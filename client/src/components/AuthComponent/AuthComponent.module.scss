@@ -6,19 +6,19 @@
 }
 
 .card {
-  width: 600px;
-  padding: 20px;
-  border: 1px solid gray;
+  border: 1px solid #808080;
   border-radius: 10px;
+  padding: 20px;
+  width: 600px;
 }
 
 .title {
   margin: 0;
+  margin-bottom: 20px;
   padding: 0;
-  text-align: center;
   font-weight: 700;
   font-size: 24px;
-  margin-bottom: 20px;
+  text-align: center;
 }
 
 .form {
@@ -28,48 +28,48 @@
 }
 
 .formItem {
-  padding: 10px;
+  border: 1px solid #808080;
   border-radius: 10px;
-  border: 1px solid gray;
+  padding: 10px;
   width: 100%;
 
   &::placeholder {
-    color: gray;
+    color: #808080;
   }
 
   &:not(:last-child) {
     margin-bottom: 15px;
   }
 }
+
 .formBottom {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
 }
 
 .formButton {
-  background-color: transparent;
-  border: 1px solid green;
+  border: 1px solid #008000;
   border-radius: 5px;
   padding: 10px;
-  cursor: pointer;
   font-size: 16px;
-  color: green;
-
+  color: #008000;
+  background-color: transparent;
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  cursor: pointer;
 
   &:hover {
-    background-color: green;
-    color: white;
+    color: #fff;
+    background-color: #008000;
   }
 }
 
 .formLink {
-  text-decoration: none;
-  font-size: 16px;
-  color: rgb(0, 13, 255);
   margin-left: 3px;
+  font-size: 16px;
+  text-decoration: none;
+  color: #000dff;
 
   &:hover {
     text-decoration: underline;
