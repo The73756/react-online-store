@@ -18,7 +18,7 @@ const AuthComponent = () => {
               <span>
                 Нет аккаунта?
                 <Link to={REGISTRATION_ROUTE} className={styles.formLink}>
-                  Зарегестрируйтесь!
+                  Зарегистрируйтесь!
                 </Link>
               </span>
             ) : (
@@ -30,9 +30,7 @@ const AuthComponent = () => {
               </span>
             )}
 
-            <button className={styles.formButton}>
-              {isLogin ? 'Войти' : 'Регистрация'}
-            </button>
+            <button className={styles.formButton}>{isLogin ? 'Войти' : 'Регистрация'}</button>
           </div>
         </form>
       </div>
