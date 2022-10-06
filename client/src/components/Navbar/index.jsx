@@ -8,35 +8,37 @@ import { LOGIN_ROUTE } from '../../utils/consts';
 const Navbar = observer(() => {
   const { user } = useContext(Context);
   return (
-    <nav className={styles.navbar}>
+    <div className={styles.navbar}>
       <h1 className={styles.logo}>
-        Магазин
         <Link className={styles.logoLink} to='/' />
+        Магазин
       </h1>
-      <ul className={styles.navList}>
-        {user.isAuth ? (
-          <>
-            {' '}
+      <nav>
+        <ul className={styles.navList}>
+          {user.isAuth ? (
+            <>
+              {' '}
+              <li className={styles.navItem}>
+                <Link to='/' className={styles.navLink}>
+                  Корзина
+                </Link>
+              </li>
+              <li className={styles.navItem}>
+                <Link to='/' className={styles.navLink}>
+                  Админ панель
+                </Link>
+              </li>
+            </>
+          ) : (
             <li className={styles.navItem}>
-              <Link to='/' className={styles.navLink}>
-                Корзина
+              <Link to={LOGIN_ROUTE} className={styles.navLink}>
+                Авторизация
               </Link>
             </li>
-            <li className={styles.navItem}>
-              <Link to='/' className={styles.navLink}>
-                Админ панель
-              </Link>
-            </li>
-          </>
-        ) : (
-          <li className={styles.navItem}>
-            <Link to={LOGIN_ROUTE} className={styles.navLink}>
-              Авторизация
-            </Link>
-          </li>
-        )}
-      </ul>
-    </nav>
+          )}
+        </ul>
+      </nav>
+    </div>
   );
 });
 

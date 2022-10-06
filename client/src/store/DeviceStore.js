@@ -8,9 +8,12 @@ export default class DeviceStore {
       { id: 3, name: 'Ноутбуки' },
       { id: 4, name: 'Телевизоры' },
     ];
+
     this._brands = [
       { id: 1, name: 'Apple' },
       { id: 2, name: 'Samsung' },
+      { id: 3, name: 'Xiaomi' },
+      { id: 4, name: 'Lenovo' },
     ];
     this._devices = [
       {
@@ -41,8 +44,39 @@ export default class DeviceStore {
         rating: 5,
         img: 'https://cdn.svyaznoy.ru/upload/iblock/fb8/ruru_iphone12pro_q121_graphite_pdp-image-1b.jpg/resize/483x483/hq/',
       },
+      {
+        id: 5,
+        name: 'Iphone 12 Pro',
+        price: 25000,
+        rating: 5,
+        img: 'https://cdn.svyaznoy.ru/upload/iblock/fb8/ruru_iphone12pro_q121_graphite_pdp-image-1b.jpg/resize/483x483/hq/',
+      },
+      {
+        id: 6,
+        name: 'Iphone 12 Pro',
+        price: 25000,
+        rating: 5,
+        img: 'https://cdn.svyaznoy.ru/upload/iblock/fb8/ruru_iphone12pro_q121_graphite_pdp-image-1b.jpg/resize/483x483/hq/',
+      },
+      {
+        id: 7,
+        name: 'Iphone 12 Pro',
+        price: 25000,
+        rating: 5,
+        img: 'https://cdn.svyaznoy.ru/upload/iblock/fb8/ruru_iphone12pro_q121_graphite_pdp-image-1b.jpg/resize/483x483/hq/',
+      },
+      {
+        id: 8,
+        name: 'Iphone 12 Pro',
+        price: 25000,
+        rating: 5,
+        img: 'https://cdn.svyaznoy.ru/upload/iblock/fb8/ruru_iphone12pro_q121_graphite_pdp-image-1b.jpg/resize/483x483/hq/',
+      },
     ];
+
     this._selectedType = {};
+
+    this._selectedBrand = {};
 
     makeAutoObservable(this);
   }
@@ -63,6 +97,10 @@ export default class DeviceStore {
     this._selectedType = type;
   }
 
+  setSelectedBrand(brand) {
+    this._selectedBrand = brand;
+  }
+
   get types() {
     return this._types;
   }
@@ -77,5 +115,9 @@ export default class DeviceStore {
 
   get selectedType() {
     return this._selectedType;
+  }
+
+  get selectedBrand() {
+    return this._selectedBrand;
   }
 }

@@ -1,4 +1,5 @@
-import ShopContainer from '../components/ShopContainer';
+import BrandsBar from '../components/BrandsBar';
+import DevicesList from '../components/DevicesList';
 import TypesSidebar from '../components/TypesSidebar';
 
 const Shop = () => {
@@ -8,14 +9,10 @@ const Shop = () => {
         <TypesSidebar />
       </div>
 
-      <main className='container shop-products' style={{ width: '100%' }}>
-        <ShopContainer>
-          <span>1232123</span>
-          <span>1232123</span>
-          <span>1232123</span>
-          <span>1232123</span>
-        </ShopContainer>
-      </main>
+      <div className='container'>
+        <BrandsBar />
+        <DevicesList />
+      </div>
     </div>
   );
 };
