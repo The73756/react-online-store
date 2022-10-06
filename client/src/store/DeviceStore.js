@@ -5,6 +5,8 @@ export default class DeviceStore {
     this._types = [
       { id: 1, name: 'Смартфоны' },
       { id: 2, name: 'Холодильники' },
+      { id: 3, name: 'Ноутбуки' },
+      { id: 4, name: 'Телевизоры' },
     ];
     this._brands = [
       { id: 1, name: 'Apple' },
@@ -40,6 +42,8 @@ export default class DeviceStore {
         img: 'https://cdn.svyaznoy.ru/upload/iblock/fb8/ruru_iphone12pro_q121_graphite_pdp-image-1b.jpg/resize/483x483/hq/',
       },
     ];
+    this._selectedType = {};
+
     makeAutoObservable(this);
   }
 
@@ -55,6 +59,10 @@ export default class DeviceStore {
     this._devices = devices;
   }
 
+  setSelectedType(type) {
+    this._selectedType = type;
+  }
+
   get types() {
     return this._types;
   }
@@ -62,7 +70,12 @@ export default class DeviceStore {
   get brands() {
     return this._brands;
   }
+
   get devices() {
     return this._devices;
+  }
+
+  get selectedType() {
+    return this._selectedType;
   }
 }

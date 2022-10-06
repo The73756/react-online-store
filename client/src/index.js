@@ -11,7 +11,7 @@ root.render(
   <Context.Provider
     value={{
       user: new UserStore(),
-      deivce: new DeviceStore(),
+      device: new DeviceStore(),
     }}>
     <React.StrictMode>
       <App />

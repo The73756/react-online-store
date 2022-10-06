@@ -1,33 +1,26 @@
-import { Link } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
+import { useContext } from 'react';
+import { Context } from '../..';
 import styles from './TypesSidebar.module.scss';
 
-const TypesSidebar = () => {
+const TypesSidebar = observer(() => {
+  const { device } = useContext(Context);
+  console.log(device.types);
   return (
     <aside className={styles.container}>
       <ul className={styles.list}>
-        <li className={styles.item}>
-          <Link className={styles.link} to='/types/1'>
-            Type 1
-          </Link>
-        </li>
-        <li className={styles.item}>
-          <Link className={styles.link} to='/types/1'>
-            Type 1
-          </Link>
-        </li>
-        <li className={styles.item}>
-          <Link className={styles.link} to='/types/1'>
-            Type 1
-          </Link>
-        </li>
-        <li className={styles.item}>
-          <Link className={styles.link} to='/types/1'>
-            Type 1
-          </Link>
-        </li>
+        {device.types.map((type) => (
+          <li className={styles.item} key={type.id}>
+            <button
+              className={`${styles.link} ${type.id === device.selectedType.id ? styles.active : ''}`}
+              onClick={() => device.setSelectedType(type)}>
+              {type.name}
+            </button>
+          </li>
+        ))}
       </ul>
     </aside>
   );
-};
+});
 
 export default TypesSidebar;
