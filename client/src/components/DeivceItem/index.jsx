@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
+import { DEVICE_ROUTE } from '../../utils/consts';
 import styles from './DeivceItem.module.scss';
 
-const DeivceItem = ({ name, price, rating, img }) => {
+const DeivceItem = ({ id, name, price, rating, img }) => {
   return (
     <article className={styles.card}>
       <img src={img} alt={name} width={150} className={styles.img} />
@@ -25,7 +26,7 @@ const DeivceItem = ({ name, price, rating, img }) => {
       <h2 className={styles.title}>{name}</h2>
 
       <p className={styles.price}>{price} ₽</p>
-      <Link to='/' className={styles.link} />
+      <Link to={`${DEVICE_ROUTE}/${id}`} className={styles.link} />
     </article>
   );
 };

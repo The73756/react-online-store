@@ -1,5 +1,7 @@
+import DevicePageComponent from '../components/DevicePageComponent';
+
 const DevicePage = () => {
-  return <div>DevicePage</div>;
+  return <DevicePageComponent />;
 };
 
 export default DevicePage;

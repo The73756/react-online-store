@@ -1,0 +1,57 @@
+.top {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0;
+}
+
+.topImg {
+  width: 300px;
+  object-fit: contain;
+}
+
+.topRatingBlock {
+  text-align: center;
+}
+
+.topPriceBlock {
+}
+
+.title {
+  margin: 0;
+  margin-bottom: 10px;
+  padding: 0;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 240px;
+  height: 240px;
+  font-size: 30px;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.price {
+  margin: 0;
+  margin-bottom: 10px;
+  padding: 0;
+  font-size: 26px;
+}
+
+.cartBtn {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #000;
+  background-color: transparent;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ccc;
+  }
+}
