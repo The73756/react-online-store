@@ -1,0 +1,58 @@
+.modal {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: rgb(0 0 0 / 25%);
+  animation: modal-enter 0.2s ease-in-out;
+}
+
+.modalDialog {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin: 0 20px;
+  width: 100%;
+  max-width: 550px;
+  max-height: calc(100vh - 40px);
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+  background: #fff;
+}
+
+// не работает
+
+.modalEnter {
+  opacity: 0;
+}
+
+.modalEnterActive {
+  opacity: 1;
+  transition: opacity 200ms ease-in-out;
+}
+
+// работает
+
+.modalExit {
+  opacity: 1;
+}
+
+.modalExitActive {
+  opacity: 0;
+  transition: opacity 200ms ease-in-out;
+}
+
+@keyframes modal-enter {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

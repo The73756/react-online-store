@@ -1,5 +1,11 @@
+import AdminComponent from '../components/AdminComponent';
+
 const Admin = () => {
-  return <div>Admin</div>;
+  return (
+    <div className='container'>
+      <AdminComponent />
+    </div>
+  );
 };
 
 export default Admin;
