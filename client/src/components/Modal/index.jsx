@@ -16,7 +16,7 @@ const Modal = ({ opened, onClose, children }) => {
   const { mounted } = useMount({ opened, animationTime: ANIMATION_TIME });
   const [animationIn, setAnimationIn] = useState(false);
   const modalRef = useRef();
-  console.log(opened, animationIn);
+
   const keydownHandler = ({ key }) => {
     switch (key) {
       case 'Escape':

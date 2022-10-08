@@ -1,19 +1,32 @@
 import { useState } from 'react';
-import Modal from '../Modal';
+import CreateBrand from '../modals/CreateBrand';
+import CreateDevice from '../modals/CreateDevice';
+import CreateType from '../modals/CreateType';
+
 import styles from './AdminComponent.module.scss';
+
 const AdminComponent = () => {
-  const [opened, setOpened] = useState(false);
+  const [brandVisible, setBrandVisible] = useState(false);
+  const [deviceVisible, setDeviceVisible] = useState(false);
+  const [typeVisible, setTypeVisible] = useState(false);
 
   return (
-    <div className={styles.wrapper}>
-      <button className={styles.btn}>Добавить бренд</button>
-      <button className={styles.btn}>Добавить девайс</button>
-      <button className={styles.btn}>Добавить тип</button>
-      <button onClick={() => setOpened(true)}>Click Here</button>
-      <Modal opened={opened} onClose={() => setOpened(false)}>
-        <div>$@#LKJH:LKFHDFDHFJ</div>
-      </Modal>
-    </div>
+    <>
+      <div className={styles.wrapper}>
+        <button onClick={() => setBrandVisible(true)} className={styles.btn}>
+          Добавить бренд
+        </button>
+        <button onClick={() => setDeviceVisible(true)} className={styles.btn}>
+          Добавить девайс
+        </button>
+        <button onClick={() => setTypeVisible(true)} className={styles.btn}>
+          Добавить тип
+        </button>
+      </div>
+      <CreateBrand opened={brandVisible} onClose={() => setBrandVisible(false)} />
+      <CreateDevice opened={deviceVisible} onClose={() => setDeviceVisible(false)} />
+      <CreateType opened={typeVisible} onClose={() => setTypeVisible(false)} />
+    </>
   );
 };
 

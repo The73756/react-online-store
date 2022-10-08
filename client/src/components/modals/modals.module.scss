@@ -1,0 +1,98 @@
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.btn {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: transparent;
+  transition: background-color 200ms ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ccc;
+  }
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  margin-top: 10px;
+  padding: 0;
+}
+
+.listItem {
+  width: 100%;
+
+  &:not(:last-child) {
+    margin-bottom: 5px;
+  }
+}
+
+.listBtn {
+  padding: 5px 0;
+  width: 100%;
+}
+
+.inputsBlock {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  border-bottom: 1px dashed #ccc;
+}
+
+.input {
+  margin-bottom: 10px;
+  outline: none;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.closeBtn {
+  margin-left: 10px;
+  border: 1px solid #f00;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100px;
+  background-color: transparent;
+  transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    color: #fff;
+    background-color: #f00;
+  }
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.infoBlock {
+  margin-top: 10px;
+}
+
+.infoBlockItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  border-bottom: 2px dashed #ccc;
+  padding-bottom: 5px;
+
+  .input {
+    margin-bottom: 0;
+  }
+}
