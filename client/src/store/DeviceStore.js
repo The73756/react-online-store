@@ -4,6 +4,8 @@ export default class DeviceStore {
   constructor() {
     this._types = [];
     this._brands = [];
+    this._selectedType = {};
+    this._selectedBrand = {};
     this._devices = [
       {
         id: 1,
@@ -62,10 +64,6 @@ export default class DeviceStore {
         img: 'https://cdn.svyaznoy.ru/upload/iblock/fb8/ruru_iphone12pro_q121_graphite_pdp-image-1b.jpg/resize/483x483/hq/',
       },
     ];
-
-    this._selectedType = {};
-
-    this._selectedBrand = {};
 
     makeAutoObservable(this);
   }

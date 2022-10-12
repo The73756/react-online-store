@@ -3,10 +3,8 @@ import { useContext } from 'react';
 import { Context } from '../..';
 import styles from './BrandsBar.module.scss';
 
-const BrandsBar = observer(({brands}) => {
+const BrandsBar = observer(() => {
   const { device } = useContext(Context);
-
-  // TODO: доделать как в типах, что бы передавать данные из шопа
 
   return (
     <div className={styles.container}>

@@ -1,15 +1,19 @@
 import { observer } from 'mobx-react-lite';
+import { useContext } from 'react';
+import { Context } from '../..';
 import styles from './TypesSidebar.module.scss';
 
-const TypesSidebar = observer(({ types }) => {
+const TypesSidebar = observer(() => {
+  const { device } = useContext(Context);
+
   return (
     <aside className={styles.container}>
       <ul className={styles.list}>
-        {types.map((type) => (
+        {device.types.map((type) => (
           <li className={styles.item} key={type.id}>
             <button
-              className={`${styles.btn} ${type.id === types.selectedType.id ? styles.active : ''}`}
-              onClick={() => types.setSelectedType(type)}>
+              className={`${styles.btn} ${type.id === device.selectedType.id ? styles.active : ''}`}
+              onClick={() => device.setSelectedType(type)}>
               {type.name}
             </button>
           </li>

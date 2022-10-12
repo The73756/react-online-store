@@ -12,7 +12,7 @@ const Shop = () => {
     try {
       fetchTypes().then((data) => device.setTypes(data));
       fetchBrands().then((data) => device.setBrands(data));
-      fetchDevices().then((data) => console.log(data.rows)); // ? device.setDevices(data.rows)
+      fetchDevices().then((data) => console.log(data.rows)); // ? device.setDevices(data.rows) + доделать
     } catch (error) {
       console.log(error);
       alert('Ошибка при загрузке классификаций (типов/брендов)'); // TODO: доделать лоадер и обработку ошибок
@@ -22,11 +22,11 @@ const Shop = () => {
   return (
     <div className='shop-container'>
       <div className='shop-sidebar'>
-        <TypesSidebar types={device.types} />
+        <TypesSidebar />
       </div>
 
       <div className='container'>
-        <BrandsBar brands={device.brands} />
+        <BrandsBar />
         <DevicesList />
       </div>
     </div>

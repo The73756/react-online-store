@@ -10,7 +10,7 @@ export const fetchTypes = async () => {
   return data;
 };
 
-export const createBrands = async (brand) => {
+export const createBrand = async (brand) => {
   const { data } = await $authHost.post('/api/brand', brand);
   return data;
 };
