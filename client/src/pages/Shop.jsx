@@ -8,11 +8,11 @@ import { fetchBrands, fetchDevices, fetchTypes } from '../http/deviceApi';
 const Shop = () => {
   const { device } = useContext(Context);
   useEffect(() => {
-    // TODO: попробовать переписать на Promise.all
+    // TODO: вынести фетчинг по компонентам
     try {
       fetchTypes().then((data) => device.setTypes(data));
       fetchBrands().then((data) => device.setBrands(data));
-      fetchDevices().then((data) => console.log(data.rows)); // ? device.setDevices(data.rows) + доделать
+      fetchDevices().then((data) => device.setDevices(data.rows));
     } catch (error) {
       console.log(error);
       alert('Ошибка при загрузке классификаций (типов/брендов)'); // TODO: доделать лоадер и обработку ошибок

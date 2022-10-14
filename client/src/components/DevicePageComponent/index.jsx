@@ -1,11 +1,15 @@
 import star from '../../assets/star.png';
 import styles from './DevicePageComponent.module.scss';
 
-const DevicePageComponent = ({ name, price, rating, img, info }) => {
+const DevicePageComponent = ({ name, price, rating, img, info, isLoading }) => {
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className='container'>
       <div className={styles.top}>
-        <img className={styles.topImg} src={process.env.REACT_APP_API_URL + img} alt={name} />
+        <img className={styles.topImg} src={`${process.env.REACT_APP_API_URL}/${img}`} alt={name} />
         <div className={styles.topRatingBlock}>
           <h2 className={styles.title}>{name}</h2>
           <div className={styles.rating} style={{ backgroundImage: `url(${star})` }}>

@@ -5,12 +5,7 @@ import styles from './DeivceItem.module.scss';
 const DeivceItem = ({ id, name, price, rating, img }) => {
   return (
     <article className={styles.card}>
-      <img
-        src={process.env.REACT_APP_API_URL + img}
-        alt={name}
-        width={150}
-        className={styles.img}
-      />
+      <img src={`${process.env.REACT_APP_API_URL}/${img}`} alt={name} className={styles.img} />
       <div className={styles.top}>
         <span className={styles.subtitle}>Смарфтфон сиаоме</span>
         <div className={styles.rating}>

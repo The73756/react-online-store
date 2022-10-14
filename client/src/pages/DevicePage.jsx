@@ -5,13 +5,20 @@ import { fetchOneDevice } from '../http/deviceApi';
 
 const DevicePage = () => {
   const [device, setDevice] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   const { id } = useParams();
 
   useEffect(() => {
-    fetchOneDevice(id).then((data) => setDevice(data));
+    setIsLoading(true);
+    fetchOneDevice(id).then((data) => {
+      setDevice(data);
+      setIsLoading(false);
+    });
+    console.log(device);
   }, []);
 
-  return <DevicePageComponent {...device}/>;
+  return <DevicePageComponent {...device} isLoading={isLoading} />;
 };
 
 export default DevicePage;

@@ -6,64 +6,7 @@ export default class DeviceStore {
     this._brands = [];
     this._selectedType = {};
     this._selectedBrand = {};
-    this._devices = [
-      {
-        id: 1,
-        name: 'Iphone 12 Pro',
-        price: 25000,
-        rating: 5,
-        img: 'https://cdn.svyaznoy.ru/upload/iblock/fb8/ruru_iphone12pro_q121_graphite_pdp-image-1b.jpg/resize/483x483/hq/',
-      },
-      {
-        id: 2,
-        name: 'Iphone 12 Pro',
-        price: 25000,
-        rating: 5,
-        img: 'https://cdn.svyaznoy.ru/upload/iblock/fb8/ruru_iphone12pro_q121_graphite_pdp-image-1b.jpg/resize/483x483/hq/',
-      },
-      {
-        id: 3,
-        name: 'Iphone 12 Pro',
-        price: 25000,
-        rating: 5,
-        img: 'https://cdn.svyaznoy.ru/upload/iblock/fb8/ruru_iphone12pro_q121_graphite_pdp-image-1b.jpg/resize/483x483/hq/',
-      },
-      {
-        id: 4,
-        name: 'Iphone 12 Pro',
-        price: 25000,
-        rating: 5,
-        img: 'https://cdn.svyaznoy.ru/upload/iblock/fb8/ruru_iphone12pro_q121_graphite_pdp-image-1b.jpg/resize/483x483/hq/',
-      },
-      {
-        id: 5,
-        name: 'Iphone 12 Pro',
-        price: 25000,
-        rating: 5,
-        img: 'https://cdn.svyaznoy.ru/upload/iblock/fb8/ruru_iphone12pro_q121_graphite_pdp-image-1b.jpg/resize/483x483/hq/',
-      },
-      {
-        id: 6,
-        name: 'Iphone 12 Pro',
-        price: 25000,
-        rating: 5,
-        img: 'https://cdn.svyaznoy.ru/upload/iblock/fb8/ruru_iphone12pro_q121_graphite_pdp-image-1b.jpg/resize/483x483/hq/',
-      },
-      {
-        id: 7,
-        name: 'Iphone 12 Pro',
-        price: 25000,
-        rating: 5,
-        img: 'https://cdn.svyaznoy.ru/upload/iblock/fb8/ruru_iphone12pro_q121_graphite_pdp-image-1b.jpg/resize/483x483/hq/',
-      },
-      {
-        id: 8,
-        name: 'Iphone 12 Pro',
-        price: 25000,
-        rating: 5,
-        img: 'https://cdn.svyaznoy.ru/upload/iblock/fb8/ruru_iphone12pro_q121_graphite_pdp-image-1b.jpg/resize/483x483/hq/',
-      },
-    ];
+    this._devices = [];
 
     makeAutoObservable(this);
   }
