@@ -15,7 +15,6 @@ const DevicePage = () => {
       setDevice(data);
       setIsLoading(false);
     });
-    console.log(device);
   }, []);
 
   return <DevicePageComponent {...device} isLoading={isLoading} />;
