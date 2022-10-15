@@ -24,8 +24,8 @@ const Device = sequelize.define('device', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, unique: true, allowNull: false },
   price: { type: DataTypes.INTEGER, allowNull: false },
-  rating: { type: DataTypes.INTEGER, defaultValue: 0 },
-  img: { type: DataTypes.STRING, allowNull: false },
+  rating: { type: DataTypes.DOUBLE, defaultValue: 0 },
+  img: { type: DataTypes.DOUBLE, allowNull: false },
 });
 
 const Type = sequelize.define('type', {
@@ -40,7 +40,7 @@ const Brand = sequelize.define('brand', {
 
 const Rating = sequelize.define('rating', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  rate: { type: DataTypes.INTEGER, allowNull: false },
+  rate: { type: DataTypes.DOUBLE, allowNull: false },
 });
 
 const DeviceInfo = sequelize.define('device_info', {

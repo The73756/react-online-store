@@ -119,7 +119,7 @@ const CreateDevice = observer(({ opened, onClose }) => {
             value={price}
             onChange={(e) => setPrice(Number(e.target.value))}
           />
-          <input className={styles.input} type='file' onChange={selectFile} multiple />
+          <input className={styles.input} type='file' onChange={selectFile} />
         </div>
 
         <button type='button' className={styles.btn} onClick={addInfo}>
