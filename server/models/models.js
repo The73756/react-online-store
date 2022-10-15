@@ -10,10 +10,14 @@ const User = sequelize.define('user', {
 
 const Basket = sequelize.define('basket', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  userId: { type: DataTypes.INTEGER, unique: true },
 });
 
 const BasketDevice = sequelize.define('basket_device', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  basketId: { type: DataTypes.INTEGER, unique: true },
+  deviceId: { type: DataTypes.INTEGER },
+  count: { type: DataTypes.INTEGER },
 });
 
 const Device = sequelize.define('device', {
