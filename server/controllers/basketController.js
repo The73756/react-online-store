@@ -74,7 +74,7 @@ class BasketController {
       });
 
       if (!device) {
-        return next(ApiError.badRequest('Device not found'));
+        return next(ApiError.badRequest('Basket device not found'));
       } else {
         await BasketDevice.destroy({
           where: { id },

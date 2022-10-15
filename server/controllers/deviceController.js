@@ -65,13 +65,17 @@ class DeviceController {
     return res.json(device);
   }
 
-  async delete(req, res) {
+  async delete(req, res, next) {
     try {
       const { id } = req.body;
-      const device = await Device.destroy({
-        where: { id },
-      });
-      return res.json('device deleted');
+      const device = await Device.findOne({ where: { id } });
+
+      if (!device) {
+        return next(ApiError.badRequest('Device not found'));
+      } else {
+        await Device.destroy({ where: { id } });
+        return res.json('device deleted');
+      }
     } catch (e) {
       next(ApiError.badRequest(e.message));
     }
