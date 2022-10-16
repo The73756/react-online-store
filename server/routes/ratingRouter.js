@@ -3,8 +3,8 @@ const router = new Router();
 const ratingController = require('../controllers/ratingController');
 const authMiddleware = require('../middleware/authMiddleware');
 
-router.post('/', ratingController.create); // authMiddleware,
+router.post('/', authMiddleware, ratingController.create);
 router.get('/', ratingController.getAll);
-router.delete('/', ratingController.delete); // authMiddleware,
+router.delete('/', authMiddleware, ratingController.delete);
 
 module.exports = router;
