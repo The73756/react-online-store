@@ -5,6 +5,11 @@ class BasketController {
   async create(req, res, next) {
     try {
       const { deviceId, basketId } = req.body;
+
+      if (!deviceId || !basketId) {
+        return next(ApiError.badRequest('deviceId or basketId not found'));
+      }
+
       const basketdevice = await BasketDevice.create({ deviceId, basketId, count: 1 });
       return res.json(basketdevice);
     } catch (e) {
@@ -73,16 +78,22 @@ class BasketController {
 
   async delete(req, res, next) {
     try {
-      const { id } = req.body;
+      const { deviceId, basketId } = req.query;
+
+      if (!deviceId || !basketId) {
+        console.log(req.query);
+        return next(ApiError.badRequest('deviceId or basketId not found'));
+      }
+
       const device = await BasketDevice.findOne({
-        where: { id },
+        where: { deviceId, basketId },
       });
 
       if (!device) {
         return next(ApiError.badRequest('Basket device not found'));
       } else {
         await BasketDevice.destroy({
-          where: { id },
+          where: { deviceId, basketId },
         });
         return res.json('basket device deleted');
       }

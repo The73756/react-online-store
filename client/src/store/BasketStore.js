@@ -1,9 +1,11 @@
+import jwtDecode from 'jwt-decode';
 import { makeAutoObservable } from 'mobx';
 
 export default class BasketStore {
   constructor() {
     this._basketDevices = [];
     this._basketTotalCount = 0;
+    this._basketId = jwtDecode(localStorage.getItem('token'))?.id;
     makeAutoObservable(this);
   }
 
@@ -21,5 +23,9 @@ export default class BasketStore {
 
   get basketTotalCount() {
     return this._basketTotalCount;
+  }
+
+  get basketId() {
+    return this._basketId;
   }
 }

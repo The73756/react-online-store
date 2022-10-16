@@ -5,15 +5,21 @@ import BrandsBar from '../components/BrandsBar';
 import DevicesList from '../components/DevicesList';
 import Pagination from '../components/Pagination';
 import TypesSidebar from '../components/TypesSidebar';
+import { fetchBasketDevices } from '../http/basketApi';
 import { fetchBrands, fetchDevices, fetchTypes } from '../http/deviceApi';
 
 const Shop = observer(() => {
-  const { device } = useContext(Context);
+  const { device, basket, user } = useContext(Context);
   useEffect(() => {
     // TODO: вынести фетчинг по компонентам
+    // TODO: переписать на промис алл
     try {
       fetchTypes().then((data) => device.setTypes(data));
       fetchBrands().then((data) => device.setBrands(data));
+      fetchBasketDevices(user.userData.id).then((data) => {
+        basket.setBasketDevices(data.rows);
+        basket.setBasketTotalCount(data.count);
+      });
     } catch (error) {
       console.log(error);
       alert('Ошибка при загрузке классификаций (типов/брендов)'); // TODO: доделать лоадер и обработку ошибок
