@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import { DEVICE_ROUTE } from '../../utils/consts';
-import styles from './DeivceItem.module.scss';
+import styles from './DeviceItem.module.scss';
 
-const DeivceItem = ({ id, name, price, rating, img }) => {
+const DeviceItem = ({ id, name, price, rating, img }) => {
   return (
     <article className={styles.card}>
       <img src={`${process.env.REACT_APP_API_URL}/${img}`} alt={name} className={styles.img} />
@@ -30,4 +30,4 @@ const DeivceItem = ({ id, name, price, rating, img }) => {
   );
 };
 
-export default DeivceItem;
+export default DeviceItem;

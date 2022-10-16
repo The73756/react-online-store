@@ -1,9 +1,11 @@
+import jwtDecode from 'jwt-decode';
 import { makeAutoObservable } from 'mobx';
 
 export default class UserStore {
   constructor() {
     this._isAuth = false;
     this._user = {};
+    this._userData = jwtDecode(localStorage.getItem('token'));
     makeAutoObservable(this);
   }
 
@@ -21,5 +23,9 @@ export default class UserStore {
 
   get user() {
     return this._user;
+  }
+
+  get userData() {
+    return this._userData;
   }
 }

@@ -45,21 +45,26 @@ class BasketController {
 
   async getAll(req, res, next) {
     try {
-      const { basketId } = req.body;
+      const { basketId } = req.query;
       const basketsDevices = await BasketDevice.findAll({
         where: { basketId },
       });
       const devices = [];
+      const response = {};
 
       Promise.all(
         basketsDevices.map(async (item) => {
           const device = await Device.findOne({
             where: { id: item.deviceId },
           });
-          devices.push({ ...device.dataValues, count: item.count });
+          if (device) {
+            devices.push({ ...device.dataValues, count: item.count });
+          }
         }),
       ).then(() => {
-        return res.json(devices);
+        response.rows = devices;
+        response.count = devices.length;
+        return res.json(response);
       });
     } catch (e) {
       next(ApiError.badRequest(e.message));
