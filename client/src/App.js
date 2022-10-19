@@ -12,9 +12,9 @@ const App = observer(() => {
   const [isLoading, setIsLoading] = useState(true); // TODO: прикрутить какой то лоадер
 
   useEffect(() => {
-    if (user.isAuth) {
+    try {
       check()
-        .then((_) => {
+        .then(() => {
           user.setUser(true);
           user.setIsAuth(true);
         })
@@ -23,8 +23,10 @@ const App = observer(() => {
           user.setIsAuth(false); // TODO: Авторизация неудачна (например, токен просрочен)
         })
         .finally(() => setIsLoading(false));
+    } catch (e) {
+      console.log(e);
     }
-  }, [user.isAuth]);
+  }, []);
 
   return (
     <BrowserRouter>

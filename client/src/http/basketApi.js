@@ -14,7 +14,7 @@ export const fetchBasketDevices = async (basketId) => {
   return data;
 };
 
-export const deleteBasketDevice = async ({ basketId, deviceId }) => {
-  const { data } = await $authHost.delete('/api/basket', { params: { basketId, deviceId } });
+export const deleteBasketDevice = async ({ id }) => {
+  const { data } = await $authHost.delete('/api/basket', { params: { id } });
   return data;
 };

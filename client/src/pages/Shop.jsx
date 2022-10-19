@@ -7,6 +7,7 @@ import Pagination from '../components/Pagination';
 import TypesSidebar from '../components/TypesSidebar';
 import { fetchBasketDevices } from '../http/basketApi';
 import { fetchBrands, fetchDevices, fetchTypes } from '../http/deviceApi';
+import { check } from '../http/userApi';
 
 const Shop = observer(() => {
   const { device, basket, user } = useContext(Context);
@@ -32,17 +33,19 @@ const Shop = observer(() => {
   }, [device.selectedType, device.selectedBrand, device.page]);
 
   useEffect(() => {
-    if (user.isAuth) {
-      try {
-        fetchBasketDevices(user.userData.id).then((data) => {
-          basket.setBasketDevices(data.rows);
-          basket.setBasketTotalCount(data.count);
-        });
-      } catch (e) {
-        console.log(e);
+    check().then((data) => {
+      if (data.id) {
+        try {
+          fetchBasketDevices(data.id).then((data) => {
+            basket.setBasketDevices(data.rows);
+            basket.setBasketTotalCount(data.count);
+          });
+        } catch (e) {
+          console.log(e);
+        }
       }
-    }
-  }, [user.isAuth]);
+    });
+  }, []);
 
   return (
     <div className='shop-container'>

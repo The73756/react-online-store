@@ -2,19 +2,26 @@ import { useContext, useEffect, useState } from 'react';
 import { Context } from '..';
 import BasketDevicesList from '../components/BasketDevicesList';
 import { fetchBasketDevices } from '../http/basketApi';
+import { check } from '../http/userApi';
 
 const Basket = () => {
-  const { basket, user } = useContext(Context);
+  const { basket } = useContext(Context);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsLoading(true);
     //TODO: сделать таких штуковин мб  document.title = 'Корзина';
-    fetchBasketDevices(user.userData.id).then((data) => {
-      basket.setBasketDevices(data.rows);
-      basket.setBasketTotalCount(data.count);
-
-      setIsLoading(false);
+    check().then((data) => {
+      if (data.id) {
+        try {
+          fetchBasketDevices(data.id).then((data) => {
+            basket.setBasketDevices(data.rows);
+            basket.setBasketTotalCount(data.count);
+          });
+        } catch (e) {
+          console.log(e);
+        }
+      }
     });
   }, []);
 

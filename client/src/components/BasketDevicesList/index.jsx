@@ -10,12 +10,10 @@ const BasketDevicesList = observer(() => {
   const { basket } = useContext(Context);
 
   const deleteDeviceFromBasket = (id) => {
-    const req = {
-      basketId: basket.basketId,
-      deviceId: id,
-    };
+    const updatedBasket = basket.basketDevices.filter((device) => device.basketItemId !== id);
+    basket.setBasketDevices(updatedBasket);
     // Todo: Нужно будет создавать локальный стейт и удалять эту штуку из локального стейта, и потом отправлять запрос на сервер
-    deleteBasketDevice(req).then((data) => {
+    deleteBasketDevice({ id }).then((data) => {
       alert('Устройство удалено из корзины');
     });
   };
@@ -26,7 +24,7 @@ const BasketDevicesList = observer(() => {
         <div key={device.id + idx}>
           <DeviceItem {...device} />
           <p>Количество: {device.count}</p>
-          <button onClick={() => deleteDeviceFromBasket(device.id)}>Удалить</button>
+          <button onClick={() => deleteDeviceFromBasket(device.basketItemId)}>Удалить</button>
         </div>
       ))}
     </main>

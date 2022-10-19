@@ -65,22 +65,21 @@ class BasketController {
 
   async delete(req, res, next) {
     try {
-      const { deviceId, basketId } = req.query;
+      const { id } = req.query;
 
-      if (!deviceId || !basketId) {
-        console.log(req.query);
-        return next(ApiError.badRequest('deviceId or basketId not found'));
+      if (!id) {
+        return next(ApiError.badRequest('id not found'));
       }
 
       const device = await BasketDevice.findOne({
-        where: { deviceId, basketId },
+        where: { id },
       });
 
       if (!device) {
         return next(ApiError.badRequest('Basket device not found'));
       } else {
         await BasketDevice.destroy({
-          where: { deviceId, basketId },
+          where: { id },
         });
         return res.json('basket device deleted');
       }
