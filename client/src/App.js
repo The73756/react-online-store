@@ -12,17 +12,19 @@ const App = observer(() => {
   const [isLoading, setIsLoading] = useState(true); // TODO: прикрутить какой то лоадер
 
   useEffect(() => {
-    check()
-      .then((_) => {
-        user.setUser(true);
-        user.setIsAuth(true);
-      })
-      .catch(() => {
-        user.setUser({});
-        user.setIsAuth(false);
-      })
-      .finally(() => setIsLoading(false));
-  }, []);
+    if (user.isAuth) {
+      check()
+        .then((_) => {
+          user.setUser(true);
+          user.setIsAuth(true);
+        })
+        .catch(() => {
+          user.setUser({});
+          user.setIsAuth(false); // TODO: Авторизация неудачна (например, токен просрочен)
+        })
+        .finally(() => setIsLoading(false));
+    }
+  }, [user.isAuth]);
 
   return (
     <BrowserRouter>

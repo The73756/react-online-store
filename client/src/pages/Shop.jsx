@@ -16,10 +16,6 @@ const Shop = observer(() => {
     try {
       fetchTypes().then((data) => device.setTypes(data));
       fetchBrands().then((data) => device.setBrands(data));
-      fetchBasketDevices(user.userData.id).then((data) => {
-        basket.setBasketDevices(data.rows);
-        basket.setBasketTotalCount(data.count);
-      });
     } catch (error) {
       console.log(error);
       alert('Ошибка при загрузке классификаций (типов/брендов)'); // TODO: доделать лоадер и обработку ошибок
@@ -34,6 +30,19 @@ const Shop = observer(() => {
       },
     );
   }, [device.selectedType, device.selectedBrand, device.page]);
+
+  useEffect(() => {
+    if (user.isAuth) {
+      try {
+        fetchBasketDevices(user.userData.id).then((data) => {
+          basket.setBasketDevices(data.rows);
+          basket.setBasketTotalCount(data.count);
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  }, [user.isAuth]);
 
   return (
     <div className='shop-container'>

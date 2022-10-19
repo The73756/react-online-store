@@ -35,19 +35,6 @@ class BasketController {
     }
   }
 
-  // ? получение одного ваще надо не? все равно же на страницу одного девайса переходить
-  // async getOne(req, res, next) {
-  //   try {
-  //     const { id } = req.params;
-  //     const basketinfo = await BasketDevice.findOne({
-  //       where: { id },
-  //     });
-  //     return res.json(basketinfo);
-  //   } catch (e) {
-  //     next(ApiError.badRequest(e.message));
-  //   }
-  // }
-
   async getAll(req, res, next) {
     try {
       const { basketId } = req.query;
@@ -63,7 +50,7 @@ class BasketController {
             where: { id: item.deviceId },
           });
           if (device) {
-            devices.push({ ...device.dataValues, count: item.count });
+            devices.push({ ...device.dataValues, count: item.count, basketItemId: item.id });
           }
         }),
       ).then(() => {

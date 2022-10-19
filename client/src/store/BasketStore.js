@@ -5,7 +5,9 @@ export default class BasketStore {
   constructor() {
     this._basketDevices = [];
     this._basketTotalCount = 0;
-    this._basketId = jwtDecode(localStorage.getItem('token'))?.id;
+    this._basketId = localStorage.getItem('token')
+      ? jwtDecode(localStorage.getItem('token'))?.id
+      : '';
     makeAutoObservable(this);
   }
 

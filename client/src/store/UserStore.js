@@ -5,7 +5,7 @@ export default class UserStore {
   constructor() {
     this._isAuth = false;
     this._user = {};
-    this._userData = jwtDecode(localStorage.getItem('token'));
+    this._userData = localStorage.getItem('token') ? jwtDecode(localStorage.getItem('token')) : {};
     makeAutoObservable(this);
   }
 
