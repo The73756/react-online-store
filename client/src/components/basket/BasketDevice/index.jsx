@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import useDebounce from '../../../hooks/useDebounce';
 import { DEVICE_ROUTE } from '../../../utils/consts';
 import styles from './BasketDevice.module.scss';
 
@@ -13,6 +15,25 @@ const BasketDevice = ({
   onDelete,
   onChangeCount,
 }) => {
+  const [localCount, setLocalCount] = useState(count);
+  const debounsedCount = useDebounce(onChangeCount, 400);
+
+  const incrementCount = () => {
+    setLocalCount(localCount + 1);
+    debounsedCount(basketItemId, localCount + 1);
+  };
+
+  const decrementCount = () => {
+    if (localCount - 1 <= 0) {
+      setLocalCount(0);
+      onDelete(basketItemId);
+      console.log(121212);
+    } else {
+      setLocalCount(localCount - 1);
+      debounsedCount(basketItemId, localCount - 1);
+    }
+  };
+
   return (
     <article className={styles.item}>
       <div className={styles.itemImg}>
@@ -30,7 +51,10 @@ const BasketDevice = ({
       </div>
 
       <div className={styles.itemCount}>
-        <button className={styles.itemBtn} onClick={onChangeCount}>
+        <button
+          className={styles.itemBtn}
+          onClick={decrementCount}
+          aria-label='Уменьшить количество'>
           <svg
             width='10'
             height='10'
@@ -43,8 +67,11 @@ const BasketDevice = ({
             />
           </svg>
         </button>
-        <b>1</b>
-        <button className={styles.itemBtn} onClick={onChangeCount}>
+        <b>{localCount}</b>
+        <button
+          className={styles.itemBtn}
+          onClick={incrementCount}
+          aria-label='Увеличить количество'>
           <svg
             width='10'
             height='10'
@@ -63,7 +90,7 @@ const BasketDevice = ({
         </button>
       </div>
       <div className={styles.itemPrice}>
-        <b>{price} Руб.</b>
+        <b>Итого: {price * localCount} Руб.</b>
         <div>
           <button className={styles.itemBtn} onClick={() => onDelete(basketItemId)}>
             <svg

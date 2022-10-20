@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { useContext } from 'react';
 import { Context } from '../../..';
-import { deleteBasketDevice } from '../../../http/basketApi';
+import { deleteBasketDevice, updateBasketDevice } from '../../../http/basketApi';
 import BasketDevice from '../BasketDevice';
 
 import styles from './BasketDevicesList.module.scss';
@@ -18,19 +18,20 @@ const BasketDevicesList = observer(() => {
   };
 
   const changeBasketDeviceCount = (id, count) => {
-    console.log('blyat');
+    updateBasketDevice({ id, count }).catch((err) => {
+      alert('Ошибка при изменении количества товара');
+    });
   };
 
   return (
     <main className={styles.container}>
       {basket.basketDevices.map((device, idx) => (
-        <div key={device.id + idx}>
-          <BasketDevice
-            {...device}
-            onDelete={deleteDeviceFromBasket}
-            onChangeCount={changeBasketDeviceCount}
-          />
-        </div>
+        <BasketDevice
+          key={device.basketItemId}
+          {...device}
+          onDelete={deleteDeviceFromBasket}
+          onChangeCount={changeBasketDeviceCount}
+        />
       ))}
     </main>
   );
