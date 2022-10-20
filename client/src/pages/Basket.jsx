@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { Context } from '..';
-import BasketDevicesList from '../components/BasketDevicesList';
+import BasketDevicesList from '../components/basket/BasketDevicesList';
 import { fetchBasketDevices } from '../http/basketApi';
 import { check } from '../http/userApi';
 

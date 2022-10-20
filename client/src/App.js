@@ -12,20 +12,16 @@ const App = observer(() => {
   const [isLoading, setIsLoading] = useState(true); // TODO: прикрутить какой то лоадер
 
   useEffect(() => {
-    try {
-      check()
-        .then(() => {
-          user.setUser(true);
-          user.setIsAuth(true);
-        })
-        .catch(() => {
-          user.setUser({});
-          user.setIsAuth(false); // TODO: Авторизация неудачна (например, токен просрочен)
-        })
-        .finally(() => setIsLoading(false));
-    } catch (e) {
-      console.log(e);
-    }
+    check()
+      .then(() => {
+        user.setUser(true);
+        user.setIsAuth(true);
+      })
+      .catch(() => {
+        user.setUser({});
+        user.setIsAuth(false); // TODO: Авторизация неудачна (например, токен просрочен)
+      })
+      .finally(() => setIsLoading(false));
   }, []);
 
   return (
