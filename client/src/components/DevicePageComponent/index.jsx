@@ -1,12 +1,15 @@
 import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { Context } from '../..';
 import star from '../../assets/star.png';
 import { createBasketDevice } from '../../http/basketApi';
+import { SHOP_ROUTE } from '../../utils/consts';
 import styles from './DevicePageComponent.module.scss';
 
 const DevicePageComponent = ({ name, price, rating, img, info, isLoading, id }) => {
   const { user } = useContext(Context);
 
+  const isAdded = false; //TODO: доделать отображение добавленности в корзину
   const addDeviceToBasket = () => {
     const formData = new FormData();
     formData.append('deviceId', id);
@@ -38,9 +41,15 @@ const DevicePageComponent = ({ name, price, rating, img, info, isLoading, id }) 
         </div>
         <div className={styles.topPriceBlock}>
           <h3 className={styles.price}>{price} Руб.</h3>
-          <button onClick={addDeviceToBasket} className={styles.cartBtn}>
-            Добавить в корзину
-          </button>
+          {isAdded ? (
+            <Link className={styles.addBtn} to={SHOP_ROUTE}>
+              Товар в корзине. Перейти
+            </Link>
+          ) : (
+            <button className={styles.addBtn} onClick={addDeviceToBasket}>
+              Добавить в корзину
+            </button>
+          )}
         </div>
       </div>
       <div className={styles.bottom}>

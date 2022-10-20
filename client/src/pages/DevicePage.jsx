@@ -4,17 +4,17 @@ import DevicePageComponent from '../components/DevicePageComponent';
 import { fetchOneDevice } from '../http/deviceApi';
 
 const DevicePage = () => {
+  const { id } = useParams();
   const [device, setDevice] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const { id } = useParams();
-
   useEffect(() => {
     setIsLoading(true);
-    fetchOneDevice(id).then((data) => {
-      setDevice(data);
-      setIsLoading(false);
-    });
+    fetchOneDevice(id)
+      .then((data) => {
+        setDevice(data);
+      })
+      .finally(() => setIsLoading(false));
   }, []);
 
   return <DevicePageComponent {...device} isLoading={isLoading} />;

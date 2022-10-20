@@ -5,16 +5,12 @@ import DeviceItem from '../DeviceItem';
 import styles from './DevicesList.module.scss';
 
 const DevicesList = observer(() => {
-  const { device, basket } = useContext(Context);
-
-  const isDeviceInBasket = (device) => {
-    return basket.basketDevices.some((item) => item.id === device.id);
-  };
+  const { device } = useContext(Context);
 
   return (
     <main className={styles.container}>
       {device.devices.map((device) => (
-        <DeviceItem key={device.id} {...device} isAdded={isDeviceInBasket(device)} />
+        <DeviceItem key={device.id} {...device} />
       ))}
     </main>
   );

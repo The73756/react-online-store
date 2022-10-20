@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
+import { useIsDeviceInBasket } from '../../hooks/useIsDeviceInBasket';
 import { DEVICE_ROUTE } from '../../utils/consts';
 import styles from './DeviceItem.module.scss';
 
-const DeviceItem = ({ id, name, price, rating, img, isAdded }) => {
-// TODO: Сделать нормальный хайлайт добавленности в корзину
+const DeviceItem = ({ id, name, price, rating, img }) => {
+  const isAdded = useIsDeviceInBasket(id);
+  // TODO: Сделать нормальный хайлайт добавленности в корзину
   return (
-    <article className={styles.card} style={{borderColor: isAdded ? 'green' : '#ccc'}}> 
+    <article className={styles.card} style={{ borderColor: isAdded ? 'green' : '#ccc' }}>
       <img src={`${process.env.REACT_APP_API_URL}/${img}`} alt={name} className={styles.img} />
       <div className={styles.top}>
         <span className={styles.subtitle}>Смарфтфон сиаоме</span>

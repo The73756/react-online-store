@@ -24,6 +24,10 @@ const App = observer(() => {
       .finally(() => setIsLoading(false));
   }, []);
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <BrowserRouter>
       <Navbar />
