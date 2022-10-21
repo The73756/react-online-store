@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import { useContext, useEffect } from 'react';
 import { Context } from '..';
 import BrandsBar from '../components/BrandsBar';
-import DevicesList from '../components/DevicesList';
+import DevicesList from '../components/device/DevicesList';
 import Pagination from '../components/Pagination';
 import TypesSidebar from '../components/TypesSidebar';
 import { fetchBasketDevices } from '../http/basketApi';
@@ -10,7 +10,7 @@ import { fetchBrands, fetchDevices, fetchTypes } from '../http/deviceApi';
 import { check } from '../http/userApi';
 
 const Shop = observer(() => {
-  const { device, basket, user } = useContext(Context);
+  const { device, basket } = useContext(Context);
   useEffect(() => {
     // TODO: вынести фетчинг по компонентам
     // TODO: переписать на промис алл

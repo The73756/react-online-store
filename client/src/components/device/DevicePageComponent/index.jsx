@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import star from '../../assets/star.png';
-import { BASKET_ROUTE } from '../../utils/consts';
+import { BASKET_ROUTE } from '../../../utils/consts';
+import star from '../../../assets/star.png';
 import styles from './DevicePageComponent.module.scss';
 
 const DevicePageComponent = ({

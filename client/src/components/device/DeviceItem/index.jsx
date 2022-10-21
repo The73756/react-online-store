@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { DEVICE_ROUTE } from '../../utils/consts';
+import { DEVICE_ROUTE } from '../../../utils/consts';
 import styles from './DeviceItem.module.scss';
 
 const DeviceItem = ({ id, name, price, rating, img, isAdded }) => {

@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Context } from '..';
-import DevicePageComponent from '../components/DevicePageComponent';
+import DevicePageComponent from '../components/device/DevicePageComponent';
 import { createBasketDevice, fetchBasketDevices } from '../http/basketApi';
 import { fetchOneDevice } from '../http/deviceApi';
 

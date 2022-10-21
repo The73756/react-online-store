@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { useContext } from 'react';
-import { Context } from '../..';
+import { Context } from '../../..';
 import DeviceItem from '../DeviceItem';
 import styles from './DevicesList.module.scss';
 
