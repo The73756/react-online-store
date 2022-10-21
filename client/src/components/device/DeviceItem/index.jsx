@@ -2,13 +2,15 @@ import { Link } from 'react-router-dom';
 import { DEVICE_ROUTE } from '../../../utils/consts';
 import styles from './DeviceItem.module.scss';
 
-const DeviceItem = ({ id, name, price, rating, img, isAdded }) => {
+const DeviceItem = ({ id, name, price, rating, img, isAdded, type, brand }) => {
   // TODO: Сделать нормальный хайлайт добавленности в корзину
   return (
     <article className={styles.card} style={{ borderColor: isAdded ? 'green' : '#ccc' }}>
       <img src={`${process.env.REACT_APP_API_URL}/${img}`} alt={name} className={styles.img} />
       <div className={styles.top}>
-        <span className={styles.subtitle}>Смарфтфон сиаоме</span>
+        <span className={styles.subtitle}>
+          {type.slice(0, -1)}, {brand}
+        </span>
         <div className={styles.rating}>
           <span>{rating}</span>
           <svg
