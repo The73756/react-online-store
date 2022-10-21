@@ -1,34 +1,19 @@
-import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { Context } from '../..';
 import star from '../../assets/star.png';
-import { createBasketDevice } from '../../http/basketApi';
-import { SHOP_ROUTE } from '../../utils/consts';
+import { BASKET_ROUTE } from '../../utils/consts';
 import styles from './DevicePageComponent.module.scss';
 
-const DevicePageComponent = ({ name, price, rating, img, info, isLoading, id }) => {
-  const { user } = useContext(Context);
-
-  const isAdded = false; //TODO: доделать отображение добавленности в корзину
-  const addDeviceToBasket = () => {
-    const formData = new FormData();
-    formData.append('deviceId', id);
-    formData.append('basketId', user.userData.id);
-
-    try {
-      createBasketDevice(formData).then((data) => {
-        console.log(data);
-        alert('Товар добавлен в корзину');
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
+const DevicePageComponent = ({
+  name,
+  price,
+  rating,
+  img,
+  info,
+  id,
+  addDeviceToBasket,
+  isAdded,
+  isBasketLoading,
+}) => {
   return (
     <div className='container'>
       <div className={styles.top}>
@@ -41,13 +26,19 @@ const DevicePageComponent = ({ name, price, rating, img, info, isLoading, id }) 
         </div>
         <div className={styles.topPriceBlock}>
           <h3 className={styles.price}>{price} Руб.</h3>
-          {isAdded ? (
-            <Link className={styles.addBtn} to={SHOP_ROUTE}>
-              Товар в корзине. Перейти
-            </Link>
+          {!isBasketLoading ? (
+            isAdded ? ( //TODO: Прикрутить норм лоадер
+              <Link className={styles.addBtn} to={BASKET_ROUTE}>
+                Товар в корзине. Перейти
+              </Link>
+            ) : (
+              <button className={styles.addBtn} onClick={addDeviceToBasket}>
+                Добавить в корзину
+              </button>
+            )
           ) : (
             <button className={styles.addBtn} onClick={addDeviceToBasket}>
-              Добавить в корзину
+              Загрузка
             </button>
           )}
         </div>

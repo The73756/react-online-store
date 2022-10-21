@@ -12,6 +12,7 @@ const BasketDevicesList = observer(() => {
   const deleteDeviceFromBasket = (id) => {
     const updatedBasket = basket.basketDevices.filter((device) => device.basketItemId !== id);
     basket.setBasketDevices(updatedBasket);
+    basket.setBasketTotalCount(basket.basketTotalCount - 1);
     deleteBasketDevice({ id }).then((data) => {
       alert('Устройство удалено из корзины');
     });

@@ -33,7 +33,7 @@
 
 .price {
   margin: 0;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   padding: 0;
   font-size: 26px;
 }
@@ -47,6 +47,19 @@
   background-color: transparent;
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
   cursor: pointer;
+
+  &:hover {
+    background-color: #ccc;
+  }
+}
+
+.addBtn {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  text-decoration: none;
+  color: #000;
+  transition: 0.2s ease-in-out;
 
   &:hover {
     background-color: #ccc;

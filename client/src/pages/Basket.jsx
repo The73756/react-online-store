@@ -5,24 +5,23 @@ import { fetchBasketDevices } from '../http/basketApi';
 import { check } from '../http/userApi';
 
 const Basket = () => {
-  const { basket } = useContext(Context);
+  const { basket, user } = useContext(Context);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsLoading(true);
     //TODO: сделать таких штуковин мб  document.title = 'Корзина';
-    check().then((data) => {
-      if (data.id) {
-        try {
-          fetchBasketDevices(data.id).then((data) => {
-            basket.setBasketDevices(data.rows);
-            basket.setBasketTotalCount(data.count);
-          });
-        } catch (e) {
-          console.log(e);
-        }
-      }
-    });
+
+    try {
+      fetchBasketDevices(user.userData.id)
+        .then((data) => {
+          basket.setBasketDevices(data.rows);
+          basket.setBasketTotalCount(data.count);
+        })
+        .finally(() => setIsLoading(false));
+    } catch (e) {
+      console.log(e);
+    }
   }, []);
 
   return (
