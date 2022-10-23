@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Context } from '..';
 import BrandsBar from '../components/BrandsBar';
 import DevicesList from '../components/device/DevicesList';
@@ -7,45 +7,65 @@ import Pagination from '../components/Pagination';
 import TypesSidebar from '../components/TypesSidebar';
 import { fetchBasketDevices } from '../http/basketApi';
 import { fetchBrands, fetchDevices, fetchTypes } from '../http/deviceApi';
-import { check } from '../http/userApi';
+import { fetchRatings } from '../http/ratingApi';
 
 const Shop = observer(() => {
-  const { device, basket } = useContext(Context);
+  const { device, basket, rating, user } = useContext(Context);
+  const [loadedComponents, setLoadedComponents] = useState(0);
+  const [isDevicesLoading, setIsDevicesLoading] = useState(true);
+
   useEffect(() => {
-    // TODO: вынести фетчинг по компонентам
-    // TODO: переписать на промис алл
-    try {
-      fetchTypes().then((data) => device.setTypes(data));
-      fetchBrands().then((data) => device.setBrands(data));
-    } catch (error) {
-      console.log(error);
-      alert('Ошибка при загрузке классификаций (типов/брендов)'); // TODO: доделать лоадер и обработку ошибок
-    }
+    Promise.all([fetchTypes(), fetchBrands()])
+      .then(([types, brands]) => {
+        device.setTypes(types);
+        device.setBrands(brands);
+      })
+      .catch((e) => {
+        alert('ошибка при загрузке типов и брендов');
+        console.log(e);
+      })
+      .finally(() => setLoadedComponents((prev) => prev + 1));
   }, []);
 
   useEffect(() => {
-    fetchDevices(device.selectedType.id, device.selectedBrand.id, device.page, device.limit).then(
-      (data) => {
+    setIsDevicesLoading(false);
+
+    fetchDevices(device.selectedType.id, device.selectedBrand.id, device.page, device.limit)
+      .then((data) => {
         device.setDevices(data.rows);
         device.setTotalCount(data.count);
-      },
-    );
+      })
+      .catch((e) => {
+        alert('Ошибка при загрузке девайсов');
+        console.log(e);
+      })
+      .finally(() => {
+        setIsDevicesLoading(false);
+      });
   }, [device.selectedType, device.selectedBrand, device.page]);
 
   useEffect(() => {
-    check().then((data) => {
-      if (data.id) {
-        try {
-          fetchBasketDevices(data.id).then((data) => {
-            basket.setBasketDevices(data.rows);
-            basket.setBasketTotalCount(data.count);
-          });
-        } catch (e) {
+    if (user.isAuth) {
+      Promise.all([fetchBasketDevices(user.userId), fetchRatings(user.userId)])
+        .then(([basketDevices, ratings]) => {
+          basket.setBasketDevices(basketDevices.rows);
+          basket.setBasketTotalCount(basketDevices.count);
+
+          rating.setRatedDevices(ratings.rows);
+          rating.setRatedDevicesCount(ratings.count);
+        })
+        .catch((e) => {
+          alert('Ошибка при загрузке корзины и рейтингов');
           console.log(e);
-        }
-      }
-    });
+        })
+        .finally(() => setLoadedComponents((prev) => prev + 1));
+    }
   }, []);
+
+  if (isDevicesLoading || loadedComponents < 2) {
+    // TODO: переделать лоадер мб
+    return <div className='container'>Loading...</div>;
+  }
 
   return (
     <div className='shop-container'>

@@ -13,13 +13,14 @@ const App = observer(() => {
 
   useEffect(() => {
     check()
-      .then(() => {
-        user.setUser(true);
+      .then((data) => {
+        user.setUser(data);
         user.setIsAuth(true);
       })
-      .catch(() => {
+      .catch((e) => {
         user.setUser({});
         user.setIsAuth(false); // TODO: Авторизация неудачна (например, токен просрочен)
+        console.log(e);
       })
       .finally(() => setIsLoading(false));
   }, []);

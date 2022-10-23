@@ -32,8 +32,6 @@ const AuthComponent = observer(() => {
       alert(error.response.data.message);
       console.log(error);
     }
-
-    console.log(data);
   };
 
   return (

@@ -15,13 +15,12 @@ const DevicePage = observer(() => {
   const [userRate, setUserRate] = useState(null);
 
   const [isLoading, setIsLoading] = useState(true);
-  const [isBasketLoading, setIsBasketLoading] = useState(true);
-  const [isUserRateLoading, setIsUserRateLoading] = useState(true);
+  const [isUserDataLoading, setIsUserDataLoading] = useState(true);
 
   const addDeviceToBasket = () => {
     const formData = new FormData();
     formData.append('deviceId', id);
-    formData.append('basketId', user.userData.id);
+    formData.append('basketId', user.userId);
 
     try {
       createBasketDevice(formData).then((data) => {
@@ -46,37 +45,26 @@ const DevicePage = observer(() => {
       console.log(e);
     }
 
-    try {
-      if (user.isAuth) {
-        fetchBasketDevices(user.userData.id)
-          .then((data) => {
-            basket.setBasketDevices(data.rows);
-            basket.setBasketTotalCount(data.count);
-            setIsAdded(basket.basketDevices.some((item) => item.id === +id));
-          })
-          .finally(() => setIsBasketLoading(false));
-      }
-    } catch (e) {
-      alert('Ошибка при получении корзины');
-      console.log(e);
-    }
-  }, []);
-
-  useEffect(() => {
-    setIsUserRateLoading(true);
-
-    try {
-      if (user.isAuth) {
-        fetchOneRating(user.userData.id, id)
-          .then((data) => {
-            setUserRate(data.rate);
-          })
-          .finally(() => setIsUserRateLoading(false));
-      } else {
-        setIsUserRateLoading(false);
-      }
-    } catch (e) {
-      console.log(e);
+    if (user.isAuth) {
+      Promise.all([
+        fetchBasketDevices(user.userId),
+        fetchOneRating({ userId: user.userId, deviceId: id }),
+      ])
+        .then(([basketData, ratingData]) => {
+          basket.setBasketDevices(basketData.rows);
+          basket.setBasketTotalCount(basketData.count);
+          setIsAdded(basket.basketDevices.some((item) => item.id === +id));
+          setUserRate(ratingData.rate);
+        })
+        .catch((e) => {
+          alert('Ошибка при получении пользовательских данных');
+          console.log(e);
+        })
+        .finally(() => {
+          setIsUserDataLoading(false);
+        });
+    } else {
+      setIsUserDataLoading(false);
     }
   }, []);
 
@@ -91,10 +79,9 @@ const DevicePage = observer(() => {
         isLoading={isLoading}
         addDeviceToBasket={addDeviceToBasket}
         isAdded={isAdded}
-        isBasketLoading={isBasketLoading}
+        isUserDataLoading={isUserDataLoading}
         userRate={userRate}
         setUserRate={setUserRate}
-        isUserRateLoading={isUserRateLoading}
       />
     </div>
   );

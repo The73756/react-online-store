@@ -13,7 +13,7 @@ const RatingComponent = ({ deviceId, setLocalRating, userRate }) => {
 
     const formData = new FormData();
     formData.append('deviceId', deviceId);
-    formData.append('userId', user.userData.id);
+    formData.append('userId', user.userId);
     formData.append('rate', newRating);
 
     try {

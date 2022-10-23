@@ -12,11 +12,18 @@ import {
 } from '../../utils/consts';
 
 const Navbar = observer(() => {
-  const { user } = useContext(Context);
+  const { user, basket, rating } = useContext(Context);
 
   const logOut = () => {
     user.setUser({});
     user.setIsAuth(false);
+
+    basket.setBasketDevices([]);
+    basket.setBasketTotalCount(0);
+
+    rating.setRatedDevices([]);
+    rating.setRatedDevicesCount(0);
+
     localStorage.removeItem('token');
   };
 

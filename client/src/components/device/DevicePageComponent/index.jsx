@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 import { BASKET_ROUTE } from '../../../utils/consts';
 import styles from './DevicePageComponent.module.scss';
 import RatingComponent from '../../rating/RatingComponent';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { Context } from '../../..';
 
 const DevicePageComponent = ({
   name,
@@ -12,13 +13,12 @@ const DevicePageComponent = ({
   info,
   id,
   addDeviceToBasket,
+  isUserDataLoading,
   isAdded,
-  isBasketLoading,
   userRate,
-  setUserRate,
-  isUserRateLoading,
 }) => {
   const [localRating, setLocalRating] = useState(rating);
+  const { user } = useContext(Context);
 
   return (
     <div className='container'>
@@ -27,31 +27,37 @@ const DevicePageComponent = ({
         <div className={styles.topRatingBlock}>
           <h2 className={styles.title}>{name}</h2>
           <div>Рейтинг: {localRating}</div>
-          {isUserRateLoading ? (
-            <div>Рейтинг загружается...</div>
+          {user.isAuth ? (
+            isUserDataLoading ? (
+              <div>Рейтинг загружается...</div>
+            ) : (
+              //TODO: Сделать проверку *если рейтинг добавлен есть, если нет то то там*
+              <>
+                <div>Ваша оценка:</div>
+                <RatingComponent
+                  userRate={userRate}
+                  deviceId={id}
+                  setLocalRating={setLocalRating}
+                />
+              </>
+            )
           ) : (
-            //TODO: Сделать проверку *если рейтинг добавлен есть, если нет то то там*
-            <>
-              <div>Укажите свой Рейтинг:</div>
-              <RatingComponent userRate={userRate} deviceId={id} setLocalRating={setLocalRating} />
-            </>
+            <div>Войдите что бы оценить</div>
           )}
         </div>
         <div className={styles.topPriceBlock}>
           <h3 className={styles.price}>{price} Руб.</h3>
-          {!isBasketLoading ? (
-            isAdded ? ( //TODO: Прикрутить норм лоадер
-              <Link className={styles.addBtn} to={BASKET_ROUTE}>
-                Товар в корзине. Перейти
-              </Link>
-            ) : (
-              <button className={styles.addBtn} onClick={addDeviceToBasket}>
-                Добавить в корзину
-              </button>
-            )
-          ) : (
+          {isUserDataLoading ? (
             <button className={styles.addBtn} onClick={addDeviceToBasket}>
               Загрузка
+            </button>
+          ) : isAdded ? ( //TODO: Прикрутить норм лоадер
+            <Link className={styles.addBtn} to={BASKET_ROUTE}>
+              Товар в корзине. Перейти
+            </Link>
+          ) : (
+            <button className={styles.addBtn} onClick={addDeviceToBasket}>
+              Добавить в корзину
             </button>
           )}
         </div>

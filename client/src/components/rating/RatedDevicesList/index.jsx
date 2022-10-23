@@ -8,16 +8,19 @@ const RatedDevicesList = () => {
 
   useEffect(() => {
     setIsLodaing(true);
-    fetchRatings(user.userData.id)
-      .then((data) => {
-        rating.setRatedDevices(data.rows);
-        rating.setRatedDevicesCount(data.count);
-        console.log(user.userData.id, data);
-      })
-      .catch((e) => {
-        console.log(e);
-      })
-      .finally(() => setIsLodaing(false));
+
+    if (user.isAuth) {
+      fetchRatings(user.userId)
+        .then((res) => {
+          rating.setRatedDevices(res.rows);
+          rating.setRatedDevicesCount(res.count);
+        })
+        .catch((e) => {
+          alert('Ошибка при получении оценок');
+          console.log(e);
+        })
+        .finally(() => setIsLodaing(false));
+    }
   }, []);
 
   if (isLoading) {
