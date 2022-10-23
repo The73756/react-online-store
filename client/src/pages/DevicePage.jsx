@@ -5,14 +5,18 @@ import { Context } from '..';
 import DevicePageComponent from '../components/device/DevicePageComponent';
 import { createBasketDevice, fetchBasketDevices } from '../http/basketApi';
 import { fetchOneDevice } from '../http/deviceApi';
+import { fetchOneRating } from '../http/ratingApi';
 
 const DevicePage = observer(() => {
   const { id } = useParams();
   const { user, basket } = useContext(Context);
   const [device, setDevice] = useState([]);
+  const [isAdded, setIsAdded] = useState(false);
+  const [userRate, setUserRate] = useState(null);
+
   const [isLoading, setIsLoading] = useState(true);
   const [isBasketLoading, setIsBasketLoading] = useState(true);
-  const [isAdded, setIsAdded] = useState(false);
+  const [isUserRateLoading, setIsUserRateLoading] = useState(true);
 
   const addDeviceToBasket = () => {
     const formData = new FormData();
@@ -58,6 +62,24 @@ const DevicePage = observer(() => {
     }
   }, []);
 
+  useEffect(() => {
+    setIsUserRateLoading(true);
+
+    try {
+      if (user.isAuth) {
+        fetchOneRating(user.userData.id, id)
+          .then((data) => {
+            setUserRate(data.rate);
+          })
+          .finally(() => setIsUserRateLoading(false));
+      } else {
+        setIsUserRateLoading(false);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
   if (isLoading) {
     return <div>Загрузка...</div>; //TODO: сделать лоадер
   }
@@ -70,6 +92,9 @@ const DevicePage = observer(() => {
         addDeviceToBasket={addDeviceToBasket}
         isAdded={isAdded}
         isBasketLoading={isBasketLoading}
+        userRate={userRate}
+        setUserRate={setUserRate}
+        isUserRateLoading={isUserRateLoading}
       />
     </div>
   );

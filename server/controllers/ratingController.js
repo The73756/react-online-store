@@ -105,6 +105,22 @@ class RatingController {
     }
   }
 
+  async getOne(req, res, next) {
+    try {
+      const { userId, deviceId } = req.params;
+      const rating = await Rating.findOne({
+        where: { userId, deviceId },
+      });
+      if (rating) {
+        return res.json(rating);
+      } else {
+        return res.json(null);
+      }
+    } catch (e) {
+      next(ApiError.badRequest(e.message));
+    }
+  }
+
   async delete(req, res, next) {
     try {
       const { deviceId, userId } = req.body;

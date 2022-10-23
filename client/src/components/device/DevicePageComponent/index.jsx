@@ -14,6 +14,9 @@ const DevicePageComponent = ({
   addDeviceToBasket,
   isAdded,
   isBasketLoading,
+  userRate,
+  setUserRate,
+  isUserRateLoading,
 }) => {
   const [localRating, setLocalRating] = useState(rating);
 
@@ -24,8 +27,15 @@ const DevicePageComponent = ({
         <div className={styles.topRatingBlock}>
           <h2 className={styles.title}>{name}</h2>
           <div>Рейтинг: {localRating}</div>
-          <div>Укажите свой Рейтинг:</div>
-          <RatingComponent deviceId={id} setLocalRating={setLocalRating} />
+          {isUserRateLoading ? (
+            <div>Рейтинг загружается...</div>
+          ) : (
+            //TODO: Сделать проверку *если рейтинг добавлен есть, если нет то то там*
+            <>
+              <div>Укажите свой Рейтинг:</div>
+              <RatingComponent userRate={userRate} deviceId={id} setLocalRating={setLocalRating} />
+            </>
+          )}
         </div>
         <div className={styles.topPriceBlock}>
           <h3 className={styles.price}>{price} Руб.</h3>

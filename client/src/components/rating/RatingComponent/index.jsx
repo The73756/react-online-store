@@ -4,7 +4,7 @@ import { useContext, useState } from 'react';
 import { Context } from '../../..';
 import { createRating } from '../../../http/ratingApi';
 
-const RatingComponent = ({ deviceId, setLocalRating }) => {
+const RatingComponent = ({ deviceId, setLocalRating, userRate }) => {
   const { user } = useContext(Context);
   const [rating, setRating] = useState(0);
 
@@ -36,11 +36,11 @@ const RatingComponent = ({ deviceId, setLocalRating }) => {
     <ReactStars
       count={5}
       onChange={changeRating}
-      value={rating}
+      value={userRate ? userRate : rating}
       size={40}
       isHalf={true}
       activeColor='#ffd700'
-      classNames={styles.rating}
+      classNames={user.isAuth && styles.rating}
       edit={user.isAuth}
     />
   );
