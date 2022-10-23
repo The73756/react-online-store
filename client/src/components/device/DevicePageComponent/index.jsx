@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { BASKET_ROUTE } from '../../../utils/consts';
-import star from '../../../assets/star.png';
 import styles from './DevicePageComponent.module.scss';
+import RatingComponent from '../../rating/RatingComponent';
 
 const DevicePageComponent = ({
   name,
@@ -20,9 +20,12 @@ const DevicePageComponent = ({
         <img className={styles.topImg} src={`${process.env.REACT_APP_API_URL}/${img}`} alt={name} />
         <div className={styles.topRatingBlock}>
           <h2 className={styles.title}>{name}</h2>
-          <div className={styles.rating} style={{ backgroundImage: `url(${star})` }}>
+          {/* <div className={styles.rating} style={{ backgroundImage: `url(${star})` }}>
             {rating}
-          </div>
+          </div> */}
+          <div>Рейтинг: {rating}</div>
+          <div>Укажите свой Рейтинг:</div>
+          <RatingComponent deviceId={id} />
         </div>
         <div className={styles.topPriceBlock}>
           <h3 className={styles.price}>{price} Руб.</h3>
