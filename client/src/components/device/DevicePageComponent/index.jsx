@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { BASKET_ROUTE } from '../../../utils/consts';
 import styles from './DevicePageComponent.module.scss';
 import RatingComponent from '../../rating/RatingComponent';
+import { useState } from 'react';
 
 const DevicePageComponent = ({
   name,
@@ -14,18 +15,17 @@ const DevicePageComponent = ({
   isAdded,
   isBasketLoading,
 }) => {
+  const [localRating, setLocalRating] = useState(rating);
+
   return (
     <div className='container'>
       <div className={styles.top}>
         <img className={styles.topImg} src={`${process.env.REACT_APP_API_URL}/${img}`} alt={name} />
         <div className={styles.topRatingBlock}>
           <h2 className={styles.title}>{name}</h2>
-          {/* <div className={styles.rating} style={{ backgroundImage: `url(${star})` }}>
-            {rating}
-          </div> */}
-          <div>Рейтинг: {rating}</div>
+          <div>Рейтинг: {localRating}</div>
           <div>Укажите свой Рейтинг:</div>
-          <RatingComponent deviceId={id} />
+          <RatingComponent deviceId={id} setLocalRating={setLocalRating} />
         </div>
         <div className={styles.topPriceBlock}>
           <h3 className={styles.price}>{price} Руб.</h3>

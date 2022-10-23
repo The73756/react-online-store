@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import BasketStore from './store/BasketStore';
 import DeviceStore from './store/DeviceStore';
+import RatingStore from './store/RatingStore';
 import UserStore from './store/UserStore';
 
 export const Context = createContext(null);
@@ -14,6 +15,7 @@ root.render(
       user: new UserStore(),
       device: new DeviceStore(),
       basket: new BasketStore(),
+      rating: new RatingStore(),
     }}>
     <React.StrictMode>
       <App />

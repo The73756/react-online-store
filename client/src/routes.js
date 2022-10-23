@@ -3,6 +3,7 @@ import Auth from './pages/Auth';
 import Basket from './pages/Basket';
 import DevicePage from './pages/DevicePage';
 import Shop from './pages/Shop';
+import RatedDevices from './pages/RatedDevices';
 import {
   ADMIN_ROUTE,
   BASKET_ROUTE,
@@ -10,6 +11,7 @@ import {
   LOGIN_ROUTE,
   REGISTRATION_ROUTE,
   SHOP_ROUTE,
+  RATING_ROUTE,
 } from './utils/consts';
 
 export const authRoutes = [
@@ -21,6 +23,11 @@ export const authRoutes = [
   {
     path: BASKET_ROUTE,
     component: Basket,
+  },
+
+  {
+    path: RATING_ROUTE,
+    component: RatedDevices,
   },
 ];
 

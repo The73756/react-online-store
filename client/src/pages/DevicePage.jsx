@@ -63,13 +63,15 @@ const DevicePage = observer(() => {
   }
 
   return (
-    <DevicePageComponent
-      {...device}
-      isLoading={isLoading}
-      addDeviceToBasket={addDeviceToBasket}
-      isAdded={isAdded}
-      isBasketLoading={isBasketLoading}
-    />
+    <div className='container'>
+      <DevicePageComponent
+        {...device}
+        isLoading={isLoading}
+        addDeviceToBasket={addDeviceToBasket}
+        isAdded={isAdded}
+        isBasketLoading={isBasketLoading}
+      />
+    </div>
   );
 });
 

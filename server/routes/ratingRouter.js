@@ -4,7 +4,7 @@ const ratingController = require('../controllers/ratingController');
 const authMiddleware = require('../middleware/authMiddleware');
 
 router.post('/', authMiddleware, ratingController.create);
-router.get('/', ratingController.getAllByUser);
+router.get('/', authMiddleware, ratingController.getAllByUser);
 router.delete('/', authMiddleware, ratingController.delete);
 
 module.exports = router;

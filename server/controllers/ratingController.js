@@ -77,11 +77,29 @@ class RatingController {
   //   }
   // }
 
-  getAllByUser(req, res, next) {
+  async getAllByUser(req, res, next) {
     try {
-      const { userId } = req.body;
-      const ratings = Rating.findAll({ where: { userId } });
-      return res.json(ratings);
+      const { userId } = req.query;
+      const ratings = await Rating.findAll({ where: { userId } });
+      const devices = [];
+
+      Promise.all(
+        ratings.map(async (rating) => {
+          const device = await Device.findOne({ where: { id: rating.deviceId } });
+          console.log(rating.dataValues);
+          if (device) {
+            devices.push({
+              ...device.dataValues,
+              ratingId: rating.id,
+              rate: rating.rate,
+              rateCeatedAt: rating.createdAt,
+              rateUpdatedAt: rating.updatedAt,
+            });
+          }
+        }),
+      ).then(() => {
+        return res.json({ rows: devices, count: devices.length });
+      });
     } catch (e) {
       next(ApiError.badRequest(e.message));
     }

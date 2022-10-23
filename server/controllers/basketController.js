@@ -42,7 +42,6 @@ class BasketController {
         where: { basketId },
       });
       const devices = [];
-      const response = {};
 
       Promise.all(
         basketsDevices.map(async (item) => {
@@ -54,9 +53,7 @@ class BasketController {
           }
         }),
       ).then(() => {
-        response.rows = devices;
-        response.count = devices.length;
-        return res.json(response);
+        return res.json({ rows: devices, count: devices.length });
       });
     } catch (e) {
       next(ApiError.badRequest(e.message));

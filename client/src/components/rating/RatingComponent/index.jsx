@@ -4,7 +4,7 @@ import { useContext, useState } from 'react';
 import { Context } from '../../..';
 import { createRating } from '../../../http/ratingApi';
 
-const RatingComponent = ({ deviceId }) => {
+const RatingComponent = ({ deviceId, setLocalRating }) => {
   const { user } = useContext(Context);
   const [rating, setRating] = useState(0);
 
@@ -19,6 +19,12 @@ const RatingComponent = ({ deviceId }) => {
     try {
       createRating(formData).then((data) => {
         console.log(data);
+        if (data.newRating) {
+          setLocalRating(data.newRating);
+          alert(data.message);
+        } else {
+          alert('Вы уже оценивали этот товар');
+        }
       });
     } catch (e) {
       alert('Ошибка при изменении рейтинга');
