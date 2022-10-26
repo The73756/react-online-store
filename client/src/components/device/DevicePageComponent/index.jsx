@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom';
-import { BASKET_ROUTE } from '../../../utils/consts';
-import styles from './DevicePageComponent.module.scss';
-import RatingComponent from '../../rating/RatingComponent';
+import { observer } from 'mobx-react-lite';
 import { useContext, useState } from 'react';
 import { Context } from '../../..';
+import AddToBasketBtn from '../../../theme/AddToBasketBtn';
+import RatingComponent from '../../rating/RatingComponent';
+import styles from './DevicePageComponent.module.scss';
 
 const DevicePageComponent = ({
   name,
@@ -47,19 +47,12 @@ const DevicePageComponent = ({
         </div>
         <div className={styles.topPriceBlock}>
           <h3 className={styles.price}>{price} Руб.</h3>
-          {isUserDataLoading ? (
-            <button className={styles.addBtn} onClick={addDeviceToBasket}>
-              Загрузка
-            </button>
-          ) : isAdded ? ( //TODO: Прикрутить норм лоадер
-            <Link className={styles.addBtn} to={BASKET_ROUTE}>
-              Товар в корзине. Перейти
-            </Link>
-          ) : (
-            <button className={styles.addBtn} onClick={addDeviceToBasket}>
-              Добавить в корзину
-            </button>
-          )}
+          <AddToBasketBtn
+            isAuth={user.isAuth}
+            isLoading={isUserDataLoading}
+            isAdded={isAdded}
+            onAddToBasket={addDeviceToBasket}
+          />
         </div>
       </div>
       <div className={styles.bottom}>

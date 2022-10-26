@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
 import { Context } from '../../..';
 import { fetchRatings } from '../../../http/ratingApi';
+import RatedDeviceItem from '../RatedDeviceItem';
+import styles from './RatedDevicesComponent.module.scss';
 
 const RatedDevicesList = () => {
   const { rating, user } = useContext(Context);
@@ -28,9 +30,9 @@ const RatedDevicesList = () => {
   }
 
   return (
-    <div>
+    <div className={styles.container}>
       {rating.ratedDevices.map((device) => (
-        <div key={device.id}>{device.id}</div>
+        <RatedDeviceItem key={device.id} {...device} />
       ))}
     </div>
   );

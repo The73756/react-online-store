@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import { useContext } from 'react';
 import { Context } from '../../..';
 import { deleteBasketDevice, updateBasketDevice } from '../../../http/basketApi';
-import BasketDevice from '../BasketDevice';
+import BasketDeviceItem from '../BasketDeviceItem';
 
 import styles from './BasketDevicesList.module.scss';
 
@@ -27,7 +27,7 @@ const BasketDevicesList = observer(() => {
   return (
     <main className={styles.container}>
       {basket.basketDevices.map((device, idx) => (
-        <BasketDevice
+        <BasketDeviceItem
           key={device.basketItemId}
           {...device}
           onDelete={deleteDeviceFromBasket}

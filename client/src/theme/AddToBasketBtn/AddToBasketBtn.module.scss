@@ -1,0 +1,20 @@
+.btn {
+  margin: 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  text-decoration: none;
+  color: #000;
+  background-color: transparent;
+  transition: 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #ccc;
+  }
+}
+
+.notAuth {
+  &:hover {
+    background-color: unset;
+  }
+}

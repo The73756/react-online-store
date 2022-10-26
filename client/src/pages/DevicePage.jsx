@@ -22,15 +22,14 @@ const DevicePage = observer(() => {
     formData.append('deviceId', id);
     formData.append('basketId', user.userId);
 
-    try {
-      createBasketDevice(formData).then((data) => {
-        console.log(data);
+    createBasketDevice(formData)
+      .then(() => {
         setIsAdded(true);
+      })
+      .catch((e) => {
+        alert('Ошибка при добавлении товара в корзину');
+        console.log(e);
       });
-    } catch (e) {
-      alert('Ошибка при добавлении товара в корзину');
-      console.log(e);
-    }
   };
 
   useEffect(() => {

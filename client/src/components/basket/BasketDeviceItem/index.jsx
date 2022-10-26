@@ -4,7 +4,7 @@ import useDebounce from '../../../hooks/useDebounce';
 import { DEVICE_ROUTE } from '../../../utils/consts';
 import styles from './BasketDevice.module.scss';
 
-const BasketDevice = ({
+const BasketDeviceItem = ({
   id,
   name,
   price,
@@ -116,4 +116,4 @@ const BasketDevice = ({
   );
 };
 
-export default BasketDevice;
+export default BasketDeviceItem;
