@@ -13,7 +13,6 @@ const DevicePage = observer(() => {
   const [device, setDevice] = useState([]);
   const [isAdded, setIsAdded] = useState(false);
   const [userRate, setUserRate] = useState(null);
-
   const [isLoading, setIsLoading] = useState(true);
   const [isUserDataLoading, setIsUserDataLoading] = useState(true);
 

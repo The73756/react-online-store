@@ -17,7 +17,8 @@ const DevicePageComponent = ({
   isAdded,
   userRate,
 }) => {
-  const [localRating, setLocalRating] = useState(rating);
+  const [localDeviceRating, setLocalDeviceRating] = useState(rating);
+  const [localRate, setLocalRate] = useState(userRate);
   const { user } = useContext(Context);
 
   return (
@@ -26,18 +27,19 @@ const DevicePageComponent = ({
         <img className={styles.topImg} src={`${process.env.REACT_APP_API_URL}/${img}`} alt={name} />
         <div className={styles.topRatingBlock}>
           <h2 className={styles.title}>{name}</h2>
-          <div>Рейтинг: {localRating}</div>
+          <div>Рейтинг: {localDeviceRating}</div>
           {user.isAuth ? (
             isUserDataLoading ? (
               <div>Рейтинг загружается...</div>
             ) : (
               //TODO: Сделать проверку *если рейтинг добавлен есть, если нет то то там*
               <>
-                <div>Ваша оценка:</div>
+                <div>Ваша оценка: {localRate}</div>
                 <RatingComponent
-                  userRate={userRate}
+                  rate={localRate}
+                  setRate={setLocalRate}
                   deviceId={id}
-                  setLocalRating={setLocalRating}
+                  setLocalRating={setLocalDeviceRating}
                 />
               </>
             )

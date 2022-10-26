@@ -1,15 +1,14 @@
 import ReactStars from 'react-rating-stars-component';
 import styles from './RatingComponent.module.scss';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { Context } from '../../..';
 import { createRating } from '../../../http/ratingApi';
 
-const RatingComponent = ({ deviceId, setLocalRating, userRate }) => {
+const RatingComponent = ({ deviceId, setLocalRating, rate, setRate }) => {
   const { user } = useContext(Context);
-  const [rating, setRating] = useState(0);
 
   const changeRating = (newRating) => {
-    setRating(newRating);
+    setRate(newRating);
 
     const formData = new FormData();
     formData.append('deviceId', deviceId);
@@ -36,7 +35,7 @@ const RatingComponent = ({ deviceId, setLocalRating, userRate }) => {
     <ReactStars
       count={5}
       onChange={changeRating}
-      value={userRate ? userRate : rating}
+      value={rate}
       size={40}
       isHalf={true}
       activeColor='#ffd700'

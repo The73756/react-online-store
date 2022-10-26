@@ -9,7 +9,7 @@ import styles from './RatedDeviceItem.module.scss';
 const RatedDeviceItem = ({ id, name, img, price, rate, rating, rateCeatedAt, rateUpdatedAt }) => {
   const { user } = useContext(Context);
   const [deviceRating, setDeviceRating] = useState(rating);
-  const [localRating, setLocalRating] = useState(rate);
+  const [localRate, setLocalRate] = useState(rate);
   const createDate = new Date(rateCeatedAt).toLocaleString();
   const updateDate = new Date(rateUpdatedAt).toLocaleString();
 
@@ -39,8 +39,13 @@ const RatedDeviceItem = ({ id, name, img, price, rate, rating, rateCeatedAt, rat
 
       <div className={styles.bottom}>
         <div style={{ zIndex: 10 }}>
-          <p className={styles.rate}>Ваша оценка: {rate}</p>
-          <RatingComponent userRate={deviceRating} deviceId={id} setLocalRating={setDeviceRating} />
+          <p className={styles.rate}>Ваша оценка: {localRate}</p>
+          <RatingComponent
+            rate={localRate}
+            setRate={setLocalRate}
+            deviceId={id}
+            setLocalRating={setDeviceRating}
+          />
           <AddToBasketBtn isAdded={false} isAuth={user.isAuth} />
         </div>
         <div>
