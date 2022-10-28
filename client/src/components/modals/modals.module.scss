@@ -14,7 +14,7 @@
   border-radius: 5px;
   padding: 10px;
   background-color: transparent;
-  transition: background-color 200ms ease-in-out;
+  transition: background-colorvar(--transition);
   cursor: pointer;
 
   &:hover {
@@ -64,7 +64,7 @@
   padding: 10px;
   width: 100px;
   background-color: transparent;
-  transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
+  transition: background-colorvar(--transition), colorvar(--transition);
   cursor: pointer;
 
   &:hover {

@@ -45,7 +45,7 @@
   text-decoration: none;
   color: #000;
   background-color: transparent;
-  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: background-color var(--transition), color var(--transition);
   cursor: pointer;
 
   &:hover {
@@ -59,7 +59,7 @@
   padding: 10px;
   text-decoration: none;
   color: #000;
-  transition: 0.2s ease-in-out;
+  transition: background-color var(--transition);
 
   &:hover {
     background-color: #ccc;

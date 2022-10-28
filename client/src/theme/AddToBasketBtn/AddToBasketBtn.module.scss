@@ -6,7 +6,7 @@
   text-decoration: none;
   color: #000;
   background-color: transparent;
-  transition: 0.2s ease-in-out;
+  transition: background-color var(--transition);
 
   &:hover {
     background-color: #ccc;

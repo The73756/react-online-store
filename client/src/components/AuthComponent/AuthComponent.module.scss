@@ -56,7 +56,7 @@
   font-size: 16px;
   color: #008000;
   background-color: transparent;
-  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  transition: background-color var(--transition), color var(--transition);
   cursor: pointer;
 
   &:hover {

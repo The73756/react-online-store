@@ -29,7 +29,7 @@
   text-decoration: none;
   color: #000;
   background-color: transparent;
-  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: background-color var(--transition), color var(--transition);
   cursor: pointer;
 
   &:hover {

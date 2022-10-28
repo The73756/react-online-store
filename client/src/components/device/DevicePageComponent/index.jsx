@@ -1,4 +1,3 @@
-import { observer } from 'mobx-react-lite';
 import { useContext, useState } from 'react';
 import { Context } from '../../..';
 import AddToBasketBtn from '../../../theme/AddToBasketBtn';

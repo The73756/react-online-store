@@ -66,7 +66,8 @@ const DevicePage = observer(() => {
     }
   }, []);
 
-  if (isLoading) {
+  if (isLoading || isUserDataLoading) {
+    //TODO: пофиксить костыль (isUserDataLoading)
     return <div>Загрузка...</div>; //TODO: сделать лоадер
   }
 

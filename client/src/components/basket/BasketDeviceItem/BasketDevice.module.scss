@@ -54,7 +54,7 @@
   span,
   svg,
   path {
-    transition: all 0.2s ease-in-out;
+    transition: color var(--transition);
   }
 
   &:hover {
@@ -276,7 +276,7 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 5px 10px;
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color var(--transition);
 
   &:hover {
     background-color: #ccc;
