@@ -49,10 +49,15 @@ const DevicePage = observer(() => {
         fetchOneRating({ userId: user.userId, deviceId: id }),
       ])
         .then(([basketData, ratingData]) => {
-          basket.setBasketDevices(basketData.rows);
-          basket.setBasketTotalCount(basketData.count);
-          setIsAdded(basket.basketDevices.some((item) => item.id === +id));
-          setUserRate(ratingData.rate);
+          if (basketData) {
+            basket.setBasketDevices(basketData.rows);
+            basket.setBasketTotalCount(basketData.count);
+          }
+
+          if (ratingData) {
+            setIsAdded(basket.basketDevices.some((item) => item.id === +id));
+            setUserRate(ratingData.rate);
+          }
         })
         .catch((e) => {
           alert('Ошибка при получении пользовательских данных');

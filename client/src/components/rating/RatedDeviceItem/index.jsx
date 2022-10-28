@@ -7,7 +7,18 @@ import { DEVICE_ROUTE } from '../../../utils/consts';
 import RatingComponent from '../RatingComponent';
 import styles from './RatedDeviceItem.module.scss';
 
-const RatedDeviceItem = ({ id, name, img, price, rate, rating, rateCeatedAt, rateUpdatedAt }) => {
+const RatedDeviceItem = ({
+  id,
+  name,
+  img,
+  price,
+  rate,
+  rating,
+  rateCeatedAt,
+  rateUpdatedAt,
+  ratingId,
+  onDelete,
+}) => {
   const { user } = useContext(Context);
   const [deviceRating, setDeviceRating] = useState(rating);
   const [localRate, setLocalRate] = useState(rate);
@@ -16,7 +27,7 @@ const RatedDeviceItem = ({ id, name, img, price, rate, rating, rateCeatedAt, rat
 
   return (
     <article className={styles.card}>
-      <Link to={`${DEVICE_ROUTE}/${id}`}>
+      <Link to={`${DEVICE_ROUTE}/${id}`} className={styles.link}>
         <div className={styles.top}>
           <img src={`${process.env.REACT_APP_API_URL}/${img}`} alt={name} className={styles.img} />
           <div className={styles.topRight}>
@@ -41,7 +52,7 @@ const RatedDeviceItem = ({ id, name, img, price, rate, rating, rateCeatedAt, rat
       </Link>
 
       <div className={styles.bottom}>
-        <div style={{ zIndex: 10 }}>
+        <div style={{ zIndex: 10 }} className={styles.bottomCol}>
           <p className={styles.rate}>Ваша оценка: {localRate}</p>
           <RatingComponent
             rate={localRate}
@@ -51,10 +62,14 @@ const RatedDeviceItem = ({ id, name, img, price, rate, rating, rateCeatedAt, rat
           />
           <AddToBasketBtn isAdded={false} isAuth={user.isAuth} />
         </div>
-        <div>
-          <p>Оценка создана: {createDate}</p>
-          <p>Оценка обновлена: {updateDate}</p>
-          <Button variant='primary'>Удалить</Button>
+        <div className={styles.bottomCol}>
+          <p className={styles.date}>
+            <span>Оценка создана:</span> {createDate}
+          </p>
+          <p className={styles.date}>
+            <span>Оценка обновлена:</span> {updateDate}
+          </p>
+          <Button onClick={() => onDelete(ratingId)}>Удалить</Button>
         </div>
       </div>
     </article>

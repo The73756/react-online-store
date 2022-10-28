@@ -1,12 +1,30 @@
 import { useContext, useEffect, useState } from 'react';
 import { Context } from '../../..';
-import { fetchRatings } from '../../../http/ratingApi';
+import { deleteRating, fetchRatings } from '../../../http/ratingApi';
 import RatedDeviceItem from '../RatedDeviceItem';
 import styles from './RatedDevicesComponent.module.scss';
 
 const RatedDevicesList = () => {
   const { rating, user } = useContext(Context);
   const [isLoading, setIsLodaing] = useState(true);
+  const [isItemLoading, setIsItemLoading] = useState(false);
+
+  const deleteRate = (id) => {
+    setIsItemLoading(true);
+    deleteRating(id)
+      .then((data) => {
+        console.log(data);
+        rating.setRatedDevices(
+          rating.ratedDevices.filter((ratedDevice) => ratedDevice.ratingId !== id),
+        );
+        rating.setRatedDevicesCount(rating.ratedDevicesCount - 1);
+      })
+      .catch((e) => {
+        alert(e);
+        console.log(e);
+      })
+      .finally(() => setIsItemLoading(false));
+  };
 
   useEffect(() => {
     setIsLodaing(true);
@@ -32,7 +50,7 @@ const RatedDevicesList = () => {
   return (
     <div className={styles.container}>
       {rating.ratedDevices.map((device) => (
-        <RatedDeviceItem key={device.id} {...device} />
+        <RatedDeviceItem key={device.id} {...device} onDelete={deleteRate} />
       ))}
     </div>
   );

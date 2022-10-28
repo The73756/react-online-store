@@ -86,7 +86,6 @@ class RatingController {
       Promise.all(
         ratings.map(async (rating) => {
           const device = await Device.findOne({ where: { id: rating.deviceId } });
-          console.log(rating.dataValues);
           if (device) {
             devices.push({
               ...device.dataValues,
@@ -123,8 +122,9 @@ class RatingController {
 
   async delete(req, res, next) {
     try {
-      const { deviceId, userId } = req.body;
-      await Rating.destroy({ where: { deviceId, userId } });
+      const { id } = req.query;
+      console.log(id);
+      await Rating.destroy({ where: { id } });
       return res.json('rating deleted');
     } catch (e) {
       next(ApiError.badRequest(e.message));

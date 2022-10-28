@@ -5,7 +5,7 @@ const Button = ({
   onClick,
   disabled = false,
   variant = 'outline', // outline / primary / secondary
-  classNames = '',
+  className = '',
   hover = true,
   padding = '10px 20px',
 }) => {
@@ -18,7 +18,7 @@ const Button = ({
   return (
     <button
       style={{ padding: padding }}
-      className={`${styles.btn} ${classNames} ${disabled ? styles.disabled : ''} ${
+      className={`${styles.btn} ${className} ${disabled ? styles.disabled : ''} ${
         !hover ? styles.unHovered : ''
       } ${classesMap[variant]}`}
       onClick={onClick}>

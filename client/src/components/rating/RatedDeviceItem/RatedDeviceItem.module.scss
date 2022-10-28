@@ -9,6 +9,11 @@
   text-align: start;
 }
 
+.link {
+  text-decoration: none;
+  color: #000;
+}
+
 .top {
   display: flex;
   justify-content: space-around;
@@ -49,9 +54,26 @@
   padding: 0;
 }
 
+.rate {
+  margin: 0;
+}
+
 .bottom {
   display: flex;
   justify-content: space-between;
+  margin-top: auto;
+}
+
+.bottomCol {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.date {
+  margin: 0;
+  margin-bottom: 10px;
+  padding: 0;
 }
 
 .rating {
