@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
-import { Context } from '../../..';
-import { deleteRating, fetchRatings } from '../../../http/ratingApi';
-import RatedDeviceItem from '../RatedDeviceItem';
-import styles from './RatedDevicesComponent.module.scss';
+import { useContext, useEffect, useState } from "react";
+import { Context } from "../../..";
+import { deleteRating, fetchRatings } from "../../../http/ratingApi";
+import RatedDeviceItem from "../RatedDeviceItem";
+import styles from "./RatedDevicesComponent.module.scss";
 
 const RatedDevicesList = () => {
   const { rating, user } = useContext(Context);
@@ -15,7 +15,9 @@ const RatedDevicesList = () => {
       .then((data) => {
         console.log(data);
         rating.setRatedDevices(
-          rating.ratedDevices.filter((ratedDevice) => ratedDevice.ratingId !== id),
+          rating.ratedDevices.filter(
+            (ratedDevice) => ratedDevice.ratingId !== id
+          )
         );
         rating.setRatedDevicesCount(rating.ratedDevicesCount - 1);
       })
@@ -36,7 +38,7 @@ const RatedDevicesList = () => {
           rating.setRatedDevicesCount(res.count);
         })
         .catch((e) => {
-          alert('Ошибка при получении оценок');
+          alert("Ошибка при получении оценок");
           console.log(e);
         })
         .finally(() => setIsLodaing(false));

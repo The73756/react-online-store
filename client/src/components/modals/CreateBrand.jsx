@@ -1,16 +1,16 @@
-import { useState } from 'react';
-import { createBrand } from '../../http/deviceApi';
-import Modal from '../Modal';
-import styles from './modals.module.scss';
+import { useState } from "react";
+import { createBrand } from "../../http/deviceApi";
+import Modal from "../Modal";
+import styles from "./modals.module.scss";
 
 const CreateBrand = ({ opened, onClose }) => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
 
   const addBrand = (e) => {
     e.preventDefault();
     createBrand({ name: value })
-      .then((data) => {
-        setValue('');
+      .then(() => {
+        setValue("");
       })
       .finally(() => {
         onClose();
@@ -19,22 +19,22 @@ const CreateBrand = ({ opened, onClose }) => {
 
   return (
     <Modal opened={opened} onClose={onClose}>
-      <form action='' className={styles.form} onSubmit={addBrand}>
+      <form action="" className={styles.form} onSubmit={addBrand}>
         <div className={styles.inputsBlock}>
           <input
             className={styles.input}
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            type='text'
-            placeholder='Введите название бренда'
+            type="text"
+            placeholder="Введите название бренда"
           />
         </div>
 
         <div className={styles.footer}>
-          <button type='submit' className={styles.btn}>
+          <button type="submit" className={styles.btn}>
             Добавить
           </button>
-          <button type='button' className={styles.closeBtn} onClick={onClose}>
+          <button type="button" className={styles.closeBtn} onClick={onClose}>
             Закрыть
           </button>
         </div>

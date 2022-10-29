@@ -1,19 +1,23 @@
-import { observer } from 'mobx-react-lite';
-import { useContext, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Context } from '../..';
-import { login, registration } from '../../http/userApi';
-import { LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE } from '../../utils/consts';
+import { observer } from "mobx-react-lite";
+import { useContext, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Context } from "../..";
+import { login, registration } from "../../http/userApi";
+import {
+  LOGIN_ROUTE,
+  REGISTRATION_ROUTE,
+  SHOP_ROUTE,
+} from "../../utils/consts";
 
-import styles from './AuthComponent.module.scss';
+import styles from "./AuthComponent.module.scss";
 
 const AuthComponent = observer(() => {
   const { user } = useContext(Context);
   const location = useLocation().pathname;
   const navigate = useNavigate();
   const isLogin = location !== REGISTRATION_ROUTE;
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,22 +41,24 @@ const AuthComponent = observer(() => {
   return (
     <div className={styles.container}>
       <div className={styles.card}>
-        <h2 className={styles.title}>{isLogin ? 'Авторизация' : 'Регистрация'}</h2>
+        <h2 className={styles.title}>
+          {isLogin ? "Авторизация" : "Регистрация"}
+        </h2>
         <form className={styles.form} onSubmit={handleSubmit}>
           <input
-            type='email'
+            type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className={styles.formItem}
-            placeholder='Введите ваш e-mail'
+            placeholder="Введите ваш e-mail"
           />
           <input
-            type='password'
-            autoComplete='on'
+            type="password"
+            autoComplete="on"
             className={styles.formItem}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder='Введите ваш пароль'
+            placeholder="Введите ваш пароль"
           />
           <div className={styles.formBottom}>
             {isLogin ? (
@@ -71,8 +77,8 @@ const AuthComponent = observer(() => {
               </span>
             )}
 
-            <button type='submit' className={styles.formButton}>
-              {isLogin ? 'Войти' : 'Регистрация'}
+            <button type="submit" className={styles.formButton}>
+              {isLogin ? "Войти" : "Регистрация"}
             </button>
           </div>
         </form>

@@ -1,7 +1,7 @@
-import { observer } from 'mobx-react-lite';
-import { useContext } from 'react';
-import { Context } from '../..';
-import styles from './Pagination.module.scss';
+import { observer } from "mobx-react-lite";
+import { useContext } from "react";
+import { Context } from "../..";
+import styles from "./Pagination.module.scss";
 
 const Pagination = observer(() => {
   const { device } = useContext(Context);
@@ -16,9 +16,12 @@ const Pagination = observer(() => {
     <div className={styles.container}>
       {pages.map((page) => (
         <button
-					key={page}
-          className={`${styles.page} ${device.page === page ? styles.active : ''}`}
-          onClick={() => device.setPage(page)}>
+          key={page}
+          className={`${styles.page} ${
+            device.page === page ? styles.active : ""
+          }`}
+          onClick={() => device.setPage(page)}
+        >
           {page}
         </button>
       ))}
