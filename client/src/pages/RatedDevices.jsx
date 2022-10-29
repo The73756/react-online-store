@@ -2,7 +2,7 @@ import RatedDevicesList from '../components/rating/RatedDevicesList';
 
 const RatedDevices = () => {
   return (
-    <div className='container'>
+    <div className="container">
       <RatedDevicesList />
     </div>
   );

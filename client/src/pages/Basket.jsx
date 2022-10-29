@@ -28,7 +28,7 @@ const Basket = observer(() => {
   }
 
   return (
-    <div className='container'>
+    <div className="container">
       <BasketDevicesList />
     </div>
   );

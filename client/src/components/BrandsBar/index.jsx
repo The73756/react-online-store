@@ -1,7 +1,7 @@
-import { observer } from "mobx-react-lite";
-import { useContext } from "react";
-import { Context } from "../..";
-import styles from "./BrandsBar.module.scss";
+import { observer } from 'mobx-react-lite';
+import { useContext } from 'react';
+import { Context } from '../..';
+import styles from './BrandsBar.module.scss';
 
 const BrandsBar = observer(() => {
   const { device } = useContext(Context);
@@ -13,10 +13,9 @@ const BrandsBar = observer(() => {
           <li className={styles.item} key={brand.id}>
             <button
               className={`${styles.btn} ${
-                brand.id === device.selectedBrand.id ? styles.active : ""
+                brand.id === device.selectedBrand.id ? styles.active : ''
               }`}
-              onClick={() => device.setSelectedBrand(brand)}
-            >
+              onClick={() => device.setSelectedBrand(brand)}>
               {brand.name}
             </button>
           </li>

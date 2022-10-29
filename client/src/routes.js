@@ -9,9 +9,9 @@ import {
   BASKET_ROUTE,
   DEVICE_ROUTE,
   LOGIN_ROUTE,
+  RATING_ROUTE,
   REGISTRATION_ROUTE,
   SHOP_ROUTE,
-  RATING_ROUTE,
 } from './utils/consts';
 
 export const authRoutes = [

@@ -20,7 +20,7 @@ class BrandController {
   async delete(req, res, next) {
     try {
       const { name } = req.body;
-      const brand = await Brand.destroy({ where: { name } });
+      await Brand.destroy({ where: { name } });
       return res.json('brand deleted');
     } catch (e) {
       next(ApiError.badRequest(e.message));

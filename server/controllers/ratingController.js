@@ -30,9 +30,15 @@ class RatingController {
                 next(ApiError.badRequest(e.message));
               }
             });
-            return res.json({ newRating: calcRating / ratings.count, message: 'Rating updated' });
+            return res.json({
+              newRating: calcRating / ratings.count,
+              message: 'Rating updated',
+            });
           } else {
-            return res.json({ newRating: undefined, message: 'Rating updated' });
+            return res.json({
+              newRating: undefined,
+              message: 'Rating updated',
+            });
           }
         }
       } else {
@@ -54,7 +60,10 @@ class RatingController {
               next(ApiError.badRequest(e.message));
             }
           });
-          return res.json({ newRating: calcRating / ratings.count, message: 'Rating created' });
+          return res.json({
+            newRating: calcRating / ratings.count,
+            message: 'Rating created',
+          });
         } else {
           return res.json({ newRating: undefined, message: 'Rating created' });
         }
@@ -85,7 +94,9 @@ class RatingController {
 
       Promise.all(
         ratings.map(async (rating) => {
-          const device = await Device.findOne({ where: { id: rating.deviceId } });
+          const device = await Device.findOne({
+            where: { id: rating.deviceId },
+          });
           if (device) {
             devices.push({
               ...device.dataValues,

@@ -1,16 +1,16 @@
-import { useState } from "react";
-import { createBrand } from "../../http/deviceApi";
-import Modal from "../Modal";
-import styles from "./modals.module.scss";
+import { useState } from 'react';
+import { createBrand } from '../../http/deviceApi';
+import Modal from '../Modal';
+import styles from './modals.module.scss';
 
 const CreateBrand = ({ opened, onClose }) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
 
   const addBrand = (e) => {
     e.preventDefault();
     createBrand({ name: value })
       .then(() => {
-        setValue("");
+        setValue('');
       })
       .finally(() => {
         onClose();

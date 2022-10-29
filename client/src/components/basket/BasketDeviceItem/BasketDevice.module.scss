@@ -212,7 +212,7 @@
       margin-right: 12px;
 
       path {
-        fill: transparent !important;
+        fill: transparent !important; /* stylelint-disable-line */
         stroke-width: 2;
       }
     }
@@ -239,8 +239,8 @@
     align-items: center;
 
     > * {
-      padding: 15px 0 !important;
-      width: 80% !important;
+      padding: 15px 0 !important; /* stylelint-disable-line */
+      width: 80% !important; /* stylelint-disable-line */
 
       &:not(:last-child) {
         margin-bottom: 15px;

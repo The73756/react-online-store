@@ -1,15 +1,15 @@
-import { observer } from "mobx-react-lite";
-import { useContext, useEffect, useState } from "react";
-import { Context } from "../..";
-import { createDevice, fetchBrands, fetchTypes } from "../../http/deviceApi";
-import Modal from "../Modal";
-import styles from "./modals.module.scss";
+import { observer } from 'mobx-react-lite';
+import { useContext, useEffect, useState } from 'react';
+import { Context } from '../..';
+import { createDevice, fetchBrands, fetchTypes } from '../../http/deviceApi';
+import Modal from '../Modal';
+import styles from './modals.module.scss';
 
 const CreateDevice = observer(({ opened, onClose }) => {
   const { device } = useContext(Context);
 
   const [info, setInfo] = useState([]);
-  const [name, setName] = useState("");
+  const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [file, setFile] = useState(null);
 
@@ -22,12 +22,12 @@ const CreateDevice = observer(({ opened, onClose }) => {
       fetchBrands().then((data) => device.setBrands(data));
     } catch (error) {
       console.log(error);
-      alert("Ошибка при загрузке классификаций (типов/брендов)"); // TODO: доделать лоадер и обработку ошибок
+      alert('Ошибка при загрузке классификаций (типов/брендов)'); // TODO: доделать лоадер и обработку ошибок
     }
   }, []);
 
   const addInfo = () => {
-    setInfo([...info, { title: "", description: "", number: Date.now() }]);
+    setInfo([...info, { title: '', description: '', number: Date.now() }]);
   };
 
   const removeInfo = (number) => {
@@ -39,20 +39,18 @@ const CreateDevice = observer(({ opened, onClose }) => {
   };
 
   const changeInfo = (key, value, number) => {
-    setInfo(
-      info.map((i) => (i.number === number ? { ...i, [key]: value } : i))
-    );
+    setInfo(info.map((i) => (i.number === number ? { ...i, [key]: value } : i)));
   };
 
   const addDeivce = (e) => {
     const formData = new FormData();
     e.preventDefault();
-    formData.append("name", name);
-    formData.append("price", `${price}`);
-    formData.append("img", file);
-    formData.append("brandId", device.selectedBrand.id);
-    formData.append("typeId", device.selectedType.id);
-    formData.append("info", JSON.stringify(info));
+    formData.append('name', name);
+    formData.append('price', `${price}`);
+    formData.append('img', file);
+    formData.append('brandId', device.selectedBrand.id);
+    formData.append('typeId', device.selectedType.id);
+    formData.append('info', JSON.stringify(info));
     createDevice(formData).then(() => {
       onClose();
     });
@@ -67,21 +65,16 @@ const CreateDevice = observer(({ opened, onClose }) => {
             <button
               type="button"
               className={styles.btn}
-              onClick={() => setIsDdTypeOpen(!isDdTypeOpen)}
-            >
-              {device.selectedType.name || "Выберите тип"}
+              onClick={() => setIsDdTypeOpen(!isDdTypeOpen)}>
+              {device.selectedType.name || 'Выберите тип'}
             </button>
-            <ul
-              style={{ display: isDdTypeOpen ? "block" : "none" }}
-              className={styles.list}
-            >
+            <ul style={{ display: isDdTypeOpen ? 'block' : 'none' }} className={styles.list}>
               {device.types.map((type) => (
                 <li key={type.id} className={styles.listItem}>
                   <button
                     type="button"
                     className={`${styles.btn} ${styles.listBtn}`}
-                    onClick={() => device.setSelectedType(type)}
-                  >
+                    onClick={() => device.setSelectedType(type)}>
                     {type.name}
                   </button>
                 </li>
@@ -93,21 +86,16 @@ const CreateDevice = observer(({ opened, onClose }) => {
             <button
               type="button"
               className={styles.btn}
-              onClick={() => setIsDdBrandOpen(!isDdBrandOpen)}
-            >
-              {device.selectedBrand.name || "Выберите бренд"}
+              onClick={() => setIsDdBrandOpen(!isDdBrandOpen)}>
+              {device.selectedBrand.name || 'Выберите бренд'}
             </button>
-            <ul
-              style={{ display: isDdBrandOpen ? "block" : "none" }}
-              className={styles.list}
-            >
+            <ul style={{ display: isDdBrandOpen ? 'block' : 'none' }} className={styles.list}>
               {device.brands.map((brand) => (
                 <li key={brand.id} className={styles.listItem}>
                   <button
                     type="button"
                     className={`${styles.btn} ${styles.listBtn}`}
-                    onClick={() => device.setSelectedBrand(brand)}
-                  >
+                    onClick={() => device.setSelectedBrand(brand)}>
                     {brand.name}
                   </button>
                 </li>
@@ -146,24 +134,19 @@ const CreateDevice = observer(({ opened, onClose }) => {
                 className={styles.input}
                 placeholder="Введите название свойства"
                 value={item.title}
-                onChange={(e) =>
-                  changeInfo("title", e.target.value, item.number)
-                }
+                onChange={(e) => changeInfo('title', e.target.value, item.number)}
               />
               <input
                 type="text"
                 className={styles.input}
                 placeholder="Введите описание свойства"
                 value={item.description}
-                onChange={(e) =>
-                  changeInfo("description", e.target.value, item.number)
-                }
+                onChange={(e) => changeInfo('description', e.target.value, item.number)}
               />
               <button
                 type="button"
                 className={styles.closeBtn}
-                onClick={() => removeInfo(item.number)}
-              >
+                onClick={() => removeInfo(item.number)}>
                 Удалить
               </button>
             </div>

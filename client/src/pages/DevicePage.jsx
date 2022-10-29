@@ -77,7 +77,7 @@ const DevicePage = observer(() => {
   }
 
   return (
-    <div className='container'>
+    <div className="container">
       <DevicePageComponent
         {...device}
         isLoading={isLoading}

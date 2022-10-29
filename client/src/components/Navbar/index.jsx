@@ -1,15 +1,15 @@
-import { useContext } from "react";
-import { Link } from "react-router-dom";
-import { observer } from "mobx-react-lite";
-import { Context } from "../..";
-import styles from "./Navbar.module.scss";
+import { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
+import { Context } from '../..';
+import styles from './Navbar.module.scss';
 import {
   ADMIN_ROUTE,
   BASKET_ROUTE,
   LOGIN_ROUTE,
   RATING_ROUTE,
   SHOP_ROUTE,
-} from "../../utils/consts";
+} from '../../utils/consts';
 
 const Navbar = observer(() => {
   const { user, basket, rating } = useContext(Context);
@@ -24,7 +24,7 @@ const Navbar = observer(() => {
     rating.setRatedDevices([]);
     rating.setRatedDevicesCount(0);
 
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
   };
 
   return (
@@ -53,11 +53,7 @@ const Navbar = observer(() => {
                 </Link>
               </li>
               <li className={styles.navItem}>
-                <Link
-                  to={LOGIN_ROUTE}
-                  onClick={logOut}
-                  className={styles.navLink}
-                >
+                <Link to={LOGIN_ROUTE} onClick={logOut} className={styles.navLink}>
                   Выйти
                 </Link>
               </li>

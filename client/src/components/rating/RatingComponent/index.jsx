@@ -1,8 +1,8 @@
-import ReactStars from "react-rating-stars-component";
-import styles from "./RatingComponent.module.scss";
-import { useContext } from "react";
-import { Context } from "../../..";
-import { createRating } from "../../../http/ratingApi";
+import ReactStars from 'react-rating-stars-component';
+import styles from './RatingComponent.module.scss';
+import { useContext } from 'react';
+import { Context } from '../../..';
+import { createRating } from '../../../http/ratingApi';
 
 const RatingComponent = ({ deviceId, setLocalRating, rate, setRate }) => {
   const { user } = useContext(Context);
@@ -11,9 +11,9 @@ const RatingComponent = ({ deviceId, setLocalRating, rate, setRate }) => {
     setRate(newRating);
 
     const formData = new FormData();
-    formData.append("deviceId", deviceId);
-    formData.append("userId", user.userId);
-    formData.append("rate", newRating);
+    formData.append('deviceId', deviceId);
+    formData.append('userId', user.userId);
+    formData.append('rate', newRating);
 
     try {
       createRating(formData).then((data) => {
@@ -22,11 +22,11 @@ const RatingComponent = ({ deviceId, setLocalRating, rate, setRate }) => {
           setLocalRating(data.newRating);
           alert(data.message);
         } else {
-          alert("Вы уже оценивали этот товар");
+          alert('Вы уже оценивали этот товар');
         }
       });
     } catch (e) {
-      alert("Ошибка при изменении рейтинга");
+      alert('Ошибка при изменении рейтинга');
       console.log(e);
     }
   };

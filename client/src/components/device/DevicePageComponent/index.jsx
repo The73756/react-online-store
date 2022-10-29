@@ -1,8 +1,8 @@
-import { useContext, useState } from "react";
-import { Context } from "../../..";
-import AddToBasketBtn from "../../../theme/AddToBasketBtn";
-import RatingComponent from "../../rating/RatingComponent";
-import styles from "./DevicePageComponent.module.scss";
+import { useContext, useState } from 'react';
+import { Context } from '../../..';
+import AddToBasketBtn from '../../../theme/AddToBasketBtn';
+import RatingComponent from '../../rating/RatingComponent';
+import styles from './DevicePageComponent.module.scss';
 
 const DevicePageComponent = ({
   name,
@@ -23,11 +23,7 @@ const DevicePageComponent = ({
   return (
     <div className="container">
       <div className={styles.top}>
-        <img
-          className={styles.topImg}
-          src={`${process.env.REACT_APP_API_URL}/${img}`}
-          alt={name}
-        />
+        <img className={styles.topImg} src={`${process.env.REACT_APP_API_URL}/${img}`} alt={name} />
         <div className={styles.topRatingBlock}>
           <h2 className={styles.title}>{name}</h2>
           <div>Рейтинг: {localDeviceRating}</div>

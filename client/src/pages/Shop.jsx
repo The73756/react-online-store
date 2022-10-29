@@ -1,13 +1,13 @@
-import { observer } from "mobx-react-lite";
-import { useContext, useEffect, useState } from "react";
-import { Context } from "..";
-import BrandsBar from "../components/BrandsBar";
-import DevicesList from "../components/device/DevicesList";
-import Pagination from "../components/Pagination";
-import TypesSidebar from "../components/TypesSidebar";
-import { fetchBasketDevices } from "../http/basketApi";
-import { fetchBrands, fetchDevices, fetchTypes } from "../http/deviceApi";
-import { fetchRatings } from "../http/ratingApi";
+import { observer } from 'mobx-react-lite';
+import { useContext, useEffect, useState } from 'react';
+import { Context } from '..';
+import BrandsBar from '../components/BrandsBar';
+import DevicesList from '../components/device/DevicesList';
+import Pagination from '../components/Pagination';
+import TypesSidebar from '../components/TypesSidebar';
+import { fetchBasketDevices } from '../http/basketApi';
+import { fetchBrands, fetchDevices, fetchTypes } from '../http/deviceApi';
+import { fetchRatings } from '../http/ratingApi';
 
 const Shop = observer(() => {
   const { device, basket, rating, user } = useContext(Context);
@@ -21,7 +21,7 @@ const Shop = observer(() => {
         device.setBrands(brands);
       })
       .catch((e) => {
-        alert("ошибка при загрузке типов и брендов");
+        alert('ошибка при загрузке типов и брендов');
         console.log(e);
       })
       .finally(() => setLoadedComponents((prev) => prev + 1));
@@ -30,18 +30,13 @@ const Shop = observer(() => {
   useEffect(() => {
     setIsDevicesLoading(false);
 
-    fetchDevices(
-      device.selectedType.id,
-      device.selectedBrand.id,
-      device.page,
-      device.limit
-    )
+    fetchDevices(device.selectedType.id, device.selectedBrand.id, device.page, device.limit)
       .then((data) => {
         device.setDevices(data.rows);
         device.setTotalCount(data.count);
       })
       .catch((e) => {
-        alert("Ошибка при загрузке девайсов");
+        alert('Ошибка при загрузке девайсов');
         console.log(e);
       })
       .finally(() => {
@@ -60,7 +55,7 @@ const Shop = observer(() => {
           rating.setRatedDevicesCount(ratings.count);
         })
         .catch((e) => {
-          alert("Ошибка при загрузке корзины и рейтингов");
+          alert('Ошибка при загрузке корзины и рейтингов');
           console.log(e);
         })
         .finally(() => setLoadedComponents((prev) => prev + 1));

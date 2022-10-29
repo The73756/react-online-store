@@ -10,7 +10,11 @@ class BasketController {
         return next(ApiError.badRequest('deviceId or basketId not found'));
       }
 
-      const basketdevice = await BasketDevice.create({ deviceId, basketId, count: 1 });
+      const basketdevice = await BasketDevice.create({
+        deviceId,
+        basketId,
+        count: 1,
+      });
       return res.json(basketdevice);
     } catch (e) {
       next(ApiError.badRequest(e.message));
@@ -49,7 +53,11 @@ class BasketController {
             where: { id: item.deviceId },
           });
           if (device) {
-            devices.push({ ...device.dataValues, count: item.count, basketItemId: item.id });
+            devices.push({
+              ...device.dataValues,
+              count: item.count,
+              basketItemId: item.id,
+            });
           }
         }),
       ).then(() => {

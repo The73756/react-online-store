@@ -2,7 +2,7 @@ import AdminComponent from '../components/AdminComponent';
 
 const Admin = () => {
   return (
-    <div className='container'>
+    <div className="container">
       <AdminComponent />
     </div>
   );

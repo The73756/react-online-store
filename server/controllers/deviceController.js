@@ -7,9 +7,9 @@ class DeviceController {
   async create(req, res, next) {
     try {
       let { name, price, brandId, typeId, info } = req.body;
-      const prevDeivce = await Device.findOne({ where: { name } });
+      const prevDevice = await Device.findOne({ where: { name } });
 
-      if (prevDeivce) {
+      if (prevDevice) {
         return next(ApiError.badRequest('Device with this name already exists'));
       }
 
@@ -17,7 +17,13 @@ class DeviceController {
       let fileName = uuid.v4() + '.jpg';
       img.mv(path.resolve(__dirname, '..', 'static', fileName));
 
-      const device = await Device.create({ name, price, brandId, typeId, img: fileName });
+      const device = await Device.create({
+        name,
+        price,
+        brandId,
+        typeId,
+        img: fileName,
+      });
 
       if (info) {
         info = JSON.parse(info);
@@ -48,15 +54,27 @@ class DeviceController {
     }
 
     if (brandId && !typeId) {
-      devices = await Device.findAndCountAll({ where: { brandId }, limit, offset });
+      devices = await Device.findAndCountAll({
+        where: { brandId },
+        limit,
+        offset,
+      });
     }
 
     if (!brandId && typeId) {
-      devices = await Device.findAndCountAll({ where: { typeId }, limit, offset });
+      devices = await Device.findAndCountAll({
+        where: { typeId },
+        limit,
+        offset,
+      });
     }
 
     if (brandId && typeId) {
-      devices = await Device.findAndCountAll({ where: { typeId, brandId }, limit, offset });
+      devices = await Device.findAndCountAll({
+        where: { typeId, brandId },
+        limit,
+        offset,
+      });
     }
 
     return res.json(devices);
