@@ -2,6 +2,7 @@ const uuid = require('uuid');
 const path = require('path');
 const { Device, DeviceInfo } = require('../models/models');
 const ApiError = require('../error/ApiError');
+const { Op } = require('sequelize');
 
 class DeviceController {
   async create(req, res, next) {
@@ -43,10 +44,12 @@ class DeviceController {
   }
 
   async getAll(req, res) {
-    let { brandId, typeId, limit, page } = req.query;
+    let { brandId, typeId, limit, page, search, sort, order } = req.query;
     page = page || 1;
     limit = limit || 9;
     let offset = page * limit - limit;
+    search = search || '';
+    sort = sort || 'rating';
     let devices;
 
     if (!brandId && !typeId) {
@@ -72,6 +75,34 @@ class DeviceController {
     if (brandId && typeId) {
       devices = await Device.findAndCountAll({
         where: { typeId, brandId },
+        limit,
+        offset,
+      });
+    }
+
+    console.log(search);
+
+    if (search) {
+      devices = await Device.findAndCountAll({
+        where: {
+          name: { [Op.iRegexp]: search },
+        },
+        limit,
+        offset,
+      });
+    }
+
+    if (sort && !order) {
+      devices = await Device.findAndCountAll({
+        order: [[sort, 'ASC']],
+        limit,
+        offset,
+      });
+    }
+
+    if (sort && order) {
+      devices = await Device.findAndCountAll({
+        order: [[sort, order]],
         limit,
         offset,
       });
