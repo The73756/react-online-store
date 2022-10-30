@@ -8,13 +8,8 @@
 }
 
 .btn {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 20px 0;
+  padding: 20px;
   width: 100%;
-  background-color: transparent;
-  transition: background-color var(--transition);
-  cursor: pointer;
 
   &:not(:last-child) {
     margin-bottom: 10px;

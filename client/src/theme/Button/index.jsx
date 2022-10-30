@@ -7,18 +7,22 @@ const Button = ({
   variant = 'outline', // outline / primary / secondary
   className = '',
   hover = true,
-  padding = '10px 20px',
+  type = 'button',
+  ...props
 }) => {
   const classesMap = {
     outline: styles.outline,
     primary: styles.primary,
     secondary: styles.secondary,
+    danger: styles.danger,
+    success: styles.success,
   };
 
   return (
     <button
-      style={{ padding: padding }}
-      className={`${styles.btn} ${className} ${disabled ? styles.disabled : ''} ${
+      {...props}
+      type={type}
+      className={`${styles.root} ${className} ${disabled ? styles.disabled : ''} ${
         !hover ? styles.unHovered : ''
       } ${classesMap[variant]}`}
       onClick={onClick}>

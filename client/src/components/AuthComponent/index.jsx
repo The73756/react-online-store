@@ -6,6 +6,7 @@ import { login, registration } from '../../http/userApi';
 import { LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE } from '../../utils/consts';
 
 import styles from './AuthComponent.module.scss';
+import Button from '../../theme/Button';
 
 const AuthComponent = observer(() => {
   const { user } = useContext(Context);
@@ -71,9 +72,9 @@ const AuthComponent = observer(() => {
               </span>
             )}
 
-            <button type="submit" className={styles.formButton}>
+            <Button type="submit" variant="success" className={styles.formButton}>
               {isLogin ? 'Войти' : 'Регистрация'}
-            </button>
+            </Button>
           </div>
         </form>
       </div>

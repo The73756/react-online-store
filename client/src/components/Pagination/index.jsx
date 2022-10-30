@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite';
 import { useContext } from 'react';
 import { Context } from '../..';
 import styles from './Pagination.module.scss';
+import Button from '../../theme/Button';
 
 const Pagination = observer(() => {
   const { device } = useContext(Context);
@@ -15,12 +16,12 @@ const Pagination = observer(() => {
   return (
     <div className={styles.container}>
       {pages.map((page) => (
-        <button
+        <Button
           key={page}
-          className={`${styles.page} ${device.page === page ? styles.active : ''}`}
+          className={`${styles.btn} ${device.page === page ? styles.active : ''}`}
           onClick={() => device.setPage(page)}>
           {page}
-        </button>
+        </Button>
       ))}
     </div>
   );

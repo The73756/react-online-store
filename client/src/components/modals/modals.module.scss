@@ -9,19 +9,6 @@
   margin-bottom: 10px;
 }
 
-.btn {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  background-color: transparent;
-  transition: background-color var(--transition);
-  cursor: pointer;
-
-  &:hover {
-    background-color: #ccc;
-  }
-}
-
 .list {
   list-style: none;
   margin: 0;
@@ -59,18 +46,6 @@
 
 .closeBtn {
   margin-left: 10px;
-  border: 1px solid #f00;
-  border-radius: 5px;
-  padding: 10px;
-  width: 100px;
-  background-color: transparent;
-  transition: background-color var(--transition), color var(--transition);
-  cursor: pointer;
-
-  &:hover {
-    color: #fff;
-    background-color: #f00;
-  }
 }
 
 .footer {

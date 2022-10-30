@@ -4,6 +4,7 @@ import { Context } from '../..';
 import { createDevice, fetchBrands, fetchTypes } from '../../http/deviceApi';
 import Modal from '../Modal';
 import styles from './modals.module.scss';
+import Button from '../../theme/Button';
 
 const CreateDevice = observer(({ opened, onClose }) => {
   const { device } = useContext(Context);
@@ -42,7 +43,7 @@ const CreateDevice = observer(({ opened, onClose }) => {
     setInfo(info.map((i) => (i.number === number ? { ...i, [key]: value } : i)));
   };
 
-  const addDeivce = (e) => {
+  const addDevice = (e) => {
     const formData = new FormData();
     e.preventDefault();
     formData.append('name', name);
@@ -59,45 +60,33 @@ const CreateDevice = observer(({ opened, onClose }) => {
   return (
     // TODO: декомпозировать эту биг штуку
     <Modal opened={opened} onClose={onClose}>
-      <form action="" className={styles.form} onSubmit={addDeivce}>
+      <form className={styles.form} onSubmit={addDevice}>
         <div className={styles.top}>
           <div>
-            <button
-              type="button"
-              className={styles.btn}
-              onClick={() => setIsDdTypeOpen(!isDdTypeOpen)}>
+            <Button className={styles.btn} onClick={() => setIsDdTypeOpen(!isDdTypeOpen)}>
               {device.selectedType.name || 'Выберите тип'}
-            </button>
+            </Button>
             <ul style={{ display: isDdTypeOpen ? 'block' : 'none' }} className={styles.list}>
               {device.types.map((type) => (
                 <li key={type.id} className={styles.listItem}>
-                  <button
-                    type="button"
-                    className={`${styles.btn} ${styles.listBtn}`}
-                    onClick={() => device.setSelectedType(type)}>
+                  <Button className={styles.listBtn} onClick={() => device.setSelectedType(type)}>
                     {type.name}
-                  </button>
+                  </Button>
                 </li>
               ))}
             </ul>
           </div>
 
           <div>
-            <button
-              type="button"
-              className={styles.btn}
-              onClick={() => setIsDdBrandOpen(!isDdBrandOpen)}>
+            <Button onClick={() => setIsDdBrandOpen(!isDdBrandOpen)}>
               {device.selectedBrand.name || 'Выберите бренд'}
-            </button>
+            </Button>
             <ul style={{ display: isDdBrandOpen ? 'block' : 'none' }} className={styles.list}>
               {device.brands.map((brand) => (
                 <li key={brand.id} className={styles.listItem}>
-                  <button
-                    type="button"
-                    className={`${styles.btn} ${styles.listBtn}`}
-                    onClick={() => device.setSelectedBrand(brand)}>
+                  <Button className={styles.listBtn} onClick={() => device.setSelectedBrand(brand)}>
                     {brand.name}
-                  </button>
+                  </Button>
                 </li>
               ))}
             </ul>
@@ -122,9 +111,7 @@ const CreateDevice = observer(({ opened, onClose }) => {
           <input className={styles.input} type="file" onChange={selectFile} />
         </div>
 
-        <button type="button" className={styles.btn} onClick={addInfo}>
-          Добавить новое свойство
-        </button>
+        <Button onClick={addInfo}>Добавить новое свойство</Button>
 
         <div className={styles.infoBlock}>
           {info.map((item) => (
@@ -143,23 +130,18 @@ const CreateDevice = observer(({ opened, onClose }) => {
                 value={item.description}
                 onChange={(e) => changeInfo('description', e.target.value, item.number)}
               />
-              <button
-                type="button"
-                className={styles.closeBtn}
-                onClick={() => removeInfo(item.number)}>
+              <Button variant="danger" onClick={() => removeInfo(item.number)}>
                 Удалить
-              </button>
+              </Button>
             </div>
           ))}
         </div>
 
         <div className={styles.footer}>
-          <button type="submit" className={styles.btn}>
-            Добавить
-          </button>
-          <button type="button" className={styles.closeBtn} onClick={onClose}>
+          <Button type="submit">Добавить</Button>
+          <Button variant="danger" className={styles.closeBtn} onClick={onClose}>
             Закрыть
-          </button>
+          </Button>
         </div>
       </form>
     </Modal>

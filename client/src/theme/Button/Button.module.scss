@@ -1,20 +1,20 @@
-.btn {
+.root {
   display: flex;
   align-items: center;
   justify-content: center;
   border: none;
+  border-radius: 5px;
+  padding: 10px;
+  text-decoration: none;
   color: #000;
   background: transparent;
-  transition:
-    background-color var(--transition),
-    color var(--transition),
+  transition: background-color var(--transition), color var(--transition),
     border-color var(--transition);
   cursor: pointer;
 }
 
 .outline {
   border: 1px solid #ccc;
-  border-radius: 5px;
   color: #000;
 
   &:hover {
@@ -45,7 +45,7 @@
   }
 }
 
-.primary .secondary {
+.secondary {
   color: var(--secondary-color);
   background-color: var(--secondary);
 
@@ -57,6 +57,38 @@
   &.disabled {
     &:hover {
       background-color: var(--secondary);
+    }
+  }
+}
+
+.danger {
+  color: var(--danger-color);
+  background-color: var(--danger);
+
+  &:hover {
+    background-color: var(--danger-hover);
+  }
+
+  &.unHovered,
+  &.disabled {
+    &:hover {
+      background-color: var(--danger);
+    }
+  }
+}
+
+.success {
+  color: var(--success-color);
+  background-color: var(--success);
+
+  &:hover {
+    background-color: var(--success-hover);
+  }
+
+  &.unHovered,
+  &.disabled {
+    &:hover {
+      background-color: var(--success);
     }
   }
 }

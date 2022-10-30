@@ -4,6 +4,7 @@ import CreateDevice from '../modals/CreateDevice';
 import CreateType from '../modals/CreateType';
 
 import styles from './AdminComponent.module.scss';
+import Button from '../../theme/Button';
 
 const AdminComponent = () => {
   const [brandVisible, setBrandVisible] = useState(false);
@@ -13,15 +14,15 @@ const AdminComponent = () => {
   return (
     <>
       <div className={styles.wrapper}>
-        <button onClick={() => setBrandVisible(true)} className={styles.btn}>
+        <Button onClick={() => setBrandVisible(true)} className={styles.btn}>
           Добавить бренд
-        </button>
-        <button onClick={() => setDeviceVisible(true)} className={styles.btn}>
+        </Button>
+        <Button onClick={() => setDeviceVisible(true)} className={styles.btn}>
           Добавить девайс
-        </button>
-        <button onClick={() => setTypeVisible(true)} className={styles.btn}>
+        </Button>
+        <Button onClick={() => setTypeVisible(true)} className={styles.btn}>
           Добавить тип
-        </button>
+        </Button>
       </div>
       <CreateBrand opened={brandVisible} onClose={() => setBrandVisible(false)} />
       <CreateDevice opened={deviceVisible} onClose={() => setDeviceVisible(false)} />

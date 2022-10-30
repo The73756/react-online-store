@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { createType } from '../../http/deviceApi';
 import Modal from '../Modal';
 import styles from './modals.module.scss';
+import Button from '../../theme/Button';
 
 const CreateType = ({ opened, onClose }) => {
   const [value, setValue] = useState('');
@@ -31,12 +32,10 @@ const CreateType = ({ opened, onClose }) => {
         </div>
 
         <div className={styles.footer}>
-          <button type="submit" className={styles.btn}>
-            Добавить
-          </button>
-          <button type="button" className={styles.closeBtn} onClick={onClose}>
+          <Button type="submit">Добавить</Button>
+          <Button variant="danger" className={styles.closeBtn} onClick={onClose}>
             Закрыть
-          </button>
+          </Button>
         </div>
       </form>
     </Modal>

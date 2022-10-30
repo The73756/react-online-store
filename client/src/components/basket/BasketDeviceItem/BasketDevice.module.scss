@@ -273,14 +273,7 @@
 }
 
 .itemBtn {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 5px 10px;
-  transition: background-color var(--transition);
-
-  &:hover {
-    background-color: #ccc;
-  }
+  padding: 10px;
 }
 
 .itemPrice {

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { createBrand } from '../../http/deviceApi';
 import Modal from '../Modal';
 import styles from './modals.module.scss';
+import Button from '../../theme/Button';
 
 const CreateBrand = ({ opened, onClose }) => {
   const [value, setValue] = useState('');
@@ -19,7 +20,7 @@ const CreateBrand = ({ opened, onClose }) => {
 
   return (
     <Modal opened={opened} onClose={onClose}>
-      <form action="" className={styles.form} onSubmit={addBrand}>
+      <form className={styles.form} onSubmit={addBrand}>
         <div className={styles.inputsBlock}>
           <input
             className={styles.input}
@@ -31,12 +32,10 @@ const CreateBrand = ({ opened, onClose }) => {
         </div>
 
         <div className={styles.footer}>
-          <button type="submit" className={styles.btn}>
-            Добавить
-          </button>
-          <button type="button" className={styles.closeBtn} onClick={onClose}>
+          <Button type="submit">Добавить</Button>
+          <Button variant="danger" className={styles.closeBtn} onClick={onClose}>
             Закрыть
-          </button>
+          </Button>
         </div>
       </form>
     </Modal>
