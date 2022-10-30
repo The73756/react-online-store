@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useDebounce from '../../../hooks/useDebounce';
 import { DEVICE_ROUTE } from '../../../utils/consts';
 import styles from './BasketDevice.module.scss';
 import Button from '../../../theme/Button';
+import { Context } from '../../../index';
 
 const BasketDeviceItem = ({
   id,
@@ -16,23 +17,29 @@ const BasketDeviceItem = ({
   onDelete,
   onChangeCount,
 }) => {
+  const { basket } = useContext(Context);
   const [localCount, setLocalCount] = useState(count);
-  const debounsedCount = useDebounce(onChangeCount, 400);
+  const debouncedCount = useDebounce(onChangeCount, 400);
 
   const incrementCount = () => {
     setLocalCount(localCount + 1);
-    debounsedCount(basketItemId, localCount + 1);
+    debouncedCount(basketItemId, localCount + 1);
+
+    basket.setBasketTotalPrice(basket.basketTotalPrice + price);
+    basket.setBasketTotalCount(basket.basketTotalCount + 1);
   };
 
   const decrementCount = () => {
     if (localCount - 1 <= 0) {
       setLocalCount(0);
-      onDelete(basketItemId);
-      console.log(121212);
+      onDelete(basketItemId, localCount);
     } else {
       setLocalCount(localCount - 1);
-      debounsedCount(basketItemId, localCount - 1);
+      debouncedCount(basketItemId, localCount - 1);
     }
+
+    basket.setBasketTotalPrice(basket.basketTotalPrice - price);
+    basket.setBasketTotalCount(basket.basketTotalCount - 1);
   };
 
   return (
@@ -48,7 +55,7 @@ const BasketDeviceItem = ({
       </div>
 
       <div className={styles.itemRating}>
-        <p>Рейтинг: {rating}</p>
+        <p>Рейтинг: {rating.toFixed(1)}</p>
       </div>
 
       <div className={styles.itemCount}>
@@ -96,7 +103,7 @@ const BasketDeviceItem = ({
           <Button
             className={styles.itemBtn}
             variant="danger"
-            onClick={() => onDelete(basketItemId)}>
+            onClick={() => onDelete({ basketItemId, price, count: localCount })}>
             <svg
               style={{ transform: 'rotate(45deg)' }}
               width="10"

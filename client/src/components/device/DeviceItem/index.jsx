@@ -12,7 +12,7 @@ const DeviceItem = ({ id, name, price, rating, img, isAdded, type, brand }) => {
           {type.slice(0, -1)}, {brand}
         </span>
         <div className={styles.rating}>
-          <span>{rating}</span>
+          <span>{rating.toFixed(1)}</span>
           <svg
             width="15"
             height="15"

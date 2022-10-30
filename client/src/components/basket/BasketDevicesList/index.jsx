@@ -9,13 +9,22 @@ import styles from './BasketDevicesList.module.scss';
 const BasketDevicesList = observer(() => {
   const { basket } = useContext(Context);
 
-  const deleteDeviceFromBasket = (id) => {
-    const updatedBasket = basket.basketDevices.filter((device) => device.basketItemId !== id);
+  const deleteDeviceFromBasket = ({ basketItemId }) => {
+    const updatedBasket = basket.basketDevices.filter(
+      (basketItem) => basketItem.basketItemId !== basketItemId,
+    );
+
     basket.setBasketDevices(updatedBasket);
-    basket.setBasketTotalCount(basket.basketTotalCount - 1);
-    deleteBasketDevice({ id }).then(() => {
-      alert('Устройство удалено из корзины');
-    });
+    basket.setBasketTotalPositions(basket.basketTotalPositions - 1);
+
+    deleteBasketDevice({ id: basketItemId })
+      .then(() => {
+        alert('Устройство удалено из корзины');
+      })
+      .catch((e) => {
+        alert('Ошибка при удалении устройства из корзины');
+        console.log(e);
+      });
   };
 
   const changeBasketDeviceCount = (id, count) => {

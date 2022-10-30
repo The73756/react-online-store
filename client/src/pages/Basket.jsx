@@ -13,7 +13,7 @@ const Basket = observer(() => {
       fetchBasketDevices(user.userId)
         .then((data) => {
           basket.setBasketDevices(data.rows);
-          basket.setBasketTotalCount(data.count);
+          basket.setBasketTotalPositions(data.count);
         })
         .catch((e) => {
           alert('Ошибка при получении корзины');
@@ -30,6 +30,9 @@ const Basket = observer(() => {
   return (
     <div className="container">
       <BasketDevicesList />
+      <p>Итого: {basket.basketTotalPrice}</p>
+      <p>Всего в корзине: {basket.basketTotalCount}</p>
+      <p>Всего позиций: {basket.basketTotalPositions}</p>
     </div>
   );
 });

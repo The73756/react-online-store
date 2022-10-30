@@ -49,7 +49,7 @@ const Shop = observer(() => {
       Promise.all([fetchBasketDevices(user.userId), fetchRatings(user.userId)])
         .then(([basketDevices, ratings]) => {
           basket.setBasketDevices(basketDevices.rows);
-          basket.setBasketTotalCount(basketDevices.count);
+          basket.setBasketTotalPositions(basketDevices.count);
 
           rating.setRatedDevices(ratings.rows);
           rating.setRatedDevicesCount(ratings.count);

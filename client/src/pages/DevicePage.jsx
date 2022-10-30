@@ -20,6 +20,7 @@ const DevicePage = observer(() => {
     createBasketDevice({ deviceId: id, basketId: user.userId })
       .then(() => {
         setIsAdded(true);
+        basket.setBasketTotalPositions(basket.basketTotalPositions + 1);
       })
       .catch((e) => {
         alert('Ошибка при добавлении товара в корзину');
@@ -47,7 +48,7 @@ const DevicePage = observer(() => {
         .then(([basketData, ratingData]) => {
           if (basketData) {
             basket.setBasketDevices(basketData.rows);
-            basket.setBasketTotalCount(basketData.count);
+            basket.setBasketTotalPositions(basketData.count);
             setIsAdded(basket.basketDevices.some((item) => item.id === +id));
           }
 

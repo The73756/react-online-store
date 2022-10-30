@@ -26,7 +26,7 @@ const DevicePageComponent = ({
         <img className={styles.topImg} src={`${process.env.REACT_APP_API_URL}/${img}`} alt={name} />
         <div className={styles.topRatingBlock}>
           <h2 className={styles.title}>{name}</h2>
-          <div>Рейтинг: {localDeviceRating}</div>
+          <div>Рейтинг: {localDeviceRating.toFixed(1)}</div>
           {user.isAuth ? (
             isUserDataLoading ? (
               <div>Рейтинг загружается...</div>

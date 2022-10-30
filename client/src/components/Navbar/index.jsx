@@ -19,7 +19,7 @@ const Navbar = observer(() => {
     user.setIsAuth(false);
 
     basket.setBasketDevices([]);
-    basket.setBasketTotalCount(0);
+    basket.setBasketTotalPositions(0);
 
     rating.setRatedDevices([]);
     rating.setRatedDevicesCount(0);
@@ -39,7 +39,7 @@ const Navbar = observer(() => {
             <>
               <li className={styles.navItem}>
                 <Link to={BASKET_ROUTE} className={styles.navLink}>
-                  Корзина
+                  Корзина {basket.basketTotalPositions}
                 </Link>
               </li>
               <li className={styles.navItem}>
