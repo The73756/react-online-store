@@ -14,19 +14,27 @@ const RatedDeviceItem = ({
   price,
   rate,
   rating,
-  rateCeatedAt,
+  rateCreatedAt,
   rateUpdatedAt,
   ratingId,
+  isAdded,
   onDelete,
+  onAddToBasket,
+  isItemLoading,
 }) => {
   const { user } = useContext(Context);
   const [deviceRating, setDeviceRating] = useState(rating);
   const [localRate, setLocalRate] = useState(rate);
-  const createDate = new Date(rateCeatedAt).toLocaleString();
+  const [localIsAdded, setLocalIsAdded] = useState(isAdded);
+  const createDate = new Date(rateCreatedAt).toLocaleString();
   const updateDate = new Date(rateUpdatedAt).toLocaleString();
 
+  const handleAddToBasket = () => {
+    onAddToBasket(id, () => setLocalIsAdded(true));
+  };
+
   return (
-    <article className={styles.card}>
+    <article className={`${styles.card} ${isItemLoading ? styles.loading : ''}`}>
       <Link to={`${DEVICE_ROUTE}/${id}`} className={styles.link}>
         <div className={styles.top}>
           <img src={`${process.env.REACT_APP_API_URL}/${img}`} alt={name} className={styles.img} />
@@ -60,7 +68,11 @@ const RatedDeviceItem = ({
             deviceId={id}
             setLocalRating={setDeviceRating}
           />
-          <AddToBasketBtn isAdded={false} isAuth={user.isAuth} />
+          <AddToBasketBtn
+            onAddToBasket={handleAddToBasket}
+            isAdded={localIsAdded}
+            isAuth={user.isAuth}
+          />
         </div>
         <div className={styles.bottomCol}>
           <p className={styles.date}>

@@ -1,7 +1,13 @@
 import { $authHost } from './index';
 
 export const createBasketDevice = async (device) => {
-  const { data } = await $authHost.post('/api/basket', device);
+  // noinspection CommaExpressionJS
+  const formData = Object.entries(device).reduce(
+    (formData, [key, value]) => (formData.append(key, String(value)), formData),
+    new FormData(),
+  );
+
+  const { data } = await $authHost.post('/api/basket', formData);
   return data;
 };
 

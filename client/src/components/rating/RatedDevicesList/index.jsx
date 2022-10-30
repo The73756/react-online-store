@@ -1,16 +1,19 @@
 import { useContext, useEffect, useState } from 'react';
 import { Context } from '../../..';
+import { observer } from 'mobx-react-lite';
 import { deleteRating, fetchRatings } from '../../../http/ratingApi';
 import RatedDeviceItem from '../RatedDeviceItem';
 import styles from './RatedDevicesComponent.module.scss';
+import { createBasketDevice, fetchBasketDevices } from '../../../http/basketApi';
 
-const RatedDevicesList = () => {
-  const { rating, user } = useContext(Context);
-  const [isLoading, setIsLodaing] = useState(true);
+const RatedDevicesList = observer(() => {
+  const { rating, basket, user } = useContext(Context);
+  const [isLoading, setIsLoading] = useState(true);
   const [isItemLoading, setIsItemLoading] = useState(false);
 
   const deleteRate = (id) => {
     setIsItemLoading(true);
+
     deleteRating(id)
       .then((data) => {
         console.log(data);
@@ -26,20 +29,42 @@ const RatedDevicesList = () => {
       .finally(() => setIsItemLoading(false));
   };
 
+  const addDeviceToBasket = (id, callback) => {
+    setIsItemLoading(true);
+
+    createBasketDevice({ deviceId: id, basketId: user.userId })
+      .then(() => {
+        callback();
+        alert('Товар успешно добавлен в корзину');
+      })
+      .catch((e) => {
+        alert('Ошибка при добавлении товара в корзину');
+        console.log(e);
+      })
+      .finally(() => setIsItemLoading(false));
+  };
+
   useEffect(() => {
-    setIsLodaing(true);
+    setIsLoading(true);
 
     if (user.isAuth) {
-      fetchRatings(user.userId)
-        .then((res) => {
-          rating.setRatedDevices(res.rows);
-          rating.setRatedDevicesCount(res.count);
+      Promise.all([fetchRatings(user.userId), fetchBasketDevices(user.userId)])
+        .then(([ratingsData, basketData]) => {
+          if (ratingsData) {
+            rating.setRatedDevices(ratingsData.rows);
+            rating.setRatedDevicesCount(ratingsData.count);
+          }
+
+          if (basketData) {
+            basket.setBasketDevices(basketData.rows);
+            basket.setBasketTotalCount(basketData.count);
+          }
         })
         .catch((e) => {
-          alert('Ошибка при получении оценок');
+          alert('Ошибка при получении пользовательских данных');
           console.log(e);
         })
-        .finally(() => setIsLodaing(false));
+        .finally(() => setIsLoading(false));
     }
   }, []);
 
@@ -50,10 +75,17 @@ const RatedDevicesList = () => {
   return (
     <div className={styles.container}>
       {rating.ratedDevices.map((device) => (
-        <RatedDeviceItem key={device.id} {...device} onDelete={deleteRate} />
+        <RatedDeviceItem
+          key={device.id}
+          {...device}
+          onDelete={deleteRate}
+          onAddToBasket={addDeviceToBasket}
+          isItemLoading={isItemLoading}
+          isAdded={basket.basketDevices.some((item) => item.id === +device.id)}
+        />
       ))}
     </div>
   );
-};
+});
 
 export default RatedDevicesList;

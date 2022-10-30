@@ -17,11 +17,7 @@ const DevicePage = observer(() => {
   const [isUserDataLoading, setIsUserDataLoading] = useState(true);
 
   const addDeviceToBasket = () => {
-    const formData = new FormData();
-    formData.append('deviceId', id);
-    formData.append('basketId', user.userId);
-
-    createBasketDevice(formData)
+    createBasketDevice({ deviceId: id, basketId: user.userId })
       .then(() => {
         setIsAdded(true);
       })
@@ -52,10 +48,10 @@ const DevicePage = observer(() => {
           if (basketData) {
             basket.setBasketDevices(basketData.rows);
             basket.setBasketTotalCount(basketData.count);
+            setIsAdded(basket.basketDevices.some((item) => item.id === +id));
           }
 
           if (ratingData) {
-            setIsAdded(basket.basketDevices.some((item) => item.id === +id));
             setUserRate(ratingData.rate);
           }
         })

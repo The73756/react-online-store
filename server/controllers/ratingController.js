@@ -15,7 +15,7 @@ class RatingController {
           await Rating.update({ rate }, { where: { deviceId, userId } });
           const ratings = await Rating.findAndCountAll({ where: { deviceId } });
 
-          if (ratings.count !== 0) {
+          if (+ratings.count !== 0) {
             let calcRating = 0;
 
             Promise.all(
@@ -45,7 +45,7 @@ class RatingController {
         await Rating.create({ deviceId, userId, rate });
         const ratings = await Rating.findAndCountAll({ where: { deviceId } });
 
-        if (ratings.count !== 0) {
+        if (+ratings.count !== 0) {
           let calcRating = 0;
 
           Promise.all(
@@ -73,19 +73,6 @@ class RatingController {
     }
   }
 
-  // ? Такое нужно вообще?
-  // async getAll(req, res, next) {
-  //   try {
-  //     const { deviceId } = req.body;
-  //     const ratings = await Rating.findAndCountAll({
-  //       where: { deviceId },
-  //     });
-  //     return res.json(ratings);
-  //   } catch (e) {
-  //     next(ApiError.badRequest(e.message));
-  //   }
-  // }
-
   async getAllByUser(req, res, next) {
     try {
       const { userId } = req.query;
@@ -102,7 +89,7 @@ class RatingController {
               ...device.dataValues,
               ratingId: rating.id,
               rate: rating.rate,
-              rateCeatedAt: rating.createdAt,
+              rateCreatedAt: rating.createdAt,
               rateUpdatedAt: rating.updatedAt,
             });
           }
