@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../..';
 import styles from './Navbar.module.scss';
@@ -10,8 +10,10 @@ import {
   RATING_ROUTE,
   SHOP_ROUTE,
 } from '../../utils/consts';
+import Search from '../Search';
 
 const Navbar = observer(() => {
+  const location = useLocation();
   const { user, basket, rating } = useContext(Context);
 
   const logOut = () => {
@@ -33,6 +35,7 @@ const Navbar = observer(() => {
         <Link className={styles.logoLink} to={SHOP_ROUTE} />
         Магазин
       </h1>
+      {location.pathname === SHOP_ROUTE && <Search />}
       <nav>
         <ul className={styles.navList}>
           {user.isAuth ? (

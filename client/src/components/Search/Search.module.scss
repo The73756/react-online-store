@@ -1,0 +1,49 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  width: 300px;
+  background-color: #fff;
+}
+
+.searchBtn {
+  margin: 0;
+  border: none;
+  padding: 0 15px;
+  height: 100%;
+  background-color: transparent;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    fill: #ccc;
+    transition: fill var(--transition);
+  }
+
+  &:hover {
+    svg {
+      fill: #000;
+    }
+  }
+}
+
+.closeBtn {
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.input {
+  position: relative;
+  border: none;
+  border-radius: 10px;
+  padding: 8.5px;
+  width: 250px;
+  height: 100%;
+
+  &:focus {
+    outline: none;
+  }
+}

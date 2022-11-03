@@ -30,7 +30,13 @@ const Shop = observer(() => {
   useEffect(() => {
     setIsDevicesLoading(false);
 
-    fetchDevices(device.selectedType.id, device.selectedBrand.id, device.page, device.limit)
+    fetchDevices(
+      device.selectedType.id,
+      device.selectedBrand.id,
+      device.page,
+      device.limit,
+      device.search,
+    )
       .then((data) => {
         device.setDevices(data.rows);
         device.setTotalCount(data.count);
@@ -42,7 +48,7 @@ const Shop = observer(() => {
       .finally(() => {
         setIsDevicesLoading(false);
       });
-  }, [device.selectedType, device.selectedBrand, device.page]);
+  }, [device.selectedType, device.selectedBrand, device.page, device.search]);
 
   useEffect(() => {
     if (user.isAuth) {
