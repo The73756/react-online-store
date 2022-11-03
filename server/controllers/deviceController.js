@@ -49,59 +49,69 @@ class DeviceController {
     limit = limit || 9;
     let offset = page * limit - limit;
     search = search || '';
-    sort = sort || 'rating';
     let devices;
 
-    if (!brandId && !typeId) {
-      devices = await Device.findAndCountAll({ limit, offset });
+    if (!brandId && !typeId && !search) {
+      devices = await Device.findAndCountAll({ order: [[sort, order]], limit, offset });
     }
 
-    if (brandId && !typeId) {
+    if (!brandId && !typeId && search) {
+      devices = await Device.findAndCountAll({
+        order: [[sort, order]],
+        where: { name: { [Op.iRegexp]: search } },
+        limit,
+        offset,
+      });
+    }
+
+    if (brandId && !typeId && !search) {
       devices = await Device.findAndCountAll({
         where: { brandId },
+        order: [[sort, order]],
         limit,
         offset,
       });
     }
 
-    if (!brandId && typeId) {
+    if (brandId && !typeId && search) {
+      devices = await Device.findAndCountAll({
+        where: { brandId, name: { [Op.iRegexp]: search } },
+        order: [[sort, order]],
+        limit,
+        offset,
+      });
+    }
+
+    if (!brandId && typeId && !search) {
       devices = await Device.findAndCountAll({
         where: { typeId },
+        order: [[sort, order]],
         limit,
         offset,
       });
     }
 
-    if (brandId && typeId) {
+    if (!brandId && typeId && search) {
+      devices = await Device.findAndCountAll({
+        where: { typeId, name: { [Op.iRegexp]: search } },
+        order: [[sort, order]],
+        limit,
+        offset,
+      });
+    }
+
+    if (brandId && typeId && !search) {
       devices = await Device.findAndCountAll({
         where: { typeId, brandId },
+        order: [[sort, order]],
         limit,
         offset,
       });
     }
 
-    console.log(search);
-
-    if (search) {
+    if (brandId && typeId && search) {
       devices = await Device.findAndCountAll({
-        where: {
-          name: { [Op.iRegexp]: search },
-        },
-        limit,
-        offset,
-      });
-    }
-
-    if (sort && !order) {
-      devices = await Device.findAndCountAll({
-        order: [[sort, 'ASC']],
-        limit,
-        offset,
-      });
-    }
-
-    if (sort && order) {
-      devices = await Device.findAndCountAll({
+        where: { typeId, brandId, name: { [Op.iRegexp]: search } },
         order: [[sort, order]],
         limit,
         offset,
