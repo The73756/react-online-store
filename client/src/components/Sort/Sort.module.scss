@@ -1,0 +1,24 @@
+.wrapper {
+  width: 200px;
+}
+
+.sort {
+  position: fixed;
+  width: 200px;
+
+  div {
+    cursor: pointer;
+  }
+}
+
+.title {
+  margin: 0;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  width: 100%;
+}

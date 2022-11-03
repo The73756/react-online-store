@@ -41,6 +41,12 @@ button {
   width: 100%;
 }
 
-.shop-sidebar {
+.shop-sidebar-left {
   position: fixed;
+  left: 5%;
+}
+
+.shop-sidebar-right {
+  position: fixed;
+  right: 5%;
 }

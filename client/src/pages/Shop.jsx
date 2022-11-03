@@ -8,6 +8,7 @@ import TypesSidebar from '../components/TypesSidebar';
 import { fetchBasketDevices } from '../http/basketApi';
 import { fetchBrands, fetchDevices, fetchTypes } from '../http/deviceApi';
 import { fetchRatings } from '../http/ratingApi';
+import Sort from '../components/Sort';
 
 const Shop = observer(() => {
   const { device, basket, rating, user } = useContext(Context);
@@ -36,6 +37,8 @@ const Shop = observer(() => {
       device.page,
       device.limit,
       device.search,
+      device.selectedSort,
+      device.selectedOrder,
     )
       .then((data) => {
         device.setDevices(data.rows);
@@ -48,7 +51,14 @@ const Shop = observer(() => {
       .finally(() => {
         setIsDevicesLoading(false);
       });
-  }, [device.selectedType, device.selectedBrand, device.page, device.search]);
+  }, [
+    device.selectedType,
+    device.selectedBrand,
+    device.page,
+    device.search,
+    device.selectedSort,
+    device.selectedOrder,
+  ]);
 
   useEffect(() => {
     if (user.isAuth) {
@@ -75,8 +85,12 @@ const Shop = observer(() => {
 
   return (
     <div className="shop-container">
-      <div className="shop-sidebar">
+      <div className="shop-sidebar-left">
         <TypesSidebar />
+      </div>
+
+      <div className="shop-sidebar-right">
+        <Sort />
       </div>
 
       <div className="container">
