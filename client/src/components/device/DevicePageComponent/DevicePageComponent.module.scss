@@ -4,7 +4,12 @@
   padding: 20px 0;
 }
 
+.wrapper {
+  max-width: 300px;
+}
+
 .topImg {
+  margin: 0 auto;
   width: 300px;
   object-fit: contain;
 }

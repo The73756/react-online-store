@@ -1,12 +1,34 @@
 import { Link } from 'react-router-dom';
 import { DEVICE_ROUTE } from '../../../utils/consts';
+import { Lazy, Pagination } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/lazy';
 import styles from './DeviceItem.module.scss';
 
-const DeviceItem = ({ id, name, price, rating, img, isAdded, type, brand }) => {
+const DeviceItem = ({ id, name, price, rating, isAdded, type, brand, photos }) => {
   // TODO: Сделать нормальный хайлайт добавленности в корзину
   return (
     <article className={styles.card} style={{ borderColor: isAdded ? 'green' : '#ccc' }}>
-      <img src={`${process.env.REACT_APP_API_URL}/${img}`} alt={name} className={styles.img} />
+      <div>
+        <Swiper
+          modules={[Pagination, Lazy]}
+          slidesPerView={1}
+          lazy={true}
+          pagination={{ clickable: true }}>
+          {photos.map((photo) => (
+            <SwiperSlide key={photo.id}>
+              <img
+                src={`${process.env.REACT_APP_API_URL}/${photo.url}`}
+                alt={name}
+                className={styles.img}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+
       <div className={styles.top}>
         <span className={styles.subtitle}>
           {type.slice(0, -1)}, {brand}

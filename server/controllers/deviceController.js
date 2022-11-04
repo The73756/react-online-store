@@ -18,12 +18,15 @@ class DeviceController {
         return next(ApiError.badRequest('Device with this name already exists'));
       }
 
+      if (!images) {
+        return next(ApiError.badRequest('No images'));
+      }
+
       const device = await Device.create({
         name,
         price,
         brandId,
         typeId,
-        img: 'заглушка',
       });
 
       images.img.forEach((image) => {
@@ -34,7 +37,7 @@ class DeviceController {
 
       imageNames.forEach((imageName) => {
         DevicePhoto.create({
-          img: imageName,
+          url: imageName,
           deviceId: device.id,
         });
       });
@@ -65,7 +68,7 @@ class DeviceController {
     let devices;
 
     if (!brandId && !typeId && !search) {
-      devices = await Device.findAndCountAll({
+      devices = await Device.findAll({
         order: [[sort, order]],
         include: [{ model: DevicePhoto, as: 'photos' }],
         limit,
@@ -74,7 +77,7 @@ class DeviceController {
     }
 
     if (!brandId && !typeId && search) {
-      devices = await Device.findAndCountAll({
+      devices = await Device.findAll({
         where: { name: { [Op.iRegexp]: search } },
         order: [[sort, order]],
         include: [{ model: DevicePhoto, as: 'photos' }],
@@ -84,7 +87,7 @@ class DeviceController {
     }
 
     if (brandId && !typeId && !search) {
-      devices = await Device.findAndCountAll({
+      devices = await Device.findAll({
         where: { brandId },
         order: [[sort, order]],
         include: [{ model: DevicePhoto, as: 'photos' }],
@@ -94,7 +97,7 @@ class DeviceController {
     }
 
     if (brandId && !typeId && search) {
-      devices = await Device.findAndCountAll({
+      devices = await Device.findAll({
         where: { brandId, name: { [Op.iRegexp]: search } },
         order: [[sort, order]],
         include: [{ model: DevicePhoto, as: 'photos' }],
@@ -104,7 +107,7 @@ class DeviceController {
     }
 
     if (!brandId && typeId && !search) {
-      devices = await Device.findAndCountAll({
+      devices = await Device.findAll({
         where: { typeId },
         order: [[sort, order]],
         include: [{ model: DevicePhoto, as: 'photos' }],
@@ -114,7 +117,7 @@ class DeviceController {
     }
 
     if (!brandId && typeId && search) {
-      devices = await Device.findAndCountAll({
+      devices = await Device.findAll({
         where: { typeId, name: { [Op.iRegexp]: search } },
         order: [[sort, order]],
         include: [{ model: DevicePhoto, as: 'photos' }],
@@ -124,7 +127,7 @@ class DeviceController {
     }
 
     if (brandId && typeId && !search) {
-      devices = await Device.findAndCountAll({
+      devices = await Device.findAll({
         where: { typeId, brandId },
         order: [[sort, order]],
         include: [{ model: DevicePhoto, as: 'photos' }],
@@ -134,7 +137,7 @@ class DeviceController {
     }
 
     if (brandId && typeId && search) {
-      devices = await Device.findAndCountAll({
+      devices = await Device.findAll({
         where: { typeId, brandId, name: { [Op.iRegexp]: search } },
         order: [[sort, order]],
         include: [{ model: DevicePhoto, as: 'photos' }],
@@ -150,8 +153,12 @@ class DeviceController {
     const { id } = req.params;
     const device = await Device.findOne({
       where: { id },
-      include: [{ model: DeviceInfo, as: 'info' }],
+      include: [
+        { model: DeviceInfo, as: 'info' },
+        { model: DevicePhoto, as: 'photos' },
+      ],
     });
+
     return res.json(device);
   }
 

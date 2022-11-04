@@ -25,7 +25,6 @@ const Device = sequelize.define('device', {
   name: { type: DataTypes.STRING, unique: true, allowNull: false },
   price: { type: DataTypes.INTEGER, allowNull: false },
   rating: { type: DataTypes.DOUBLE, defaultValue: 0 },
-  img: { type: DataTypes.DOUBLE, allowNull: false },
 });
 
 const Type = sequelize.define('type', {
@@ -51,7 +50,7 @@ const DeviceInfo = sequelize.define('device_info', {
 
 const DevicePhoto = sequelize.define('device_photo', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  img: { type: DataTypes.STRING, allowNull: false },
+  url: { type: DataTypes.STRING, allowNull: false },
   deviceId: { type: DataTypes.INTEGER },
 });
 

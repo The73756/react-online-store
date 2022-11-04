@@ -2,13 +2,18 @@ import { useContext, useState } from 'react';
 import { Context } from '../../..';
 import AddToBasketBtn from '../../../theme/AddToBasketBtn';
 import RatingComponent from '../../rating/RatingComponent';
+import { Lazy, Pagination } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/lazy';
 import styles from './DevicePageComponent.module.scss';
 
 const DevicePageComponent = ({
   name,
   price,
   rating,
-  img,
+  photos,
   info,
   id,
   addDeviceToBasket,
@@ -23,7 +28,24 @@ const DevicePageComponent = ({
   return (
     <div className="container">
       <div className={styles.top}>
-        <img className={styles.topImg} src={`${process.env.REACT_APP_API_URL}/${img}`} alt={name} />
+        <span className={styles.wrapper}>
+          <Swiper
+            modules={[Pagination, Lazy]}
+            slidesPerView={1}
+            pagination={{ clickable: true }}
+            lazy={true}>
+            {photos.map((photo) => (
+              <SwiperSlide key={photo.id}>
+                <img
+                  className={styles.topImg}
+                  src={`${process.env.REACT_APP_API_URL}/${photo.url}`}
+                  alt={name}
+                  key={photo.id}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </span>
         <div className={styles.topRatingBlock}>
           <h2 className={styles.title}>{name}</h2>
           <div>Рейтинг: {localDeviceRating.toFixed(1)}</div>

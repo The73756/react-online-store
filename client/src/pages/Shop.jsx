@@ -41,8 +41,8 @@ const Shop = observer(() => {
       device.selectedOrder,
     )
       .then((data) => {
-        device.setDevices(data.rows);
-        device.setTotalCount(data.count);
+        device.setDevices(data);
+        device.setTotalCount(data.length);
       })
       .catch((e) => {
         alert('Ошибка при загрузке девайсов');
