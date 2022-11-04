@@ -49,6 +49,12 @@ const DeviceInfo = sequelize.define('device_info', {
   description: { type: DataTypes.STRING, allowNull: false },
 });
 
+const DevicePhoto = sequelize.define('device_photo', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  img: { type: DataTypes.STRING, allowNull: false },
+  deviceId: { type: DataTypes.INTEGER },
+});
+
 const TypeBrand = sequelize.define('type_brand', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
@@ -77,6 +83,9 @@ BasketDevice.belongsTo(Device);
 Device.hasMany(DeviceInfo, { as: 'info' });
 DeviceInfo.belongsTo(Device);
 
+Device.hasMany(DevicePhoto, { as: 'photos' });
+DevicePhoto.belongsTo(Device);
+
 Type.belongsToMany(Brand, { through: TypeBrand });
 Brand.belongsToMany(Type, { through: TypeBrand });
 
@@ -90,4 +99,5 @@ module.exports = {
   Rating,
   TypeBrand,
   DeviceInfo,
+  DevicePhoto,
 };

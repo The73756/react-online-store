@@ -1,6 +1,8 @@
 const uuid = require('uuid');
 const path = require('path');
-const { Device, DeviceInfo } = require('../models/models');
+require('multer');
+
+const { Device, DeviceInfo, DevicePhoto } = require('../models/models');
 const ApiError = require('../error/ApiError');
 const { Op } = require('sequelize');
 
@@ -9,21 +11,32 @@ class DeviceController {
     try {
       let { name, price, brandId, typeId, info } = req.body;
       const prevDevice = await Device.findOne({ where: { name } });
+      const images = req.files;
+      const imageNames = [];
 
       if (prevDevice) {
         return next(ApiError.badRequest('Device with this name already exists'));
       }
-
-      const { img } = req.files;
-      let fileName = uuid.v4() + '.jpg';
-      await img.mv(path.resolve(__dirname, '..', 'static', fileName));
 
       const device = await Device.create({
         name,
         price,
         brandId,
         typeId,
-        img: fileName,
+        img: 'заглушка',
+      });
+
+      images.img.forEach((image) => {
+        const fileName = uuid.v4() + '.jpg';
+        image.mv(path.resolve(__dirname, '..', 'static', fileName));
+        imageNames.push(fileName);
+      });
+
+      imageNames.forEach((imageName) => {
+        DevicePhoto.create({
+          img: imageName,
+          deviceId: device.id,
+        });
       });
 
       if (info) {
@@ -52,13 +65,19 @@ class DeviceController {
     let devices;
 
     if (!brandId && !typeId && !search) {
-      devices = await Device.findAndCountAll({ order: [[sort, order]], limit, offset });
+      devices = await Device.findAndCountAll({
+        order: [[sort, order]],
+        include: [{ model: DevicePhoto, as: 'photos' }],
+        limit,
+        offset,
+      });
     }
 
     if (!brandId && !typeId && search) {
       devices = await Device.findAndCountAll({
-        order: [[sort, order]],
         where: { name: { [Op.iRegexp]: search } },
+        order: [[sort, order]],
+        include: [{ model: DevicePhoto, as: 'photos' }],
         limit,
         offset,
       });
@@ -68,6 +87,7 @@ class DeviceController {
       devices = await Device.findAndCountAll({
         where: { brandId },
         order: [[sort, order]],
+        include: [{ model: DevicePhoto, as: 'photos' }],
         limit,
         offset,
       });
@@ -77,6 +97,7 @@ class DeviceController {
       devices = await Device.findAndCountAll({
         where: { brandId, name: { [Op.iRegexp]: search } },
         order: [[sort, order]],
+        include: [{ model: DevicePhoto, as: 'photos' }],
         limit,
         offset,
       });
@@ -86,6 +107,7 @@ class DeviceController {
       devices = await Device.findAndCountAll({
         where: { typeId },
         order: [[sort, order]],
+        include: [{ model: DevicePhoto, as: 'photos' }],
         limit,
         offset,
       });
@@ -95,6 +117,7 @@ class DeviceController {
       devices = await Device.findAndCountAll({
         where: { typeId, name: { [Op.iRegexp]: search } },
         order: [[sort, order]],
+        include: [{ model: DevicePhoto, as: 'photos' }],
         limit,
         offset,
       });
@@ -104,6 +127,7 @@ class DeviceController {
       devices = await Device.findAndCountAll({
         where: { typeId, brandId },
         order: [[sort, order]],
+        include: [{ model: DevicePhoto, as: 'photos' }],
         limit,
         offset,
       });
@@ -113,6 +137,7 @@ class DeviceController {
       devices = await Device.findAndCountAll({
         where: { typeId, brandId, name: { [Op.iRegexp]: search } },
         order: [[sort, order]],
+        include: [{ model: DevicePhoto, as: 'photos' }],
         limit,
         offset,
       });
