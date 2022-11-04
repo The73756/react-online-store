@@ -12,7 +12,7 @@ const CreateDevice = observer(({ opened, onClose }) => {
   const [info, setInfo] = useState([]);
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
-  const [file, setFile] = useState(null);
+  const [files, setFiles] = useState(null);
 
   const [isDdTypeOpen, setIsDdTypeOpen] = useState(false);
   const [isDdBrandOpen, setIsDdBrandOpen] = useState(false);
@@ -36,7 +36,7 @@ const CreateDevice = observer(({ opened, onClose }) => {
   };
 
   const selectFile = (e) => {
-    setFile(e.target.files[0]);
+    setFiles(e.target.files);
   };
 
   const changeInfo = (key, value, number) => {
@@ -44,14 +44,20 @@ const CreateDevice = observer(({ opened, onClose }) => {
   };
 
   const addDevice = (e) => {
-    const formData = new FormData();
     e.preventDefault();
+
+    const formData = new FormData();
+
     formData.append('name', name);
     formData.append('price', `${price}`);
-    formData.append('img', file);
     formData.append('brandId', device.selectedBrand.id);
     formData.append('typeId', device.selectedType.id);
     formData.append('info', JSON.stringify(info));
+
+    for (let i = 0; i < files.length; i++) {
+      formData.append('img', files[i]);
+    }
+
     createDevice(formData).then(() => {
       onClose();
     });
@@ -108,7 +114,7 @@ const CreateDevice = observer(({ opened, onClose }) => {
             value={price}
             onChange={(e) => setPrice(Number(e.target.value))}
           />
-          <input className={styles.input} type="file" onChange={selectFile} />
+          <input className={styles.input} type="file" multiple={true} onChange={selectFile} />
         </div>
 
         <Button onClick={addInfo}>Добавить новое свойство</Button>
