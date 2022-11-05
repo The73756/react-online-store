@@ -44,24 +44,37 @@ class DeviceController {
 
       if (info) {
         info = JSON.parse(info);
-        info.forEach((i) => {
-          DeviceInfo.create({
-            title: i.title,
-            description: i.description,
-            deviceId: device.id,
-          });
 
-          // if(i.variants.length) {
-          //   i.variants.forEach(v => {
-          //     DeviceVariant.create({
-          //       title: v.title,
-          //       description: v.description,
-          //       price: v.price,
-          //       infoId: i.id,
-          //     })
-          //   })
-          // }
-        });
+        if (info.properties.length > 0) {
+          info.properties.forEach((i) => {
+            DeviceInfo.create({
+              title: i.title,
+              description: i.description,
+              deviceId: device.id,
+            });
+          });
+        }
+
+        if (info.propertiesWithVariants.length > 0) {
+          info.propertiesWithVariants.forEach((property) => {
+            (async () => {
+              const deviceInfo = await DeviceInfo.create({
+                title: property.title,
+                description: property.description,
+                deviceId: device.id,
+              });
+
+              property.variants.forEach((variant) => {
+                DeviceVariant.create({
+                  value: variant.value,
+                  cost: variant.cost,
+                  additionalInfo: variant.additionalInfo,
+                  deviceInfoId: deviceInfo.id,
+                });
+              });
+            })();
+          });
+        }
       }
 
       return res.json(device);

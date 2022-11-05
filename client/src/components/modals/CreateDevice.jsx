@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { useContext, useEffect, useState } from 'react';
 import { Context } from '../..';
-import { fetchBrands, fetchTypes } from '../../http/deviceApi';
+import { createDevice, fetchBrands, fetchTypes } from '../../http/deviceApi';
 import Modal from '../Modal';
 import styles from './modals.module.scss';
 import Button from '../../theme/Button';
@@ -89,27 +89,27 @@ const CreateDevice = observer(({ opened, onClose }) => {
   const addDevice = (e) => {
     e.preventDefault();
 
+    const formData = new FormData();
     const total = {
       properties: info,
       propertiesWithVariants: infoWithVar,
     };
-    // const formData = new FormData();
-    //
-    // formData.append('name', name);
-    // formData.append('price', `${price}`);
-    // formData.append('brandId', device.selectedBrand.id);
-    // formData.append('typeId', device.selectedType.id);
-    // formData.append('info', JSON.stringify(info));
-    //
-    // for (let i = 0; i < files.length; i++) {
-    //   formData.append('img', files[i]);
-    // }
-    //
-    // createDevice(formData).then(() => {
-    //   onClose();
-    // });
 
-    console.log(JSON.stringify(total));
+    formData.append('name', name);
+    formData.append('price', `${price}`);
+    formData.append('brandId', device.selectedBrand.id);
+    formData.append('typeId', device.selectedType.id);
+    formData.append('info', JSON.stringify(total));
+
+    for (let i = 0; i < files.length; i++) {
+      formData.append('img', files[i]);
+    }
+
+    createDevice(formData).then(() => {
+      onClose();
+    });
+
+    console.log(total);
   };
 
   return (
