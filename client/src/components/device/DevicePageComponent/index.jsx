@@ -84,7 +84,10 @@ const DevicePageComponent = ({
         <h2>Характеристики</h2>
         {info.map((info) => (
           <div key={info.id}>
-            {info.title} : {info.description}
+            {info.title} :{' '}
+            {info.variants.length > 0
+              ? info.variants.map((variant) => <span>{variant.value}</span>)
+              : info.description}
           </div>
         ))}
       </div>
