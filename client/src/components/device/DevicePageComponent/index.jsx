@@ -25,6 +25,8 @@ const DevicePageComponent = ({
   const [localRate, setLocalRate] = useState(userRate);
   const { user } = useContext(Context);
 
+  console.log(info);
+
   return (
     <div className="container">
       <div className={styles.top}>

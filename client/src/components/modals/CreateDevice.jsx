@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { useContext, useEffect, useState } from 'react';
 import { Context } from '../..';
-import { createDevice, fetchBrands, fetchTypes } from '../../http/deviceApi';
+import { fetchBrands, fetchTypes } from '../../http/deviceApi';
 import Modal from '../Modal';
 import styles from './modals.module.scss';
 import Button from '../../theme/Button';
@@ -10,6 +10,8 @@ const CreateDevice = observer(({ opened, onClose }) => {
   const { device } = useContext(Context);
 
   const [info, setInfo] = useState([]);
+  const [infoWithVar, setInfoWithVar] = useState([]);
+
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [files, setFiles] = useState(null);
@@ -35,36 +37,84 @@ const CreateDevice = observer(({ opened, onClose }) => {
     setInfo(info.filter((i) => i.number !== number));
   };
 
-  const selectFile = (e) => {
-    setFiles(e.target.files);
-  };
-
   const changeInfo = (key, value, number) => {
     setInfo(info.map((i) => (i.number === number ? { ...i, [key]: value } : i)));
+  };
+
+  const addInfoWithVar = () => {
+    setInfoWithVar([
+      ...infoWithVar,
+      {
+        title: '',
+        description: '',
+        variants: [{ value: '', cost: '', additionalInfo: '', number: Date.now() }],
+        number: Date.now(),
+      },
+    ]);
+  };
+
+  const setInfoVariant = (number) => {
+    const item = infoWithVar.find((i) => i.number === number);
+
+    item.variants.push({ value: '', cost: '', additionalInfo: '', number: Date.now() });
+    setInfoWithVar([...infoWithVar]);
+  };
+
+  const removeInfoVariant = (number) => {
+    const item = infoWithVar.find((i) => i.number === number);
+    item.variants.pop();
+    setInfoWithVar([...infoWithVar]);
+  };
+
+  const updateInfoVariant = (key, value, infoNumber, variantNumber) => {
+    const item = infoWithVar.find((i) => i.number === infoNumber);
+    const variant = item.variants.find((i) => i.number === variantNumber);
+
+    variant[key] = value;
+    setInfoWithVar([...infoWithVar]);
+  };
+
+  const removeInfoWithVar = (number) => {
+    setInfoWithVar(infoWithVar.filter((i) => i.number !== number));
+  };
+
+  const changeInfoWithVar = (key, value, number) => {
+    setInfoWithVar(infoWithVar.map((i) => (i.number === number ? { ...i, [key]: value } : i)));
+  };
+
+  const selectFile = (e) => {
+    setFiles(e.target.files);
   };
 
   const addDevice = (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
+    const total = {
+      properties: info,
+      propertiesWithVariants: infoWithVar,
+    };
+    // const formData = new FormData();
+    //
+    // formData.append('name', name);
+    // formData.append('price', `${price}`);
+    // formData.append('brandId', device.selectedBrand.id);
+    // formData.append('typeId', device.selectedType.id);
+    // formData.append('info', JSON.stringify(info));
+    //
+    // for (let i = 0; i < files.length; i++) {
+    //   formData.append('img', files[i]);
+    // }
+    //
+    // createDevice(formData).then(() => {
+    //   onClose();
+    // });
 
-    formData.append('name', name);
-    formData.append('price', `${price}`);
-    formData.append('brandId', device.selectedBrand.id);
-    formData.append('typeId', device.selectedType.id);
-    formData.append('info', JSON.stringify(info));
-
-    for (let i = 0; i < files.length; i++) {
-      formData.append('img', files[i]);
-    }
-
-    createDevice(formData).then(() => {
-      onClose();
-    });
+    console.log(JSON.stringify(total));
   };
 
   return (
-    // TODO: декомпозировать эту биг штуку
+    // TODO: декомпозировать эту биг штуку!!!!! прям надо
+
     <Modal opened={opened} onClose={onClose}>
       <form className={styles.form} onSubmit={addDevice}>
         <div className={styles.top}>
@@ -117,7 +167,10 @@ const CreateDevice = observer(({ opened, onClose }) => {
           <input className={styles.input} type="file" multiple={true} onChange={selectFile} />
         </div>
 
-        <Button onClick={addInfo}>Добавить новое свойство</Button>
+        <div className={styles.buttons}>
+          <Button onClick={addInfo}>Добавить новое свойство</Button>
+          <Button onClick={addInfoWithVar}>Добавить свойство с вариантами</Button>
+        </div>
 
         <div className={styles.infoBlock}>
           {info.map((item) => (
@@ -139,6 +192,73 @@ const CreateDevice = observer(({ opened, onClose }) => {
               <Button variant="danger" onClick={() => removeInfo(item.number)}>
                 Удалить
               </Button>
+            </div>
+          ))}
+        </div>
+
+        <div>
+          {infoWithVar.map((item) => (
+            <div
+              className={`${styles.infoBlockItem} ${styles.infoWidthVarBlock}`}
+              key={item.number}>
+              <div className={styles.infoWithVarItems}>
+                <input
+                  type="text"
+                  className={styles.input}
+                  placeholder="Введите название свойства"
+                  value={item.title}
+                  onChange={(e) => changeInfoWithVar('title', e.target.value, item.number)}
+                />
+                <input
+                  type="text"
+                  className={styles.input}
+                  placeholder="Введите описание свойства"
+                  value={item.description}
+                  onChange={(e) => changeInfoWithVar('description', e.target.value, item.number)}
+                />
+                <Button variant="danger" onClick={() => removeInfoWithVar(item.number)}>
+                  Удалить свойство
+                </Button>
+              </div>
+
+              <div className={styles.variantWrapper}>
+                Введите варианты:
+                <Button onClick={() => setInfoVariant(item.number)}>Добавить вариант</Button>
+                {item.variants.map((obj) => (
+                  <div key={obj.number} className={styles.variants}>
+                    <input
+                      type="text"
+                      className={styles.input}
+                      placeholder="Введите значение"
+                      value={item.variants.value}
+                      onChange={(e) =>
+                        updateInfoVariant('value', e.target.value, item.number, obj.number)
+                      }
+                    />
+                    <input
+                      type="text"
+                      className={styles.input}
+                      placeholder="Введите цену при этом значении"
+                      value={item.variants.cost}
+                      onChange={(e) =>
+                        updateInfoVariant('cost', e.target.value, item.number, obj.number)
+                      }
+                    />
+                    <input
+                      type="text"
+                      className={styles.input}
+                      placeholder="Введите дополнение к нему"
+                      value={item.variants.additionalInfo}
+                      onChange={(e) =>
+                        updateInfoVariant('additionalInfo', e.target.value, item.number, obj.number)
+                      }
+                    />
+                    <Button variant="danger" onClick={() => removeInfoVariant(item.number)}>
+                      Удалить вариант
+                    </Button>
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>

@@ -2,7 +2,7 @@ const uuid = require('uuid');
 const path = require('path');
 require('multer');
 
-const { Device, DeviceInfo, DevicePhoto } = require('../models/models');
+const { Device, DeviceInfo, DevicePhoto, DeviceVariant } = require('../models/models');
 const ApiError = require('../error/ApiError');
 const { Op } = require('sequelize');
 
@@ -44,13 +44,24 @@ class DeviceController {
 
       if (info) {
         info = JSON.parse(info);
-        info.forEach((i) =>
+        info.forEach((i) => {
           DeviceInfo.create({
             title: i.title,
             description: i.description,
             deviceId: device.id,
-          }),
-        );
+          });
+
+          // if(i.variants.length) {
+          //   i.variants.forEach(v => {
+          //     DeviceVariant.create({
+          //       title: v.title,
+          //       description: v.description,
+          //       price: v.price,
+          //       infoId: i.id,
+          //     })
+          //   })
+          // }
+        });
       }
 
       return res.json(device);
@@ -154,7 +165,7 @@ class DeviceController {
     const device = await Device.findOne({
       where: { id },
       include: [
-        { model: DeviceInfo, as: 'info' },
+        { model: DeviceInfo, as: 'info', include: [{ model: DeviceVariant, as: 'variants' }] },
         { model: DevicePhoto, as: 'photos' },
       ],
     });

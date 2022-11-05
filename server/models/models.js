@@ -54,6 +54,13 @@ const DevicePhoto = sequelize.define('device_photo', {
   deviceId: { type: DataTypes.INTEGER },
 });
 
+const DeviceVariant = sequelize.define('device_variant', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  value: { type: DataTypes.STRING, allowNull: false },
+  cost: { type: DataTypes.INTEGER, allowNull: false },
+  additionalInfo: { type: DataTypes.STRING, allowNull: false },
+});
+
 const TypeBrand = sequelize.define('type_brand', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
@@ -85,6 +92,9 @@ DeviceInfo.belongsTo(Device);
 Device.hasMany(DevicePhoto, { as: 'photos' });
 DevicePhoto.belongsTo(Device);
 
+DeviceInfo.hasMany(DeviceVariant, { as: 'variants' });
+DeviceVariant.belongsTo(DeviceInfo);
+
 Type.belongsToMany(Brand, { through: TypeBrand });
 Brand.belongsToMany(Type, { through: TypeBrand });
 
@@ -99,4 +109,5 @@ module.exports = {
   TypeBrand,
   DeviceInfo,
   DevicePhoto,
+  DeviceVariant,
 };
