@@ -9,9 +9,9 @@ import styles from './BasketDevicesList.module.scss';
 const BasketDevicesList = observer(() => {
   const { basket } = useContext(Context);
 
-  const deleteDeviceFromBasket = ({ basketItemId }) => {
+  const deleteDeviceFromBasket = (basketItemId) => {
     const updatedBasket = basket.basketDevices.filter(
-      (basketItem) => basketItem.basketItemId !== basketItemId,
+      (basketItem) => basketItem.id !== basketItemId,
     );
 
     basket.setBasketDevices(updatedBasket);
@@ -36,10 +36,12 @@ const BasketDevicesList = observer(() => {
 
   return (
     <main className={styles.container}>
-      {basket.basketDevices.map((device) => (
+      {basket.basketDevices.map((position) => (
         <BasketDeviceItem
-          key={device.basketItemId}
-          {...device}
+          key={position.id}
+          count={position.count}
+          basketItemId={position.id}
+          {...position.device}
           onDelete={deleteDeviceFromBasket}
           onChangeCount={changeBasketDeviceCount}
         />

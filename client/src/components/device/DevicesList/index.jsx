@@ -17,7 +17,7 @@ const DevicesList = observer(() => {
         <DeviceItem
           key={device.id}
           {...device}
-          isAdded={basket.basketDevices.some((item) => item.id === device.id)}
+          isAdded={basket.basketDevices.some((item) => item.device.id === device.id)}
         />
       ))}
     </main>

@@ -47,9 +47,9 @@ const DevicePage = observer(() => {
       ])
         .then(([basketData, ratingData]) => {
           if (basketData) {
-            basket.setBasketDevices(basketData.rows);
-            basket.setBasketTotalPositions(basketData.count);
-            setIsAdded(basket.basketDevices.some((item) => item.id === +id));
+            basket.setBasketDevices(basketData);
+            basket.setBasketTotalPositions(basketData.length);
+            setIsAdded(basket.basketDevices.some((item) => item.device.id === +id));
           }
 
           if (ratingData) {

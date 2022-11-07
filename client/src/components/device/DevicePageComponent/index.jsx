@@ -40,7 +40,6 @@ const DevicePageComponent = ({
                   className={styles.topImg}
                   src={`${process.env.REACT_APP_API_URL}/${photo.url}`}
                   alt={name}
-                  key={photo.id}
                 />
               </SwiperSlide>
             ))}
@@ -84,7 +83,7 @@ const DevicePageComponent = ({
           <div key={info.id}>
             {info.title} :{' '}
             {info.variants.length > 0
-              ? info.variants.map((variant) => <span>{variant.value}</span>)
+              ? info.variants.map((variant) => <span key={variant.id}>{variant.value}</span>)
               : info.description}
           </div>
         ))}

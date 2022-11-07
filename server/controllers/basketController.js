@@ -2,6 +2,8 @@ const {
   BasketDevice,
   Device,
   DevicePhoto,
+  Type,
+  Brand,
   DeviceInfo,
   DeviceVariant,
 } = require('../models/models');
@@ -49,36 +51,26 @@ class BasketController {
   async getAll(req, res, next) {
     try {
       const { basketId } = req.query;
+
       const basketsDevices = await BasketDevice.findAll({
         where: { basketId },
-      });
-      const devices = [];
-
-      Promise.all(
-        basketsDevices.map(async (item) => {
-          const device = await Device.findOne({
-            where: { id: item.deviceId },
+        include: [
+          {
+            model: Device,
             include: [
+              { model: DevicePhoto, as: 'photos' },
+              { model: Type, as: 'type' },
+              { model: Brand, as: 'brand' },
               {
                 model: DeviceInfo,
                 as: 'info',
                 include: [{ model: DeviceVariant, as: 'variants' }],
               },
-              { model: DevicePhoto, as: 'photos' },
             ],
-          });
-          if (device) {
-            devices.push({
-              ...device.dataValues,
-              count: item.count,
-              basketItemId: item.id,
-              deviceVariantId: item.deviceVariantId,
-            });
-          }
-        }),
-      ).then(() => {
-        return res.json({ rows: devices, count: devices.length });
+          },
+        ],
       });
+      return res.json(basketsDevices);
     } catch (e) {
       next(ApiError.badRequest(e.message));
     }

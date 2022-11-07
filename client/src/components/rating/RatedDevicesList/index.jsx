@@ -56,8 +56,8 @@ const RatedDevicesList = observer(() => {
           }
 
           if (basketData) {
-            basket.setBasketDevices(basketData.rows);
-            basket.setBasketTotalPositions(basketData.count);
+            basket.setBasketDevices(basketData);
+            basket.setBasketTotalPositions(basketData.length);
           }
         })
         .catch((e) => {

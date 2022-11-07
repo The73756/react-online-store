@@ -12,8 +12,8 @@ const Basket = observer(() => {
     if (user.isAuth) {
       fetchBasketDevices(user.userId)
         .then((data) => {
-          basket.setBasketDevices(data.rows);
-          basket.setBasketTotalPositions(data.count);
+          basket.setBasketDevices(data);
+          basket.setBasketTotalPositions(data.length);
         })
         .catch((e) => {
           alert('Ошибка при получении корзины');

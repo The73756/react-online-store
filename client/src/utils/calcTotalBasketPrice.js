@@ -1,3 +1,6 @@
 export const calcTotalBasketPrice = (basketDevices) => {
-  return basketDevices.reduce((total, device) => total + device.count * device.price, 0);
+  return basketDevices.reduce(
+    (total, position) => total + position.count * position.device.price,
+    0,
+  );
 };

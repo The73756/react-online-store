@@ -17,12 +17,12 @@ const BasketDeviceItem = ({
   price,
   rating,
   photos,
-  count,
-  basketItemId,
   onDelete,
   onChangeCount,
   type,
   brand,
+  count,
+  basketItemId,
 }) => {
   const { basket } = useContext(Context);
   const [localCount, setLocalCount] = useState(count);
