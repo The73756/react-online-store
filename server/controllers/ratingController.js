@@ -13,60 +13,31 @@ class RatingController {
           return res.json('You have already rated this device');
         } else {
           await Rating.update({ rate }, { where: { deviceId, userId } });
-          const ratings = await Rating.findAndCountAll({ where: { deviceId } });
-
-          if (+ratings.count !== 0) {
-            let calcRating = 0;
-
-            Promise.all(
-              ratings.rows.map((item) => {
-                calcRating += Number(item.dataValues.rate);
-              }),
-            ).then(() => {
-              calcRating = calcRating / ratings.count;
-              try {
-                Device.update({ rating: calcRating }, { where: { id: deviceId } });
-              } catch (e) {
-                next(ApiError.badRequest(e.message));
-              }
-            });
-            return res.json({
-              newRating: calcRating / ratings.count,
-              message: 'Rating updated',
-            });
-          } else {
-            return res.json({
-              newRating: undefined,
-              message: 'Rating updated',
-            });
-          }
         }
       } else {
         await Rating.create({ deviceId, userId, rate });
-        const ratings = await Rating.findAndCountAll({ where: { deviceId } });
+      }
+      const ratings = await Rating.findAndCountAll({ where: { deviceId } });
 
-        if (+ratings.count !== 0) {
-          let calcRating = 0;
+      if (+ratings.count !== 0) {
+        let calcRating = 0;
 
-          Promise.all(
-            ratings.rows.map((item) => {
-              calcRating += Number(item.dataValues.rate);
-            }),
-          ).then(() => {
-            calcRating = calcRating / ratings.count;
-            try {
-              Device.update({ rating: calcRating }, { where: { id: deviceId } });
-            } catch (e) {
-              next(ApiError.badRequest(e.message));
-            }
-          });
-          return res.json({
-            newRating: calcRating / ratings.count,
-            message: 'Rating created',
-          });
-        } else {
-          return res.json({ newRating: undefined, message: 'Rating created' });
-        }
+        Promise.all(
+          ratings.rows.map((item) => {
+            calcRating += Number(item.dataValues.rate);
+          }),
+        ).then(() => {
+          calcRating = calcRating / ratings.count;
+          try {
+            Device.update({ rating: calcRating }, { where: { id: deviceId } });
+          } catch (e) {
+            next(ApiError.badRequest(e.message));
+          }
+        });
+        return res.json({
+          newRating: calcRating / ratings.count,
+          message: 'Rating saved',
+        });
       }
     } catch (e) {
       next(ApiError.badRequest(e.message));
@@ -114,7 +85,6 @@ class RatingController {
   async delete(req, res, next) {
     try {
       const { id } = req.query;
-      console.log(id);
       await Rating.destroy({ where: { id } });
       return res.json('rating deleted');
     } catch (e) {
