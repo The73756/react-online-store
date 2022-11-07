@@ -1,4 +1,4 @@
-const { Rating, Device } = require('../models/models');
+const { Rating, Device, DevicePhoto, Type, Brand } = require('../models/models');
 const ApiError = require('../error/ApiError');
 
 class RatingController {
@@ -76,27 +76,20 @@ class RatingController {
   async getAllByUser(req, res, next) {
     try {
       const { userId } = req.query;
-      const ratings = await Rating.findAll({ where: { userId } });
-      const devices = [];
-
-      Promise.all(
-        ratings.map(async (rating) => {
-          const device = await Device.findOne({
-            where: { id: rating.deviceId },
-          });
-          if (device) {
-            devices.push({
-              ...device.dataValues,
-              ratingId: rating.id,
-              rate: rating.rate,
-              rateCreatedAt: rating.createdAt,
-              rateUpdatedAt: rating.updatedAt,
-            });
-          }
-        }),
-      ).then(() => {
-        return res.json({ rows: devices, count: devices.length });
+      const ratings = await Rating.findAll({
+        where: { userId },
+        include: [
+          {
+            model: Device,
+            include: [
+              { model: DevicePhoto, as: 'photos' },
+              { model: Type, as: 'type' },
+              { model: Brand, as: 'brand' },
+            ],
+          },
+        ],
       });
+      return res.json(ratings);
     } catch (e) {
       next(ApiError.badRequest(e.message));
     }
