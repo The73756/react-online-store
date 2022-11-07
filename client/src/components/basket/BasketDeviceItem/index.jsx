@@ -1,21 +1,28 @@
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useDebounce from '../../../hooks/useDebounce';
-import { DEVICE_ROUTE } from '../../../utils/consts';
-import styles from './BasketDevice.module.scss';
 import Button from '../../../theme/Button';
+import { DEVICE_ROUTE } from '../../../utils/consts';
 import { Context } from '../../../index';
+import { Lazy, Pagination } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/lazy';
+import styles from './BasketDevice.module.scss';
 
 const BasketDeviceItem = ({
   id,
   name,
   price,
   rating,
-  img,
+  photos,
   count,
   basketItemId,
   onDelete,
   onChangeCount,
+  type,
+  brand,
 }) => {
   const { basket } = useContext(Context);
   const [localCount, setLocalCount] = useState(count);
@@ -45,12 +52,28 @@ const BasketDeviceItem = ({
   return (
     <article className={styles.item}>
       <div className={styles.itemImg}>
-        <img src={`${process.env.REACT_APP_API_URL}/${img}`} alt={name} width={80} height={80} />
+        <Swiper
+          modules={[Pagination, Lazy]}
+          slidesPerView={1}
+          pagination={{ clickable: true }}
+          lazy={true}>
+          {photos.map((photo) => (
+            <SwiperSlide key={photo.id}>
+              <img
+                src={`${process.env.REACT_APP_API_URL}/${photo.url}`}
+                alt={name}
+                key={photo.id}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
 
       <div className={styles.itemInfo}>
         <h3>{name}</h3>
-        <p>смарфон сиаоме</p>
+        <p>
+          {type.name.slice(0, -1)}, {brand.name}
+        </p>
         <Link to={`${DEVICE_ROUTE}/${id}`} className={styles.link} />
       </div>
 

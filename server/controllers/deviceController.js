@@ -1,10 +1,15 @@
-const uuid = require('uuid');
-const path = require('path');
 require('multer');
-
-const { Device, DeviceInfo, DevicePhoto, DeviceVariant } = require('../models/models');
 const ApiError = require('../error/ApiError');
 const { Op } = require('sequelize');
+const uuid = require('uuid');
+const path = require('path');
+const { Device, DeviceInfo, DevicePhoto, DeviceVariant, Type, Brand } = require('../models/models');
+
+const includeArr = [
+  { model: DevicePhoto, as: 'photos' },
+  { model: Type, as: 'type' },
+  { model: Brand, as: 'brand' },
+];
 
 class DeviceController {
   async create(req, res, next) {
@@ -94,7 +99,7 @@ class DeviceController {
     if (!brandId && !typeId && !search) {
       devices = await Device.findAll({
         order: [[sort, order]],
-        include: [{ model: DevicePhoto, as: 'photos' }],
+        include: includeArr,
         limit,
         offset,
       });
@@ -104,7 +109,7 @@ class DeviceController {
       devices = await Device.findAll({
         where: { name: { [Op.iRegexp]: search } },
         order: [[sort, order]],
-        include: [{ model: DevicePhoto, as: 'photos' }],
+        include: includeArr,
         limit,
         offset,
       });
@@ -114,7 +119,7 @@ class DeviceController {
       devices = await Device.findAll({
         where: { brandId },
         order: [[sort, order]],
-        include: [{ model: DevicePhoto, as: 'photos' }],
+        include: includeArr,
         limit,
         offset,
       });
@@ -124,7 +129,7 @@ class DeviceController {
       devices = await Device.findAll({
         where: { brandId, name: { [Op.iRegexp]: search } },
         order: [[sort, order]],
-        include: [{ model: DevicePhoto, as: 'photos' }],
+        include: includeArr,
         limit,
         offset,
       });
@@ -134,7 +139,7 @@ class DeviceController {
       devices = await Device.findAll({
         where: { typeId },
         order: [[sort, order]],
-        include: [{ model: DevicePhoto, as: 'photos' }],
+        include: includeArr,
         limit,
         offset,
       });
@@ -144,7 +149,7 @@ class DeviceController {
       devices = await Device.findAll({
         where: { typeId, name: { [Op.iRegexp]: search } },
         order: [[sort, order]],
-        include: [{ model: DevicePhoto, as: 'photos' }],
+        include: includeArr,
         limit,
         offset,
       });
@@ -154,7 +159,7 @@ class DeviceController {
       devices = await Device.findAll({
         where: { typeId, brandId },
         order: [[sort, order]],
-        include: [{ model: DevicePhoto, as: 'photos' }],
+        include: includeArr,
         limit,
         offset,
       });
@@ -164,7 +169,7 @@ class DeviceController {
       devices = await Device.findAll({
         where: { typeId, brandId, name: { [Op.iRegexp]: search } },
         order: [[sort, order]],
-        include: [{ model: DevicePhoto, as: 'photos' }],
+        include: includeArr,
         limit,
         offset,
       });

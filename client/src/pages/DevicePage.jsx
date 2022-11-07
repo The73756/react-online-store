@@ -17,7 +17,7 @@ const DevicePage = observer(() => {
   const [isUserDataLoading, setIsUserDataLoading] = useState(true);
 
   const addDeviceToBasket = () => {
-    createBasketDevice({ deviceId: id, basketId: user.userId })
+    createBasketDevice({ deviceId: id, basketId: user.userId, deviceVariantId: 1 })
       .then(() => {
         setIsAdded(true);
         basket.setBasketTotalPositions(basket.basketTotalPositions + 1);

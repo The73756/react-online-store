@@ -2,12 +2,13 @@ import { Link } from 'react-router-dom';
 import { DEVICE_ROUTE } from '../../../utils/consts';
 import { Lazy, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
+
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/lazy';
 import styles from './DeviceItem.module.scss';
 
-const DeviceItem = ({ id, name, price, rating, isAdded, type, brand, photos }) => {
+const DeviceItem = ({ id, name, price, rating, isAdded, photos, type, brand }) => {
   // TODO: Сделать нормальный хайлайт добавленности в корзину
   return (
     <article className={styles.card} style={{ borderColor: isAdded ? 'green' : '#ccc' }}>
@@ -31,7 +32,7 @@ const DeviceItem = ({ id, name, price, rating, isAdded, type, brand, photos }) =
 
       <div className={styles.top}>
         <span className={styles.subtitle}>
-          {type.slice(0, -1)}, {brand}
+          {type.name.slice(0, -1)}, {brand.name}
         </span>
         <div className={styles.rating}>
           <span>{rating.toFixed(1)}</span>

@@ -1,21 +1,28 @@
-const { BasketDevice, Device } = require('../models/models');
+const {
+  BasketDevice,
+  Device,
+  DevicePhoto,
+  DeviceInfo,
+  DeviceVariant,
+} = require('../models/models');
 const ApiError = require('../error/ApiError');
 
 class BasketController {
   async create(req, res, next) {
     try {
-      const { deviceId, basketId } = req.body;
+      const { deviceId, basketId, deviceVariantId } = req.body;
 
       if (!deviceId || !basketId) {
         return next(ApiError.badRequest('deviceId or basketId not found'));
       }
 
-      const basketdevice = await BasketDevice.create({
+      const basketDevice = await BasketDevice.create({
         deviceId,
         basketId,
         count: 1,
+        deviceVariantId,
       });
-      return res.json(basketdevice);
+      return res.json(basketDevice);
     } catch (e) {
       next(ApiError.badRequest(e.message));
     }
@@ -51,12 +58,21 @@ class BasketController {
         basketsDevices.map(async (item) => {
           const device = await Device.findOne({
             where: { id: item.deviceId },
+            include: [
+              {
+                model: DeviceInfo,
+                as: 'info',
+                include: [{ model: DeviceVariant, as: 'variants' }],
+              },
+              { model: DevicePhoto, as: 'photos' },
+            ],
           });
           if (device) {
             devices.push({
               ...device.dataValues,
               count: item.count,
               basketItemId: item.id,
+              deviceVariantId: item.deviceVariantId,
             });
           }
         }),
