@@ -17,9 +17,7 @@ const RatedDevicesList = observer(() => {
     deleteRating(id)
       .then((data) => {
         console.log(data);
-        rating.setRatedDevices(
-          rating.ratedDevices.filter((ratedDevice) => ratedDevice.ratingId !== id),
-        );
+        rating.setRatedDevices(rating.ratedDevices.filter((ratedDevice) => ratedDevice.id !== id));
         rating.setRatedDevicesCount(rating.ratedDevicesCount - 1);
       })
       .catch((e) => {
@@ -51,8 +49,8 @@ const RatedDevicesList = observer(() => {
       Promise.all([fetchRatings(user.userId), fetchBasketDevices(user.userId)])
         .then(([ratingsData, basketData]) => {
           if (ratingsData) {
-            rating.setRatedDevices(ratingsData.rows);
-            rating.setRatedDevicesCount(ratingsData.count);
+            rating.setRatedDevices(ratingsData);
+            rating.setRatedDevicesCount(ratingsData.length);
           }
 
           if (basketData) {
@@ -74,14 +72,15 @@ const RatedDevicesList = observer(() => {
 
   return (
     <div className={styles.container}>
-      {rating.ratedDevices.map((device) => (
+      {rating.ratedDevices.map((rate) => (
         <RatedDeviceItem
-          key={device.id}
-          {...device}
+          key={rate.id}
+          device={rate.device}
+          {...rate}
           onDelete={deleteRate}
           onAddToBasket={addDeviceToBasket}
           isItemLoading={isItemLoading}
-          isAdded={basket.basketDevices.some((item) => item.id === +device.id)}
+          isAdded={basket.basketDevices.some((item) => item.device.id === rate.device.id)}
         />
       ))}
     </div>

@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { DEVICE_ROUTE } from '../../../utils/consts';
 import { Lazy, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/lazy';

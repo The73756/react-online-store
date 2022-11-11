@@ -67,8 +67,8 @@ const Shop = observer(() => {
           basket.setBasketDevices(basketDevices);
           basket.setBasketTotalPositions(basketDevices.length);
 
-          rating.setRatedDevices(ratings.rows);
-          rating.setRatedDevicesCount(ratings.count);
+          rating.setRatedDevices(ratings);
+          rating.setRatedDevicesCount(ratings.length);
         })
         .catch((e) => {
           alert('Ошибка при загрузке корзины и рейтингов');

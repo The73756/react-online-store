@@ -39,7 +39,7 @@ const BasketDeviceItem = ({
   const decrementCount = () => {
     if (localCount - 1 <= 0) {
       setLocalCount(0);
-      onDelete(basketItemId, localCount);
+      onDelete(basketItemId);
     } else {
       setLocalCount(localCount - 1);
       debouncedCount(basketItemId, localCount - 1);
@@ -126,7 +126,8 @@ const BasketDeviceItem = ({
           <Button
             className={styles.itemBtn}
             variant="danger"
-            onClick={() => onDelete({ basketItemId, price, count: localCount })}>
+            onClick={() => onDelete(basketItemId)}
+            aria-label="Удалить товар">
             <svg
               style={{ transform: 'rotate(45deg)' }}
               width="10"

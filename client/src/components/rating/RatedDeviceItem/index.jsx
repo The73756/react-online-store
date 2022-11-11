@@ -1,48 +1,65 @@
 import { useContext, useState } from 'react';
+import { Lazy, Pagination } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { Link } from 'react-router-dom';
-import { Context } from '../../..';
+
 import AddToBasketBtn from '../../../theme/AddToBasketBtn';
 import Button from '../../../theme/Button';
-import { DEVICE_ROUTE } from '../../../utils/consts';
 import RatingComponent from '../RatingComponent';
+import { Context } from '../../..';
+import { DEVICE_ROUTE } from '../../../utils/consts';
+
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/lazy';
 import styles from './RatedDeviceItem.module.scss';
 
 const RatedDeviceItem = ({
+  device,
   id,
-  name,
-  img,
-  price,
   rate,
-  rating,
-  rateCreatedAt,
-  rateUpdatedAt,
-  ratingId,
+  createdAt,
+  updatedAt,
   isAdded,
   onDelete,
   onAddToBasket,
   isItemLoading,
 }) => {
   const { user } = useContext(Context);
-  const [deviceRating, setDeviceRating] = useState(rating);
+  const [deviceRating, setDeviceRating] = useState(device.rating);
   const [localRate, setLocalRate] = useState(rate);
   const [localIsAdded, setLocalIsAdded] = useState(isAdded);
-  const createDate = new Date(rateCreatedAt).toLocaleString();
-  const updateDate = new Date(rateUpdatedAt).toLocaleString();
+  const createDate = new Date(createdAt).toLocaleString();
+  const updateDate = new Date(updatedAt).toLocaleString();
 
   const handleAddToBasket = () => {
-    onAddToBasket(id, () => setLocalIsAdded(true));
+    onAddToBasket(device.id, () => setLocalIsAdded(true));
   };
 
   return (
     <article className={`${styles.card} ${isItemLoading ? styles.loading : ''}`}>
       <Link to={`${DEVICE_ROUTE}/${id}`} className={styles.link}>
         <div className={styles.top}>
-          <img src={`${process.env.REACT_APP_API_URL}/${img}`} alt={name} className={styles.img} />
+          <Swiper
+            modules={[Pagination, Lazy]}
+            slidesPerView={1}
+            lazy={true}
+            pagination={{ clickable: true }}>
+            {device.photos.map((photo) => (
+              <SwiperSlide key={photo.id}>
+                <img
+                  src={`${process.env.REACT_APP_API_URL}/${photo.url}`}
+                  alt={device.name}
+                  className={styles.img}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
           <div className={styles.topRight}>
-            <h2 className={styles.title}>{name}</h2>
-            <p className={styles.price}>{price} ₽</p>
+            <h2 className={styles.title}>{device.name}</h2>
+            <p className={styles.price}>{device.price} ₽</p>
             <div className={styles.rating}>
-              <span>{deviceRating}</span>
+              <span>{deviceRating.toFixed(1)}</span>
               <svg
                 width="15"
                 height="15"
@@ -65,7 +82,7 @@ const RatedDeviceItem = ({
           <RatingComponent
             rate={localRate}
             setRate={setLocalRate}
-            deviceId={id}
+            deviceId={device.id}
             setLocalRating={setDeviceRating}
           />
           <AddToBasketBtn
@@ -81,7 +98,7 @@ const RatedDeviceItem = ({
           <p className={styles.date}>
             <span>Оценка обновлена:</span> {updateDate}
           </p>
-          <Button onClick={() => onDelete(ratingId)}>Удалить</Button>
+          <Button onClick={() => onDelete(id)}>Удалить</Button>
         </div>
       </div>
     </article>
