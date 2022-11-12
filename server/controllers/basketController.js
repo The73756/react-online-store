@@ -6,13 +6,14 @@ const {
   Brand,
   DeviceInfo,
   DeviceVariant,
+  BasketDeviceVariant,
 } = require('../models/models');
 const ApiError = require('../error/ApiError');
 
 class BasketController {
   async create(req, res, next) {
     try {
-      const { deviceId, basketId, deviceVariantId } = req.body;
+      let { deviceId, basketId, variantsId } = req.body; /*  typeOf(JSON.parse(variantsId)) array */
 
       if (!deviceId || !basketId) {
         return next(ApiError.badRequest('deviceId or basketId not found'));
@@ -22,8 +23,21 @@ class BasketController {
         deviceId,
         basketId,
         count: 1,
-        deviceVariantId,
       });
+
+      if (variantsId) {
+        variantsId = JSON.parse(variantsId);
+
+        if (variantsId.length > 0) {
+          variantsId.forEach((variantId) => {
+            BasketDeviceVariant.create({
+              deviceVariantId: variantId,
+              basketDeviceId: basketDevice.id,
+            });
+          });
+        }
+      }
+
       return res.json(basketDevice);
     } catch (e) {
       next(ApiError.badRequest(e.message));
@@ -84,18 +98,15 @@ class BasketController {
         return next(ApiError.badRequest('id not found'));
       }
 
-      const device = await BasketDevice.findOne({
+      await BasketDeviceVariant.destroy({
+        where: { basketDeviceId: id },
+      });
+
+      await BasketDevice.destroy({
         where: { id },
       });
 
-      if (!device) {
-        return next(ApiError.badRequest('Basket device not found'));
-      } else {
-        await BasketDevice.destroy({
-          where: { id },
-        });
-        return res.json('basket device deleted');
-      }
+      return res.json('basket device deleted');
     } catch (e) {
       next(ApiError.badRequest(e.message));
     }

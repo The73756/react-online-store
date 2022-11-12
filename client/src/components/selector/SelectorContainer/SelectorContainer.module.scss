@@ -1,0 +1,31 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  padding: 6px;
+  background-color: #f3f3f3;
+
+  ul {
+    display: flex;
+    flex: 1;
+
+    &:first-of-type {
+      margin-bottom: 6px;
+    }
+
+    li {
+      flex: 1;
+      padding: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+    }
+  }
+}
+
+.selector .active {
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 4%);
+  background: #fff;
+  cursor: auto;
+}

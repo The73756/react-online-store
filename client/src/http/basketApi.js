@@ -7,6 +7,8 @@ export const createBasketDevice = async (device) => {
     new FormData(),
   );
 
+  formData.append('variantsId', JSON.stringify([1, 2]));
+
   const { data } = await $authHost.post('/api/basket', formData);
   return data;
 };

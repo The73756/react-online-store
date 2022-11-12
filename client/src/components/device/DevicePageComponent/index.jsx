@@ -8,6 +8,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/lazy';
 import styles from './DevicePageComponent.module.scss';
+import SelectorContainer from '../../selector/SelectorContainer';
 
 const DevicePageComponent = ({
   name,
@@ -23,7 +24,22 @@ const DevicePageComponent = ({
 }) => {
   const [localDeviceRating, setLocalDeviceRating] = useState(rating);
   const [localRate, setLocalRate] = useState(userRate);
+  const [selectedVariant, setSelectedVariants] = useState({});
   const { user } = useContext(Context);
+
+  const setVariantsObj = (id) => {
+    /*
+     *   [
+     *     {variantId: 1, value: "name", cost: 42323, additionalInfo: "biba"},
+     *   ]
+     *
+     *
+     *
+     *
+     * */
+
+    setSelectedVariants((prev) => ({ ...prev, [id]: { ...prev[id], id } }));
+  };
 
   return (
     <div className="container">
@@ -82,9 +98,11 @@ const DevicePageComponent = ({
         {info.map((info) => (
           <div key={info.id}>
             {info.title} :{' '}
-            {info.variants.length > 0
-              ? info.variants.map((variant) => <span key={variant.id}>{variant.value}</span>)
-              : info.description}
+            {info.variants.length > 0 ? (
+              <SelectorContainer variants={info.variants} setGlobalState={setVariantsObj} />
+            ) : (
+              info.description
+            )}
           </div>
         ))}
       </div>

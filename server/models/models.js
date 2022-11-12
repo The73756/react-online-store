@@ -20,6 +20,10 @@ const BasketDevice = sequelize.define('basket_device', {
   count: { type: DataTypes.INTEGER },
 });
 
+const BasketDeviceVariant = sequelize.define('basket_device_variant', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+});
+
 const Device = sequelize.define('device', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, unique: true, allowNull: false },
@@ -87,16 +91,16 @@ Device.hasMany(BasketDevice);
 BasketDevice.belongsTo(Device);
 
 Device.hasMany(DeviceInfo, { as: 'info' });
-DeviceInfo.belongsTo(Device);
+DeviceInfo.belongsTo(Device, { onDelete: 'cascade' });
 
 Device.hasMany(DevicePhoto, { as: 'photos' });
-DevicePhoto.belongsTo(Device);
+DevicePhoto.belongsTo(Device, { onDelete: 'cascade' });
 
 DeviceInfo.hasMany(DeviceVariant, { as: 'variants' });
 DeviceVariant.belongsTo(DeviceInfo);
 
-DeviceVariant.hasMany(BasketDevice, { as: 'variant' });
-BasketDevice.belongsTo(DeviceVariant);
+DeviceVariant.hasMany(BasketDeviceVariant, { as: 'variant' });
+BasketDeviceVariant.belongsTo(BasketDevice, { onDelete: 'cascade' });
 
 Type.belongsToMany(Brand, { through: TypeBrand });
 Brand.belongsToMany(Type, { through: TypeBrand });
@@ -105,6 +109,7 @@ module.exports = {
   User,
   Basket,
   BasketDevice,
+  BasketDeviceVariant,
   Device,
   Type,
   Brand,
