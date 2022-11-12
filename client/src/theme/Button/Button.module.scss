@@ -93,6 +93,22 @@
   }
 }
 
+.active {
+  color: var(--active-color);
+  background-color: var(--active);
+
+  &:hover {
+    background-color: var(--active-hover);
+  }
+
+  &.unHovered,
+  &.disabled {
+    &:hover {
+      background-color: var(--active);
+    }
+  }
+}
+
 .disabled {
   opacity: 0.5;
   cursor: default;

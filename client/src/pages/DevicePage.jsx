@@ -16,8 +16,16 @@ const DevicePage = observer(() => {
   const [isLoading, setIsLoading] = useState(true);
   const [isUserDataLoading, setIsUserDataLoading] = useState(true);
 
-  const addDeviceToBasket = () => {
-    createBasketDevice({ deviceId: id, basketId: user.userId, deviceVariantId: 1 })
+  const addDeviceToBasket = (variantsObj) => {
+    if (!variantsObj.length) {
+      return alert('Выберите вариант!');
+    }
+
+    createBasketDevice({
+      deviceId: +id,
+      basketId: +user.userId,
+      variantsId: variantsObj.map((variant) => variant.id),
+    })
       .then(() => {
         setIsAdded(true);
         basket.setBasketTotalPositions(basket.basketTotalPositions + 1);

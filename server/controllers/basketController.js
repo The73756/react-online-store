@@ -15,10 +15,6 @@ class BasketController {
     try {
       let { deviceId, basketId, variantsId } = req.body; /*  typeOf(JSON.parse(variantsId)) array */
 
-      if (!deviceId || !basketId) {
-        return next(ApiError.badRequest('deviceId or basketId not found'));
-      }
-
       const basketDevice = await BasketDevice.create({
         deviceId,
         basketId,
@@ -75,12 +71,12 @@ class BasketController {
               { model: DevicePhoto, as: 'photos' },
               { model: Type, as: 'type' },
               { model: Brand, as: 'brand' },
-              {
-                model: DeviceInfo,
-                as: 'info',
-                include: [{ model: DeviceVariant, as: 'variants' }],
-              },
             ],
+          },
+          {
+            model: BasketDeviceVariant,
+            as: 'variants',
+            include: [DeviceVariant],
           },
         ],
       });

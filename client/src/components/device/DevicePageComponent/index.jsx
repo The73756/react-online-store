@@ -2,13 +2,13 @@ import { useContext, useState } from 'react';
 import { Context } from '../../..';
 import AddToBasketBtn from '../../../theme/AddToBasketBtn';
 import RatingComponent from '../../rating/RatingComponent';
+import SelectorContainer from '../../selector/SelectorContainer';
 import { Lazy, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/lazy';
 import styles from './DevicePageComponent.module.scss';
-import SelectorContainer from '../../selector/SelectorContainer';
 
 const DevicePageComponent = ({
   name,
@@ -24,21 +24,19 @@ const DevicePageComponent = ({
 }) => {
   const [localDeviceRating, setLocalDeviceRating] = useState(rating);
   const [localRate, setLocalRate] = useState(userRate);
-  const [selectedVariant, setSelectedVariants] = useState({});
+  const [selectedVariant, setSelectedVariants] = useState([]);
   const { user } = useContext(Context);
 
-  const setVariantsObj = (id) => {
-    /*
-     *   [
-     *     {variantId: 1, value: "name", cost: 42323, additionalInfo: "biba"},
-     *   ]
-     *
-     *
-     *
-     *
-     * */
+  const setVariantsObj = (infoId, id) => {
+    const item = selectedVariant.find((variant) => variant.infoId === infoId);
 
-    setSelectedVariants((prev) => ({ ...prev, [id]: { ...prev[id], id } }));
+    if (item) {
+      setSelectedVariants((prev) =>
+        prev.map((variant) => (variant.infoId === infoId ? { ...variant, id } : variant)),
+      );
+    } else {
+      setSelectedVariants([...selectedVariant, { infoId, id }]);
+    }
   };
 
   return (
@@ -89,7 +87,7 @@ const DevicePageComponent = ({
             isAuth={user.isAuth}
             isLoading={isUserDataLoading}
             isAdded={isAdded}
-            onAddToBasket={addDeviceToBasket}
+            onAddToBasket={() => addDeviceToBasket(selectedVariant)}
           />
         </div>
       </div>
@@ -99,7 +97,11 @@ const DevicePageComponent = ({
           <div key={info.id}>
             {info.title} :{' '}
             {info.variants.length > 0 ? (
-              <SelectorContainer variants={info.variants} setGlobalState={setVariantsObj} />
+              <SelectorContainer
+                infoId={info.id}
+                variants={info.variants}
+                setGlobalState={setVariantsObj}
+              />
             ) : (
               info.description
             )}
