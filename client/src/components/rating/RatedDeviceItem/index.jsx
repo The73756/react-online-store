@@ -38,7 +38,7 @@ const RatedDeviceItem = ({
 
   return (
     <article className={`${styles.card} ${isItemLoading ? styles.loading : ''}`}>
-      <Link to={`${DEVICE_ROUTE}/${id}`} className={styles.link}>
+      <Link to={`${DEVICE_ROUTE}/${device.id}`} className={styles.link}>
         <div className={styles.top}>
           <Swiper
             modules={[Pagination, Lazy]}

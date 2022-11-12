@@ -96,6 +96,8 @@ class DeviceController {
     search = search || '';
     let devices;
 
+    const count = await Device.count();
+
     if (!brandId && !typeId && !search) {
       devices = await Device.findAll({
         order: [[sort, order]],
@@ -175,7 +177,7 @@ class DeviceController {
       });
     }
 
-    return res.json(devices);
+    return res.json({ rows: devices, count });
   }
 
   async getOne(req, res) {
