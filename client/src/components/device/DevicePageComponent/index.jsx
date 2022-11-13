@@ -28,6 +28,7 @@ const DevicePageComponent = observer(
     const [localRate, setLocalRate] = useState(userRate);
     const [selectedVariant, setSelectedVariant] = useState([]);
     const [isDeviceVariantSame, setIsDeviceVariantSame] = useState(false);
+    const [localPrice, setLocalPrice] = useState(price);
     const { user, basket } = useContext(Context);
 
     const isDeviceVariantsSame = () => {
@@ -120,7 +121,7 @@ const DevicePageComponent = observer(
             )}
           </div>
           <div>
-            <h3 className={styles.price}>{price} Руб.</h3>
+            <h3 className={styles.price}>{localPrice} Руб.</h3>
             <AddToBasketBtn
               isAuth={user.isAuth}
               isLoading={isUserDataLoading || isBasketUpdating}
@@ -139,6 +140,8 @@ const DevicePageComponent = observer(
                   infoId={info.id}
                   variants={info.variants}
                   setGlobalState={setVariantsObj}
+                  setPrice={setLocalPrice}
+                  price={price}
                 />
               ) : (
                 info.description

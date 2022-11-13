@@ -27,6 +27,10 @@ const BasketDeviceItem = ({
   const [localCount, setLocalCount] = useState(count);
   const debouncedCount = useDebounce(onChangeCount, 400);
 
+  variants.forEach((variant) => {
+    price += variant.device_variant.cost;
+  });
+
   const incrementCount = () => {
     setLocalCount(localCount + 1);
     debouncedCount(basketItemId, localCount + 1);

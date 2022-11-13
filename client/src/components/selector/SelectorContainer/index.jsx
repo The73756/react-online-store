@@ -1,14 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './SelectorContainer.module.scss';
 import SelectorItem from '../SelectorItem';
 
-const SelectorContainer = ({ variants, infoId, setGlobalState, setPrice }) => {
+const SelectorContainer = ({ variants, infoId, setGlobalState, price, setPrice }) => {
   const [selectedVariant, setSelectedVariant] = useState(variants[0].id);
 
+  useEffect(() => {
+    setPrice(+price + variants.find((variant) => variant.id === selectedVariant).cost);
+  }, []);
+
   const onChange = (id) => {
+    const variant = variants.find((variant) => variant.id === id);
+
     setSelectedVariant(id);
     setGlobalState(infoId, id);
-    // setPrice(variants[id].cost);
+    setPrice(price + variant.cost);
   };
 
   return (
