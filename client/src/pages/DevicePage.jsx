@@ -11,12 +11,12 @@ const DevicePage = observer(() => {
   const { id } = useParams();
   const { user, basket } = useContext(Context);
   const [device, setDevice] = useState([]);
-  const [isAdded, setIsAdded] = useState(false);
   const [userRate, setUserRate] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isUserDataLoading, setIsUserDataLoading] = useState(true);
+  const [isBasketUpdating, setIsBasketUpdating] = useState(false);
 
-  const addDeviceToBasket = (variantsObj) => {
+  const addDeviceToBasket = (variantsObj, callback) => {
     if (!variantsObj.length) {
       return alert('Выберите вариант!');
     }
@@ -27,8 +27,15 @@ const DevicePage = observer(() => {
       variantsId: variantsObj.map((variant) => variant.id),
     })
       .then(() => {
-        setIsAdded(true);
-        basket.setBasketTotalPositions(basket.basketTotalPositions + 1);
+        setIsBasketUpdating(true);
+
+        fetchBasketDevices(user.userId)
+          .then((data) => {
+            basket.setBasketDevices(data);
+            basket.setBasketTotalPositions(data.length);
+            callback();
+          })
+          .finally(() => setIsBasketUpdating(false));
       })
       .catch((e) => {
         alert('Ошибка при добавлении товара в корзину');
@@ -57,7 +64,6 @@ const DevicePage = observer(() => {
           if (basketData) {
             basket.setBasketDevices(basketData);
             basket.setBasketTotalPositions(basketData.length);
-            setIsAdded(basket.basketDevices.some((item) => item.device.id === +id));
           }
 
           if (ratingData) {
@@ -87,9 +93,9 @@ const DevicePage = observer(() => {
         {...device}
         isLoading={isLoading}
         addDeviceToBasket={addDeviceToBasket}
-        isAdded={isAdded}
         isUserDataLoading={isUserDataLoading}
         userRate={userRate}
+        isBasketUpdating={isBasketUpdating}
         setUserRate={setUserRate}
       />
     </div>

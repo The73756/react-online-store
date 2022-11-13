@@ -41,6 +41,7 @@ const BasketDevicesList = observer(() => {
           key={position.id}
           count={position.count}
           basketItemId={position.id}
+          variants={position.variants}
           {...position.device}
           onDelete={deleteDeviceFromBasket}
           onChangeCount={changeBasketDeviceCount}

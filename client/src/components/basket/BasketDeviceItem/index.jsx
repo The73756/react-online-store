@@ -19,8 +19,7 @@ const BasketDeviceItem = ({
   photos,
   onDelete,
   onChangeCount,
-  type,
-  brand,
+  variants,
   count,
   basketItemId,
 }) => {
@@ -71,9 +70,11 @@ const BasketDeviceItem = ({
 
       <div className={styles.itemInfo}>
         <h3>{name}</h3>
-        <p>
-          {type.name.slice(0, -1)}, {brand.name}
-        </p>
+        <div>
+          {variants.map((variant) => (
+            <p key={variant.id}>{variant.device_variant.value}</p>
+          ))}
+        </div>
         <Link to={`${DEVICE_ROUTE}/${id}`} className={styles.link} />
       </div>
 
