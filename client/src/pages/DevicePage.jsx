@@ -17,10 +17,6 @@ const DevicePage = observer(() => {
   const [isBasketUpdating, setIsBasketUpdating] = useState(false);
 
   const addDeviceToBasket = (variantsObj, callback) => {
-    if (!variantsObj.length) {
-      return alert('Выберите вариант!');
-    }
-
     createBasketDevice({
       deviceId: +id,
       basketId: +user.userId,

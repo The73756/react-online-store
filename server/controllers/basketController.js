@@ -4,7 +4,6 @@ const {
   DevicePhoto,
   Type,
   Brand,
-  DeviceInfo,
   DeviceVariant,
   BasketDeviceVariant,
 } = require('../models/models');
@@ -76,7 +75,7 @@ class BasketController {
           {
             model: BasketDeviceVariant,
             as: 'variants',
-            include: [DeviceVariant],
+            include: { model: DeviceVariant, as: 'device_variant' },
           },
         ],
       });

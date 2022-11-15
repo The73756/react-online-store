@@ -27,25 +27,27 @@ const DevicePageComponent = observer(
     const [localDeviceRating, setLocalDeviceRating] = useState(rating);
     const [localRate, setLocalRate] = useState(userRate);
     const [selectedVariant, setSelectedVariant] = useState([]);
-    const [isDeviceVariantSame, setIsDeviceVariantSame] = useState(false);
+    const [isDeviceAdded, setIsDeviceAdded] = useState(false);
     const [localPrice, setLocalPrice] = useState(price);
     const { user, basket } = useContext(Context);
 
-    const isDeviceVariantsSame = () => {
+    const checkDeviceInBasket = () => {
       const basketItemVariants = basket?.basketDevices.filter((item) => item.device.id === +id);
 
-      if (!basketItemVariants || !selectedVariant.length) return false;
+      if (!basketItemVariants || !selectedVariant.length) {
+        setIsDeviceAdded(basket?.basketDevices.some((item) => item.device.id === +id));
+      } else {
+        const variantsId = selectedVariant.map((variant) => variant.id);
+        const basketVariantsId = [];
 
-      const variantsId = selectedVariant.map((variant) => variant.id);
-      const basketVariantsId = [];
-
-      basketItemVariants.forEach((item) => {
-        item.variants.forEach((variant) => {
-          basketVariantsId.push(variant.device_variant.id);
+        basketItemVariants.forEach((item) => {
+          item.variants.forEach((variant) => {
+            basketVariantsId.push(variant.device_variant.id);
+          });
         });
-      });
 
-      setIsDeviceVariantSame(variantsId.every((variantId) => basketVariantsId.includes(variantId)));
+        setIsDeviceAdded(variantsId.every((variantId) => basketVariantsId.includes(variantId)));
+      }
     };
 
     useEffect(() => {
@@ -58,12 +60,12 @@ const DevicePageComponent = observer(
       });
 
       setSelectedVariant(initVariants);
-      isDeviceVariantsSame();
+      checkDeviceInBasket();
     }, []);
 
     // not sure if this is the best way to do it, but it works
     useEffect(() => {
-      isDeviceVariantsSame();
+      checkDeviceInBasket();
     }, [selectedVariant]);
 
     const setVariantsObj = (infoId, id) => {
@@ -125,8 +127,8 @@ const DevicePageComponent = observer(
             <AddToBasketBtn
               isAuth={user.isAuth}
               isLoading={isUserDataLoading || isBasketUpdating}
-              isAdded={isDeviceVariantSame}
-              onAddToBasket={() => addDeviceToBasket(selectedVariant, isDeviceVariantsSame)}
+              isAdded={isDeviceAdded}
+              onAddToBasket={() => addDeviceToBasket(selectedVariant, checkDeviceInBasket)}
             />
           </div>
         </div>

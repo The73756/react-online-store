@@ -40,16 +40,18 @@ const BasketDeviceItem = ({
   };
 
   const decrementCount = () => {
+    const totalPrice = basket.basketTotalPrice - price <= 0 ? 0 : basket.basketTotalPrice - price;
+    const totalCount = basket.basketTotalCount - 1 <= 0 ? 0 : basket.basketTotalCount - 1;
+
     if (localCount - 1 <= 0) {
       setLocalCount(0);
       onDelete(basketItemId);
     } else {
       setLocalCount(localCount - 1);
-      debouncedCount(basketItemId, localCount - 1);
+      debouncedCount(basketItemId, localCount);
     }
-
-    basket.setBasketTotalPrice(basket.basketTotalPrice - price);
-    basket.setBasketTotalCount(basket.basketTotalCount - 1);
+    basket.setBasketTotalCount(totalCount);
+    basket.setBasketTotalPrice(totalPrice);
   };
 
   return (
