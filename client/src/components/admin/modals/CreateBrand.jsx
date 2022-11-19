@@ -9,6 +9,12 @@ const CreateBrand = ({ opened, onClose }) => {
 
   const addBrand = (e) => {
     e.preventDefault();
+
+    if (!value) {
+      alert('Введите название бренда!');
+      return;
+    }
+
     createBrand({ name: value })
       .then(() => {
         setValue('');

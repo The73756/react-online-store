@@ -1,10 +1,11 @@
 import { useContext, useState } from 'react';
+import { observer } from 'mobx-react-lite';
 import { Context } from '../../../index';
 import Button from '../../../theme/Button';
 
 import styles from './DeviceMetaSelect.module.scss';
 
-const DeviceMetaSelect = ({ rootClassname }) => {
+const DeviceMetaSelect = observer(({ rootClassname }) => {
   const { device } = useContext(Context);
 
   const [isDdTypeOpen, setIsDdTypeOpen] = useState(false);
@@ -41,6 +42,6 @@ const DeviceMetaSelect = ({ rootClassname }) => {
       </ul>
     </div>
   );
-};
+});
 
 export default DeviceMetaSelect;

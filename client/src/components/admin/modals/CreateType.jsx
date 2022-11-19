@@ -9,6 +9,12 @@ const CreateType = ({ opened, onClose }) => {
 
   const addType = (e) => {
     e.preventDefault();
+
+    if (!value) {
+      alert('Введите название типа!');
+      return;
+    }
+
     createType({ name: value })
       .then(() => {
         setValue('');
