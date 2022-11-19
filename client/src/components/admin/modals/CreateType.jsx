@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { createType } from '../../http/deviceApi';
-import Modal from '../Modal';
+import { createType } from '../../../http/deviceApi';
+import Modal from '../../Modal';
 import styles from './modals.module.scss';
-import Button from '../../theme/Button';
+import Button from '../../../theme/Button';
 
 const CreateType = ({ opened, onClose }) => {
   const [value, setValue] = useState('');
@@ -20,7 +20,10 @@ const CreateType = ({ opened, onClose }) => {
 
   return (
     <Modal opened={opened} onClose={onClose}>
-      <form action="" className={styles.form} onSubmit={addType}>
+      <form
+        action="client/src/components/admin/modals/CreateType"
+        className={styles.form}
+        onSubmit={addType}>
         <div className={styles.inputsBlock}>
           <input
             className={styles.input}

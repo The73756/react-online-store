@@ -4,7 +4,7 @@ import CreateDevice from '../modals/CreateDevice';
 import CreateType from '../modals/CreateType';
 
 import styles from './AdminComponent.module.scss';
-import Button from '../../theme/Button';
+import Button from '../../../theme/Button';
 
 const AdminComponent = () => {
   const [brandVisible, setBrandVisible] = useState(false);

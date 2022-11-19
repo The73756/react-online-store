@@ -1,0 +1,25 @@
+.root {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  margin-top: 10px;
+  padding: 0;
+}
+
+.listBtn {
+  padding: 5px 0;
+  width: 100%;
+}
+
+.listItem {
+  width: 100%;
+
+  &:not(:last-child) {
+    margin-bottom: 5px;
+  }
+}

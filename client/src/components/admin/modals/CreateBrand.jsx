@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { createBrand } from '../../http/deviceApi';
-import Modal from '../Modal';
+import { createBrand } from '../../../http/deviceApi';
+import Modal from '../../Modal';
 import styles from './modals.module.scss';
-import Button from '../../theme/Button';
+import Button from '../../../theme/Button';
 
 const CreateBrand = ({ opened, onClose }) => {
   const [value, setValue] = useState('');

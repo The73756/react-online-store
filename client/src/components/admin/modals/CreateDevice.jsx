@@ -1,23 +1,20 @@
 import { observer } from 'mobx-react-lite';
 import { useContext, useEffect, useState } from 'react';
-import { Context } from '../..';
-import { createDevice, fetchBrands, fetchTypes } from '../../http/deviceApi';
-import Modal from '../Modal';
+import { Context } from '../../../index';
+import { createDevice, fetchBrands, fetchTypes } from '../../../http/deviceApi';
+import Modal from '../../Modal';
 import styles from './modals.module.scss';
-import Button from '../../theme/Button';
+import Button from '../../../theme/Button';
+import DeviceMetaSelect from '../DeviceMetaSelect';
+import DeviceInfoBlock from '../DeviceInfoBlock';
 
 const CreateDevice = observer(({ opened, onClose }) => {
   const { device } = useContext(Context);
-
   const [info, setInfo] = useState([]);
   const [infoWithVar, setInfoWithVar] = useState([]);
-
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [files, setFiles] = useState(null);
-
-  const [isDdTypeOpen, setIsDdTypeOpen] = useState(false);
-  const [isDdBrandOpen, setIsDdBrandOpen] = useState(false);
 
   useEffect(() => {
     try {
@@ -117,37 +114,7 @@ const CreateDevice = observer(({ opened, onClose }) => {
 
     <Modal opened={opened} onClose={onClose}>
       <form className={styles.form} onSubmit={addDevice}>
-        <div className={styles.top}>
-          <div>
-            <Button className={styles.btn} onClick={() => setIsDdTypeOpen(!isDdTypeOpen)}>
-              {device.selectedType.name || 'Выберите тип'}
-            </Button>
-            <ul style={{ display: isDdTypeOpen ? 'block' : 'none' }} className={styles.list}>
-              {device.types.map((type) => (
-                <li key={type.id} className={styles.listItem}>
-                  <Button className={styles.listBtn} onClick={() => device.setSelectedType(type)}>
-                    {type.name}
-                  </Button>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <Button onClick={() => setIsDdBrandOpen(!isDdBrandOpen)}>
-              {device.selectedBrand.name || 'Выберите бренд'}
-            </Button>
-            <ul style={{ display: isDdBrandOpen ? 'block' : 'none' }} className={styles.list}>
-              {device.brands.map((brand) => (
-                <li key={brand.id} className={styles.listItem}>
-                  <Button className={styles.listBtn} onClick={() => device.setSelectedBrand(brand)}>
-                    {brand.name}
-                  </Button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        <DeviceMetaSelect />
 
         <div className={styles.inputsBlock}>
           <input
@@ -174,25 +141,12 @@ const CreateDevice = observer(({ opened, onClose }) => {
 
         <div className={styles.infoBlock}>
           {info.map((item) => (
-            <div className={styles.infoBlockItem} key={item.number}>
-              <input
-                type="text"
-                className={styles.input}
-                placeholder="Введите название свойства"
-                value={item.title}
-                onChange={(e) => changeInfo('title', e.target.value, item.number)}
-              />
-              <input
-                type="text"
-                className={styles.input}
-                placeholder="Введите описание свойства"
-                value={item.description}
-                onChange={(e) => changeInfo('description', e.target.value, item.number)}
-              />
-              <Button variant="danger" onClick={() => removeInfo(item.number)}>
-                Удалить
-              </Button>
-            </div>
+            <DeviceInfoBlock
+              key={item.number}
+              {...item}
+              changeInfo={changeInfo}
+              removeInfo={removeInfo}
+            />
           ))}
         </div>
 

@@ -1,4 +1,4 @@
-import AdminComponent from '../components/AdminComponent';
+import AdminComponent from '../components/admin/AdminComponent';
 
 const Admin = () => {
   return (
