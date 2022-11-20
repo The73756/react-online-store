@@ -26,10 +26,8 @@ const CreateType = ({ opened, onClose }) => {
 
   return (
     <Modal opened={opened} onClose={onClose}>
-      <form
-        action="client/src/components/admin/modals/CreateType"
-        className={styles.form}
-        onSubmit={addType}>
+      <h2>Добавить тип</h2>
+      <form className={styles.form} onSubmit={addType}>
         <div className={styles.inputsBlock}>
           <input
             className={styles.input}

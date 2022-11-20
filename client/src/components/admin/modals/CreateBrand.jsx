@@ -26,6 +26,7 @@ const CreateBrand = ({ opened, onClose }) => {
 
   return (
     <Modal opened={opened} onClose={onClose}>
+      <h2>Добавить бренд</h2>
       <form className={styles.form} onSubmit={addBrand}>
         <div className={styles.inputsBlock}>
           <input

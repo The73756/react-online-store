@@ -19,8 +19,8 @@ class BrandController {
 
   async delete(req, res, next) {
     try {
-      const { name } = req.body;
-      await Brand.destroy({ where: { name } });
+      const { id } = req.query;
+      await Brand.destroy({ where: { id } });
       return res.json('brand deleted');
     } catch (e) {
       next(ApiError.badRequest(e.message));

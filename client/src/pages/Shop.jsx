@@ -31,15 +31,15 @@ const Shop = observer(() => {
   useEffect(() => {
     setIsDevicesLoading(false);
 
-    fetchDevices(
-      device.selectedType.id,
-      device.selectedBrand.id,
-      device.page,
-      device.limit,
-      device.search,
-      device.selectedSort,
-      device.selectedOrder,
-    )
+    fetchDevices({
+      typeId: device.selectedType.id,
+      brandId: device.selectedBrand.id,
+      page: device.page,
+      limit: device.limit,
+      search: device.search,
+      sort: device.selectedSort,
+      order: device.selectedOrder,
+    })
       .then((data) => {
         device.setDevices(data.rows);
         device.setTotalCount(data.count);

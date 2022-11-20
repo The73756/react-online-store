@@ -3,6 +3,7 @@ const ApiError = require('../error/ApiError');
 const { Op } = require('sequelize');
 const uuid = require('uuid');
 const path = require('path');
+const fs = require('fs');
 const { Device, DeviceInfo, DevicePhoto, DeviceVariant, Type, Brand } = require('../models/models');
 
 const includeArr = [
@@ -224,15 +225,28 @@ class DeviceController {
 
   async delete(req, res, next) {
     try {
-      const { id } = req.body;
-      const device = await Device.findOne({ where: { id } });
+      const { id } = req.query;
+      const device = await Device.findOne({
+        where: { id },
+        include: [{ model: DevicePhoto, as: 'photos' }],
+      });
 
       if (!device) {
         return next(ApiError.badRequest('Device not found'));
-      } else {
-        await Device.destroy({ where: { id } });
-        return res.json('device deleted');
       }
+      // Не удаляется девайс инфос и девайс вариантс !! (девайс - 33)
+
+      if (device.photos.length > 0) {
+        device.photos.forEach((photo) => {
+          fs.unlink(path.resolve(__dirname, '..', 'static', photo.url), (err) => {
+            err && console.log(err);
+          });
+        });
+      }
+
+      await Device.destroy({ where: { id } });
+
+      return res.json('device deleted');
     } catch (e) {
       next(ApiError.badRequest(e.message));
     }

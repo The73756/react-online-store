@@ -97,13 +97,13 @@ Device.hasMany(DevicePhoto, { as: 'photos' });
 DevicePhoto.belongsTo(Device, { onDelete: 'cascade' });
 
 DeviceInfo.hasMany(DeviceVariant, { as: 'variants' });
-DeviceVariant.belongsTo(DeviceInfo);
+DeviceVariant.belongsTo(DeviceInfo, { onDelete: 'cascade' });
 
 BasketDevice.hasMany(BasketDeviceVariant, { as: 'variants' });
 BasketDeviceVariant.belongsTo(BasketDevice, { onDelete: 'cascade' });
 
 DeviceVariant.hasMany(BasketDeviceVariant);
-BasketDeviceVariant.belongsTo(DeviceVariant);
+BasketDeviceVariant.belongsTo(DeviceVariant, { onDelete: 'cascade' });
 
 Type.belongsToMany(Brand, { through: TypeBrand });
 Brand.belongsToMany(Type, { through: TypeBrand });

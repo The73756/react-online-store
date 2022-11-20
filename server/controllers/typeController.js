@@ -19,8 +19,8 @@ class TypeController {
 
   async delete(req, res, next) {
     try {
-      const { name } = req.body;
-      await Type.destroy({ where: { name } });
+      const { id } = req.query;
+      await Type.destroy({ where: { id } });
       return res.json('type deleted');
     } catch (e) {
       next(ApiError.badRequest(e.message));

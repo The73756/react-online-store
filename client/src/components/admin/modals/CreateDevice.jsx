@@ -113,6 +113,7 @@ const CreateDevice = observer(({ opened, onClose }) => {
     // TODO: декомпозировать эту биг штуку!!!!! прям надо
 
     <Modal opened={opened} onClose={onClose}>
+      <h2>Добавить девайс</h2>
       <form className={styles.form} onSubmit={addDevice}>
         <DeviceMetaSelect />
 
@@ -192,7 +193,7 @@ const CreateDevice = observer(({ opened, onClose }) => {
                     <input
                       type="text"
                       className={styles.input}
-                      placeholder="Введите цену при этом значении"
+                      placeholder="Введите наценку этого варианта"
                       value={item.variants.cost}
                       onChange={(e) =>
                         updateInfoVariant('cost', e.target.value, item.number, obj.number)
