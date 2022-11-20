@@ -7,6 +7,14 @@ import Button from '../../theme/Button';
 const TypesSidebar = observer(() => {
   const { device } = useContext(Context);
 
+  const handleChangeType = (type) => {
+    if (device.selectedType.id === type.id) {
+      device.setSelectedType({});
+    } else {
+      device.setSelectedType(type);
+    }
+  };
+
   return (
     <aside className={styles.container}>
       <ul className={styles.list}>
@@ -14,7 +22,7 @@ const TypesSidebar = observer(() => {
           <li className={styles.item} key={type.id}>
             <Button
               className={`${styles.btn} ${type.id === device.selectedType.id ? styles.active : ''}`}
-              onClick={() => device.setSelectedType(type)}>
+              onClick={() => handleChangeType(type)}>
               {type.name}
             </Button>
           </li>

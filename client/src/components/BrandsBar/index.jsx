@@ -7,6 +7,14 @@ import Button from '../../theme/Button';
 const BrandsBar = observer(() => {
   const { device } = useContext(Context);
 
+  const handleChangeBrand = (brand) => {
+    if (device.selectedBrand.id === brand.id) {
+      device.setSelectedBrand({});
+    } else {
+      device.setSelectedBrand(brand);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <ul className={styles.list}>
@@ -14,7 +22,7 @@ const BrandsBar = observer(() => {
           <li className={styles.item} key={brand.id}>
             <Button
               className={`${brand.id === device.selectedBrand.id ? styles.active : ''}`}
-              onClick={() => device.setSelectedBrand(brand)}>
+              onClick={() => handleChangeBrand(brand)}>
               {brand.name}
             </Button>
           </li>
