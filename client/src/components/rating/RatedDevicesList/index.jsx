@@ -80,7 +80,6 @@ const RatedDevicesList = observer(() => {
           onDelete={deleteRate}
           onAddToBasket={addDeviceToBasket}
           isItemLoading={isItemLoading}
-          isAdded={basket.basketDevices.some((item) => item.device.id === rate.device.id)}
         />
       ))}
     </div>

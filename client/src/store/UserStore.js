@@ -26,4 +26,8 @@ export default class UserStore {
   get userId() {
     return this._user.id;
   }
+
+  get userRole() {
+    return this._user.role;
+  }
 }

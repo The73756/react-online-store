@@ -2,18 +2,22 @@ import { observer } from 'mobx-react-lite';
 import { useContext } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Context } from '..';
-import { authRoutes, publicRoutes } from '../routes';
-import { SHOP_ROUTE } from '../utils/consts';
+import { adminRoutes, authRoutes, publicRoutes } from '../routes';
+import { ADMIN_ROLE, SHOP_ROUTE } from '../utils/consts';
 
 const AppRouter = observer(() => {
   const { user } = useContext(Context);
 
   return (
     <Routes>
-      {user.isAuth &&
-        authRoutes.map((route) => (
-          <Route key={route.path} path={route.path} element={<route.component />} />
-        ))}
+      {user.isAuth && user.userRole === ADMIN_ROLE
+        ? adminRoutes.map((route) => (
+            <Route key={route.path} path={route.path} element={<route.component />} />
+          ))
+        : authRoutes.map((route) => (
+            <Route key={route.path} path={route.path} element={<route.component />} />
+          ))}
+
       {publicRoutes.map((route) => (
         <Route key={route.path} path={route.path} element={<route.component />} />
       ))}

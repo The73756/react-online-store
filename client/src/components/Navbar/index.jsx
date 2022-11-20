@@ -50,11 +50,13 @@ const Navbar = observer(() => {
                   Ваши оценки
                 </Link>
               </li>
-              <li className={styles.navItem}>
-                <Link to={ADMIN_ROUTE} className={styles.navLink}>
-                  Админ панель
-                </Link>
-              </li>
+              {user.user.role === 'ADMIN' && (
+                <li className={styles.navItem}>
+                  <Link to={ADMIN_ROUTE} className={styles.navLink}>
+                    Админ панель
+                  </Link>
+                </li>
+              )}
               <li className={styles.navItem}>
                 <Link to={LOGIN_ROUTE} onClick={logOut} className={styles.navLink}>
                   Выйти

@@ -3,7 +3,13 @@ import { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Context } from '../..';
 import { login, registration } from '../../http/userApi';
-import { LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE } from '../../utils/consts';
+import {
+  ADMIN_ROLE,
+  LOGIN_ROUTE,
+  REGISTRATION_ROUTE,
+  SHOP_ROUTE,
+  USER_ROLE,
+} from '../../utils/consts';
 
 import styles from './AuthComponent.module.scss';
 import Button from '../../theme/Button';
@@ -15,6 +21,7 @@ const AuthComponent = observer(() => {
   const isLogin = location !== REGISTRATION_ROUTE;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,7 +31,7 @@ const AuthComponent = observer(() => {
       if (isLogin) {
         data = await login(email, password);
       } else {
-        data = await registration(email, password);
+        data = await registration(email, password, `${isAdmin ? ADMIN_ROLE : USER_ROLE}`);
       }
       user.setUser(data);
       user.setIsAuth(true);
@@ -70,6 +77,13 @@ const AuthComponent = observer(() => {
                   Войдите!
                 </Link>
               </span>
+            )}
+
+            {!isLogin && (
+              <div>
+                Зарегистрироватся как администратор?
+                <input type="checkbox" checked={isAdmin} onChange={() => setIsAdmin(!isAdmin)} />
+              </div>
             )}
 
             <Button type="submit" variant="success" className={styles.formButton}>

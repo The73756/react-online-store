@@ -1,12 +1,9 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { Lazy, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Link } from 'react-router-dom';
-
-import AddToBasketBtn from '../../../theme/AddToBasketBtn';
 import Button from '../../../theme/Button';
 import RatingComponent from '../RatingComponent';
-import { Context } from '../../..';
 import { DEVICE_ROUTE } from '../../../utils/consts';
 
 import 'swiper/css';
@@ -14,27 +11,11 @@ import 'swiper/css/pagination';
 import 'swiper/css/lazy';
 import styles from './RatedDeviceItem.module.scss';
 
-const RatedDeviceItem = ({
-  device,
-  id,
-  rate,
-  createdAt,
-  updatedAt,
-  isAdded,
-  onDelete,
-  onAddToBasket,
-  isItemLoading,
-}) => {
-  const { user } = useContext(Context);
+const RatedDeviceItem = ({ device, id, rate, createdAt, updatedAt, onDelete, isItemLoading }) => {
   const [deviceRating, setDeviceRating] = useState(device.rating);
   const [localRate, setLocalRate] = useState(rate);
-  const [localIsAdded, setLocalIsAdded] = useState(isAdded);
   const createDate = new Date(createdAt).toLocaleString();
   const updateDate = new Date(updatedAt).toLocaleString();
-
-  const handleAddToBasket = () => {
-    onAddToBasket(device.id, () => setLocalIsAdded(true));
-  };
 
   return (
     <article className={`${styles.card} ${isItemLoading ? styles.loading : ''}`}>
@@ -84,11 +65,6 @@ const RatedDeviceItem = ({
             setRate={setLocalRate}
             deviceId={device.id}
             setLocalRating={setDeviceRating}
-          />
-          <AddToBasketBtn
-            onAddToBasket={handleAddToBasket}
-            isAdded={localIsAdded}
-            isAuth={user.isAuth}
           />
         </div>
         <div className={styles.bottomCol}>

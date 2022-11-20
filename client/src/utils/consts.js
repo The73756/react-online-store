@@ -13,3 +13,5 @@ export const SORT = {
   BRAND: 'brandId',
 };
 export const ANIMATION_TIME = 200;
+export const ADMIN_ROLE = 'ADMIN';
+export const USER_ROLE = 'USER';
