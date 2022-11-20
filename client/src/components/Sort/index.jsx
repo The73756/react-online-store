@@ -1,10 +1,11 @@
 import Select from 'react-select';
-import styles from './Sort.module.scss';
 import { useContext, useState } from 'react';
 import { SORT } from '../../utils/consts';
 import { Context } from '../../index';
 import Button from '../../theme/Button';
 import { observer } from 'mobx-react-lite';
+
+import styles from './Sort.module.scss';
 
 const options = [
   { value: SORT.RATING, label: 'По рейтингу' },

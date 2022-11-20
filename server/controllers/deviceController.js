@@ -95,8 +95,7 @@ class DeviceController {
     let offset = page * limit - limit;
     search = search || '';
     let devices;
-
-    const count = await Device.count();
+    let count;
 
     if (!brandId && !typeId && !search) {
       devices = await Device.findAll({
@@ -105,6 +104,8 @@ class DeviceController {
         limit,
         offset,
       });
+
+      count = await Device.count();
     }
 
     if (!brandId && !typeId && search) {
@@ -114,6 +115,10 @@ class DeviceController {
         include: includeArr,
         limit,
         offset,
+      });
+
+      count = await Device.count({
+        where: { name: { [Op.iRegexp]: search } },
       });
     }
 
@@ -125,6 +130,10 @@ class DeviceController {
         limit,
         offset,
       });
+
+      count = await Device.count({
+        where: { brandId },
+      });
     }
 
     if (brandId && !typeId && search) {
@@ -134,6 +143,10 @@ class DeviceController {
         include: includeArr,
         limit,
         offset,
+      });
+
+      count = await Device.count({
+        where: { brandId, name: { [Op.iRegexp]: search } },
       });
     }
 
@@ -145,6 +158,10 @@ class DeviceController {
         limit,
         offset,
       });
+
+      count = await Device.count({
+        where: { typeId },
+      });
     }
 
     if (!brandId && typeId && search) {
@@ -154,6 +171,10 @@ class DeviceController {
         include: includeArr,
         limit,
         offset,
+      });
+
+      count = await Device.count({
+        where: { typeId, name: { [Op.iRegexp]: search } },
       });
     }
 
@@ -165,6 +186,10 @@ class DeviceController {
         limit,
         offset,
       });
+
+      count = await Device.count({
+        where: { typeId, brandId },
+      });
     }
 
     if (brandId && typeId && search) {
@@ -174,6 +199,10 @@ class DeviceController {
         include: includeArr,
         limit,
         offset,
+      });
+
+      count = await Device.count({
+        where: { typeId, brandId, name: { [Op.iRegexp]: search } },
       });
     }
 

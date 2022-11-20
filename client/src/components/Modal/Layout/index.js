@@ -25,9 +25,23 @@ export const Layout = ({ onClose, children, opened }) => {
 
   const [animationIn, setAnimationIn] = useState(false);
 
+  const keydownHandler = ({ key }) => {
+    switch (key) {
+      case 'Escape':
+        onClose();
+        break;
+      default:
+    }
+  };
+
   useEffect(() => {
     setAnimationIn(opened);
   }, [opened]);
+
+  useEffect(() => {
+    document.addEventListener('keydown', keydownHandler);
+    return () => document.removeEventListener('keydown', keydownHandler);
+  }, []);
 
   return (
     <div className={styles.container}>
