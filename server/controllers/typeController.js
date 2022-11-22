@@ -2,7 +2,7 @@ const { Type } = require('../models/models');
 const ApiError = require('../error/ApiError');
 
 class TypeController {
-  async create(req, res) {
+  async create(req, res, next) {
     try {
       const { name } = req.body;
       const type = await Type.create({ name });
@@ -20,6 +20,7 @@ class TypeController {
   async delete(req, res, next) {
     try {
       const { id } = req.query;
+
       await Type.destroy({ where: { id } });
       return res.json('type deleted');
     } catch (e) {

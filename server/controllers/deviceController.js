@@ -35,11 +35,17 @@ class DeviceController {
         typeId,
       });
 
-      images.img.forEach((image) => {
+      if (images.img.length > 1) {
+        images.img.forEach((image) => {
+          const fileName = uuid.v4() + '.jpg';
+          image.mv(path.resolve(__dirname, '..', 'static', fileName));
+          imageNames.push(fileName);
+        });
+      } else {
         const fileName = uuid.v4() + '.jpg';
-        image.mv(path.resolve(__dirname, '..', 'static', fileName));
+        await images.img.mv(path.resolve(__dirname, '..', 'static', fileName));
         imageNames.push(fileName);
-      });
+      }
 
       imageNames.forEach((imageName) => {
         DevicePhoto.create({
@@ -76,6 +82,7 @@ class DeviceController {
                   cost: variant.cost,
                   additionalInfo: variant.additionalInfo,
                   deviceInfoId: deviceInfo.id,
+                  deviceId: device.id,
                 });
               });
             })();
@@ -234,7 +241,6 @@ class DeviceController {
       if (!device) {
         return next(ApiError.badRequest('Device not found'));
       }
-      // Не удаляется девайс инфос и девайс вариантс !! (девайс - 33)
 
       if (device.photos.length > 0) {
         device.photos.forEach((photo) => {
