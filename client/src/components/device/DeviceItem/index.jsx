@@ -8,7 +8,9 @@ import 'swiper/css/lazy';
 import styles from './DeviceItem.module.scss';
 
 const DeviceItem = ({ id, name, price, rating, isAdded, photos, type, brand }) => {
-  // TODO: Сделать нормальный хайлайт добавленности в корзину
+  const deviceType = type.name.slice(0, -1) ? type.name : 'No type';
+  const deviceBrand = brand.name ? brand.name : 'No brand';
+
   return (
     <article className={styles.card} style={{ borderColor: isAdded ? 'green' : '#ccc' }}>
       <div>
@@ -31,7 +33,7 @@ const DeviceItem = ({ id, name, price, rating, isAdded, photos, type, brand }) =
 
       <div className={styles.top}>
         <span className={styles.subtitle}>
-          {type.name.slice(0, -1)}, {brand.name}
+          {deviceType}, {deviceBrand}
         </span>
         <div className={styles.rating}>
           <span>{rating.toFixed(1)}</span>
