@@ -3,6 +3,7 @@ import { createType } from '../../../http/deviceApi';
 import Modal from '../../Modal';
 import styles from './modals.module.scss';
 import Button from '../../../theme/Button';
+import Input from '../../../theme/Input';
 
 const CreateType = ({ opened, onClose }) => {
   const [value, setValue] = useState('');
@@ -29,7 +30,7 @@ const CreateType = ({ opened, onClose }) => {
       <h2>Добавить тип</h2>
       <form className={styles.form} onSubmit={addType}>
         <div className={styles.inputsBlock}>
-          <input
+          <Input
             className={styles.input}
             value={value}
             onChange={(e) => setValue(e.target.value)}

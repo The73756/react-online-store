@@ -7,6 +7,8 @@ import styles from './modals.module.scss';
 import Button from '../../../theme/Button';
 import DeviceMetaSelect from '../DeviceMetaSelect';
 import DeviceInfoBlock from '../DeviceInfoBlock';
+import Input from '../../../theme/Input';
+import Textarea from '../../../theme/Textarea';
 
 const CreateDevice = observer(({ opened, onClose }) => {
   const { device } = useContext(Context);
@@ -123,23 +125,20 @@ const CreateDevice = observer(({ opened, onClose }) => {
         <DeviceMetaSelect />
 
         <div className={styles.inputsBlock}>
-          <input
-            className={styles.input}
-            type="text"
+          <Input
             placeholder="Введите название устройства"
             required={true}
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <input
-            className={styles.input}
+          <Input
             type="number"
             placeholder="Введите стоимость устройства"
             required={true}
-            value={price}
+            value={price || ''}
             onChange={(e) => setPrice(Number(e.target.value))}
           />
-          <textarea
+          <Textarea
             value={desc}
             onChange={(e) => setDesc(e.target.value)}
             className={styles.input}
@@ -147,13 +146,7 @@ const CreateDevice = observer(({ opened, onClose }) => {
             placeholder="Введите описание устройства"
             style={{ resize: 'vertical' }}
           />
-          <input
-            className={styles.input}
-            type="file"
-            multiple={true}
-            onChange={selectFile}
-            required={true}
-          />
+          <Input type="file" multiple={true} onChange={selectFile} required={true} />
         </div>
 
         <div className={styles.buttons}>
@@ -178,17 +171,13 @@ const CreateDevice = observer(({ opened, onClose }) => {
               className={`${styles.infoBlockItem} ${styles.infoWidthVarBlock}`}
               key={item.number}>
               <div className={styles.infoWithVarItems}>
-                <input
-                  type="text"
-                  className={styles.input}
+                <Input
                   placeholder="Введите название свойства"
                   required={true}
                   value={item.title}
                   onChange={(e) => changeInfoWithVar('title', e.target.value, item.number)}
                 />
-                <input
-                  type="text"
-                  className={styles.input}
+                <Input
                   placeholder="Введите описание свойства"
                   value={item.description}
                   onChange={(e) => changeInfoWithVar('description', e.target.value, item.number)}
@@ -203,9 +192,7 @@ const CreateDevice = observer(({ opened, onClose }) => {
                 <Button onClick={() => setInfoVariant(item.number)}>Добавить вариант</Button>
                 {item.variants.map((obj) => (
                   <div key={obj.number} className={styles.variants}>
-                    <input
-                      type="text"
-                      className={styles.input}
+                    <Input
                       placeholder="Введите значение"
                       required={true}
                       value={item.variants.value}
@@ -213,9 +200,7 @@ const CreateDevice = observer(({ opened, onClose }) => {
                         updateInfoVariant('value', e.target.value, item.number, obj.number)
                       }
                     />
-                    <input
-                      type="text"
-                      className={styles.input}
+                    <Input
                       placeholder="Введите наценку этого варианта"
                       required={true}
                       value={item.variants.cost}
@@ -223,9 +208,7 @@ const CreateDevice = observer(({ opened, onClose }) => {
                         updateInfoVariant('cost', e.target.value, item.number, obj.number)
                       }
                     />
-                    <input
-                      type="text"
-                      className={styles.input}
+                    <Input
                       placeholder="Введите дополнение к нему"
                       value={item.variants.additionalInfo}
                       onChange={(e) =>

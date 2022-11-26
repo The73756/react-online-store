@@ -3,6 +3,7 @@ import { createBrand } from '../../../http/deviceApi';
 import Modal from '../../Modal';
 import styles from './modals.module.scss';
 import Button from '../../../theme/Button';
+import Input from '../../../theme/Input';
 
 const CreateBrand = ({ opened, onClose }) => {
   const [value, setValue] = useState('');
@@ -29,7 +30,7 @@ const CreateBrand = ({ opened, onClose }) => {
       <h2>Добавить бренд</h2>
       <form className={styles.form} onSubmit={addBrand}>
         <div className={styles.inputsBlock}>
-          <input
+          <Input
             className={styles.input}
             value={value}
             onChange={(e) => setValue(e.target.value)}
