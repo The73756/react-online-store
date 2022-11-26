@@ -1,5 +1,23 @@
 const { Rating, Device, DevicePhoto, Type, Brand } = require('../models/models');
 const ApiError = require('../error/ApiError');
+const { Sequelize } = require('sequelize');
+
+const updateRating = async (deviceId) => {
+  const avgRating = await Rating.findAll({
+    where: { deviceId },
+    attributes: [[Sequelize.fn('AVG', Sequelize.col('rate')), 'avgRating']],
+  });
+
+  const result = avgRating.map((r) => r.get('avgRating'))[0];
+  const newRating = result ? result : 0;
+
+  Device.update({ rating: newRating }, { where: { id: deviceId } });
+
+  return {
+    newRating: newRating,
+    message: 'Rating saved',
+  };
+};
 
 class RatingController {
   async create(req, res, next) {
@@ -17,28 +35,8 @@ class RatingController {
       } else {
         await Rating.create({ deviceId, userId, rate });
       }
-      const ratings = await Rating.findAndCountAll({ where: { deviceId } });
-
-      if (+ratings.count !== 0) {
-        let calcRating = 0;
-
-        Promise.all(
-          ratings.rows.map((item) => {
-            calcRating += Number(item.dataValues.rate);
-          }),
-        ).then(() => {
-          calcRating = calcRating / ratings.count;
-          try {
-            Device.update({ rating: calcRating }, { where: { id: deviceId } });
-          } catch (e) {
-            next(ApiError.badRequest(e.message));
-          }
-        });
-        return res.json({
-          newRating: calcRating / ratings.count,
-          message: 'Rating saved',
-        });
-      }
+      const result = await updateRating(deviceId);
+      return res.json(result);
     } catch (e) {
       next(ApiError.badRequest(e.message));
     }
@@ -84,9 +82,10 @@ class RatingController {
 
   async delete(req, res, next) {
     try {
-      const { id } = req.query;
+      const { id, deviceId } = req.query;
       await Rating.destroy({ where: { id } });
-      return res.json('rating deleted');
+      const result = await updateRating(deviceId);
+      return res.json(result);
     } catch (e) {
       next(ApiError.badRequest(e.message));
     }

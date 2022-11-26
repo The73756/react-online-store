@@ -15,7 +15,7 @@ export const fetchOneRating = async ({ userId, deviceId }) => {
   return data;
 };
 
-export const deleteRating = async (id) => {
-  const { data } = await $authHost.delete(`api/rating`, { params: { id } });
+export const deleteRating = async (id, deviceId) => {
+  const { data } = await $authHost.delete(`api/rating`, { params: { id, deviceId } });
   return data;
 };

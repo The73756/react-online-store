@@ -19,15 +19,18 @@
   justify-content: space-around;
 }
 
+.imgWrapper {
+  margin-bottom: 10px;
+  max-width: 300px;
+}
+
 .topRight {
   padding: 0 10px;
 }
 
 .img {
-  display: block;
-  margin-bottom: 20px;
-  max-width: 50%;
-  object-fit: contain;
+  display: inline-block;
+  max-width: 300px;
 }
 
 .title {
@@ -60,8 +63,8 @@
 
 .bottom {
   display: flex;
+  align-items: flex-end;
   justify-content: space-between;
-  margin-top: auto;
 }
 
 .bottomCol {

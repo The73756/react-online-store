@@ -11,10 +11,10 @@ const RatedDevicesList = observer(() => {
   const [isLoading, setIsLoading] = useState(true);
   const [isItemLoading, setIsItemLoading] = useState(false);
 
-  const deleteRate = (id) => {
+  const deleteRate = (id, deviceId) => {
     setIsItemLoading(true);
 
-    deleteRating(id)
+    deleteRating(id, deviceId)
       .then((data) => {
         console.log(data);
         rating.setRatedDevices(rating.ratedDevices.filter((ratedDevice) => ratedDevice.id !== id));

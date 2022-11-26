@@ -21,21 +21,23 @@ const RatedDeviceItem = ({ device, id, rate, createdAt, updatedAt, onDelete, isI
     <article className={`${styles.card} ${isItemLoading ? styles.loading : ''}`}>
       <Link to={`${DEVICE_ROUTE}/${device.id}`} className={styles.link}>
         <div className={styles.top}>
-          <Swiper
-            modules={[Pagination, Lazy]}
-            slidesPerView={1}
-            lazy={true}
-            pagination={{ clickable: true }}>
-            {device.photos.map((photo) => (
-              <SwiperSlide key={photo.id}>
-                <img
-                  src={`${process.env.REACT_APP_API_URL}/${photo.url}`}
-                  alt={device.name}
-                  className={styles.img}
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          <div className={styles.imgWrapper}>
+            <Swiper
+              modules={[Pagination, Lazy]}
+              slidesPerView={1}
+              lazy={true}
+              pagination={{ clickable: true }}>
+              {device.photos.map((photo) => (
+                <SwiperSlide key={photo.id}>
+                  <img
+                    src={`${process.env.REACT_APP_API_URL}/${photo.url}`}
+                    alt={device.name}
+                    className={styles.img}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
           <div className={styles.topRight}>
             <h2 className={styles.title}>{device.name}</h2>
             <p className={styles.price}>{device.price} ₽</p>
@@ -74,7 +76,7 @@ const RatedDeviceItem = ({ device, id, rate, createdAt, updatedAt, onDelete, isI
           <p className={styles.date}>
             <span>Оценка обновлена:</span> {updateDate}
           </p>
-          <Button onClick={() => onDelete(id)}>Удалить</Button>
+          <Button onClick={() => onDelete(id, device.id)}>Удалить</Button>
         </div>
       </div>
     </article>
