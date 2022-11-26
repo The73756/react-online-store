@@ -15,7 +15,7 @@ const includeArr = [
 class DeviceController {
   async create(req, res, next) {
     try {
-      let { name, price, brandId, typeId, info } = req.body;
+      let { name, price, brandId, typeId, info, description } = req.body;
       const prevDevice = await Device.findOne({ where: { name } });
       const images = req.files;
       const imageNames = [];
@@ -33,6 +33,7 @@ class DeviceController {
         price,
         brandId,
         typeId,
+        description,
       });
 
       if (images.img.length > 1) {

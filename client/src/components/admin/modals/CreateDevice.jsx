@@ -13,6 +13,7 @@ const CreateDevice = observer(({ opened, onClose }) => {
   const [info, setInfo] = useState([]);
   const [infoWithVar, setInfoWithVar] = useState([]);
   const [name, setName] = useState('');
+  const [desc, setDesc] = useState('');
   const [price, setPrice] = useState(0);
   const [files, setFiles] = useState(null);
 
@@ -86,6 +87,11 @@ const CreateDevice = observer(({ opened, onClose }) => {
   const addDevice = (e) => {
     e.preventDefault();
 
+    if (!device.selectedBrand.id || !device.selectedType.id) {
+      alert('Выберите бренд и тип');
+      return;
+    }
+
     const formData = new FormData();
     const total = {
       properties: info,
@@ -97,6 +103,7 @@ const CreateDevice = observer(({ opened, onClose }) => {
     formData.append('brandId', device.selectedBrand.id);
     formData.append('typeId', device.selectedType.id);
     formData.append('info', JSON.stringify(total));
+    formData.append('description', desc);
 
     for (let i = 0; i < files.length; i++) {
       formData.append('img', files[i]);
@@ -105,8 +112,6 @@ const CreateDevice = observer(({ opened, onClose }) => {
     createDevice(formData).then(() => {
       onClose();
     });
-
-    console.log(total);
   };
 
   return (
@@ -122,6 +127,7 @@ const CreateDevice = observer(({ opened, onClose }) => {
             className={styles.input}
             type="text"
             placeholder="Введите название устройства"
+            required={true}
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
@@ -129,10 +135,25 @@ const CreateDevice = observer(({ opened, onClose }) => {
             className={styles.input}
             type="number"
             placeholder="Введите стоимость устройства"
+            required={true}
             value={price}
             onChange={(e) => setPrice(Number(e.target.value))}
           />
-          <input className={styles.input} type="file" multiple={true} onChange={selectFile} />
+          <textarea
+            value={desc}
+            onChange={(e) => setDesc(e.target.value)}
+            className={styles.input}
+            required={true}
+            placeholder="Введите описание устройства"
+            style={{ resize: 'vertical' }}
+          />
+          <input
+            className={styles.input}
+            type="file"
+            multiple={true}
+            onChange={selectFile}
+            required={true}
+          />
         </div>
 
         <div className={styles.buttons}>
@@ -161,6 +182,7 @@ const CreateDevice = observer(({ opened, onClose }) => {
                   type="text"
                   className={styles.input}
                   placeholder="Введите название свойства"
+                  required={true}
                   value={item.title}
                   onChange={(e) => changeInfoWithVar('title', e.target.value, item.number)}
                 />
@@ -185,6 +207,7 @@ const CreateDevice = observer(({ opened, onClose }) => {
                       type="text"
                       className={styles.input}
                       placeholder="Введите значение"
+                      required={true}
                       value={item.variants.value}
                       onChange={(e) =>
                         updateInfoVariant('value', e.target.value, item.number, obj.number)
@@ -194,6 +217,7 @@ const CreateDevice = observer(({ opened, onClose }) => {
                       type="text"
                       className={styles.input}
                       placeholder="Введите наценку этого варианта"
+                      required={true}
                       value={item.variants.cost}
                       onChange={(e) =>
                         updateInfoVariant('cost', e.target.value, item.number, obj.number)

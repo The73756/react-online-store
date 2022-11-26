@@ -19,6 +19,7 @@ const DevicePageComponent = observer(
     photos,
     info,
     id,
+    description,
     addDeviceToBasket,
     isUserDataLoading,
     isBasketUpdating,
@@ -121,6 +122,7 @@ const DevicePageComponent = observer(
             ) : (
               <div>Войдите что бы оценить</div>
             )}
+            <div className={styles.desc}>{description}</div>
           </div>
           <div>
             <h3 className={styles.price}>{localPrice} Руб.</h3>

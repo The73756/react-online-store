@@ -8,6 +8,7 @@ const DeviceInfoBlock = ({ title, description, number, changeInfo, removeInfo })
         type="text"
         className={styles.input}
         placeholder="Введите название свойства"
+        required={true}
         value={title}
         onChange={(e) => changeInfo('title', e.target.value, number)}
       />
@@ -15,6 +16,7 @@ const DeviceInfoBlock = ({ title, description, number, changeInfo, removeInfo })
         type="text"
         className={styles.input}
         placeholder="Введите описание свойства"
+        required={true}
         value={description}
         onChange={(e) => changeInfo('description', e.target.value, number)}
       />
