@@ -65,7 +65,7 @@ const DeviceVariant = sequelize.define('device_variant', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   value: { type: DataTypes.STRING, allowNull: false },
   cost: { type: DataTypes.INTEGER, allowNull: false },
-  additionalInfo: { type: DataTypes.STRING, allowNull: false },
+  colorHex: { type: DataTypes.STRING, allowNull: false },
   deviceInfoId: { type: DataTypes.INTEGER, allowNull: false },
   deviceId: { type: DataTypes.INTEGER, allowNull: false },
 });

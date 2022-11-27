@@ -1,4 +1,5 @@
 .btn {
+  display: block;
   margin: 0;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -17,4 +18,9 @@
   &:hover {
     background-color: unset;
   }
+}
+
+.accent {
+  font-weight: 700;
+  color: var(--active);
 }

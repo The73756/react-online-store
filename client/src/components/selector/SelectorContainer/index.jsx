@@ -2,7 +2,15 @@ import { useEffect, useState } from 'react';
 import styles from './SelectorContainer.module.scss';
 import SelectorItem from '../SelectorItem';
 
-const SelectorContainer = ({ variants, infoId, setGlobalState, price, setPrice }) => {
+const SelectorContainer = ({
+  variants,
+  infoId,
+  setGlobalState,
+  title,
+  price,
+  setPrice,
+  className,
+}) => {
   const [selectedVariant, setSelectedVariant] = useState(variants[0].id);
 
   useEffect(() => {
@@ -18,7 +26,8 @@ const SelectorContainer = ({ variants, infoId, setGlobalState, price, setPrice }
   };
 
   return (
-    <div className={styles.root}>
+    <div className={`${styles.root} ${className}`}>
+      {title && <h3 className={styles.title}>{title}:</h3>}
       <ul>
         {variants.map((variant) => (
           <SelectorItem

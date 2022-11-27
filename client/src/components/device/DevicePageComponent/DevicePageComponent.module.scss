@@ -16,6 +16,7 @@
 
 .topRatingBlock {
   display: flex;
+  flex: 1;
   flex-direction: column;
   align-items: center;
 }
@@ -40,7 +41,7 @@
 
 .price {
   margin: 0;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   padding: 0;
   font-size: 26px;
 }
@@ -60,15 +61,64 @@
   }
 }
 
-.addBtn {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  text-decoration: none;
-  color: #000;
-  transition: background-color var(--transition);
+.addToBasketBtn {
+  margin-bottom: 10px;
+}
 
-  &:hover {
-    background-color: #ccc;
+.selector {
+  &:not(:last-child) {
+    margin-bottom: 10px;
   }
+}
+
+.infoItem {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.infoTitle {
+  margin: 0;
+  margin-right: 5px;
+  padding: 0;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.infoDesc {
+  margin: 0;
+  padding: 0;
+  font-size: 18px;
+}
+
+.infoVariant {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  font-size: 18px;
+
+  &:not(:last-child) {
+    margin-right: 10px;
+
+    &::after {
+      content: '/';
+      position: absolute;
+      right: -8px;
+      font-weight: 700;
+    }
+  }
+}
+
+.infoColorWrapper {
+  display: inline-flex;
+  align-items: center;
+}
+
+.infoColor {
+  margin-right: 2px;
+  margin-left: 2px;
+  border-radius: 5px;
+  width: 18px;
+  height: 18px;
 }

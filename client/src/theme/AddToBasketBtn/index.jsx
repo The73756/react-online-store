@@ -18,13 +18,13 @@ const AddToBasketBtn = ({ isAuth, isAdded, isLoading, onAddToBasket, onClick, cl
 
   if (isAdded) {
     return (
-      <Link to={BASKET_ROUTE} className={`${styles.added} ${classes}`} onClick={onClick}>
-        Товар в корзине. Показать
+      <Link to={BASKET_ROUTE} className={`${styles.added}   ${classes}`} onClick={onClick}>
+        Товар в корзине. <span className={styles.accent}>Перейти</span>
       </Link>
     );
   }
   return (
-    <button className={` ${styles.btn}`} onClick={onAddToBasket}>
+    <button className={`${classes}`} onClick={onAddToBasket}>
       Добавить товар в корзину
     </button>
   );

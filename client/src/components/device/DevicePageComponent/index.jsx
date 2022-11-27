@@ -3,13 +3,15 @@ import { observer } from 'mobx-react-lite';
 import { Context } from '../../..';
 import AddToBasketBtn from '../../../theme/AddToBasketBtn';
 import RatingComponent from '../../rating/RatingComponent';
-import SelectorContainer from '../../selector/SelectorContainer';
+import { Link } from 'react-router-dom';
 import { Lazy, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/lazy';
 import styles from './DevicePageComponent.module.scss';
+import { LOGIN_ROUTE } from '../../../utils/consts';
+import SelectorContainer from '../../selector/SelectorContainer';
 
 const DevicePageComponent = observer(
   ({
@@ -120,7 +122,9 @@ const DevicePageComponent = observer(
                 </>
               )
             ) : (
-              <div>Войдите что бы оценить</div>
+              <div>
+                <Link to={LOGIN_ROUTE}>Войдите</Link> что бы оценить
+              </div>
             )}
             <div className={styles.desc}>{description}</div>
           </div>
@@ -131,24 +135,47 @@ const DevicePageComponent = observer(
               isLoading={isUserDataLoading || isBasketUpdating}
               isAdded={isDeviceAdded}
               onAddToBasket={() => addDeviceToBasket(selectedVariant, checkDeviceInBasket)}
+              className={styles.addToBasketBtn}
             />
+            {info.map((item) =>
+              item.variants.length ? (
+                <SelectorContainer
+                  key={item.id}
+                  infoId={item.id}
+                  {...item}
+                  setGlobalState={setVariantsObj}
+                  setPrice={setLocalPrice}
+                  price={price}
+                  className={styles.selector}
+                />
+              ) : null,
+            )}
           </div>
         </div>
         <div>
           <h2>Характеристики</h2>
-          {info.map((info) => (
-            <div key={info.id}>
-              {info.title} :{' '}
-              {info.variants.length > 0 ? (
-                <SelectorContainer
-                  infoId={info.id}
-                  variants={info.variants}
-                  setGlobalState={setVariantsObj}
-                  setPrice={setLocalPrice}
-                  price={price}
-                />
+          {info.map((item) => (
+            <div key={item.id} className={styles.infoItem}>
+              <span className={styles.infoTitle}>{item.title} : </span>
+              {item.variants.length > 0 ? (
+                item.variants.map((variant) =>
+                  variant.colorHex ? (
+                    <span
+                      key={variant.id}
+                      className={`${styles.infoVariant} ${styles.infoColorWrapper}`}>
+                      <span
+                        style={{ backgroundColor: variant.colorHex }}
+                        className={styles.infoColor}></span>
+                      {variant.value}
+                    </span>
+                  ) : (
+                    <span key={variant.id} className={styles.infoVariant}>
+                      {variant.value}
+                    </span>
+                  ),
+                )
               ) : (
-                info.description
+                <span className={styles.infoDesc}>{info.description}</span>
               )}
             </div>
           ))}

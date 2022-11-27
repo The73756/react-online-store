@@ -81,7 +81,7 @@ class DeviceController {
                 DeviceVariant.create({
                   value: variant.value,
                   cost: variant.cost,
-                  additionalInfo: variant.additionalInfo,
+                  colorHex: variant.colorHex,
                   deviceInfoId: deviceInfo.id,
                   deviceId: device.id,
                 });

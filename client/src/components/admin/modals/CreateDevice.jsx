@@ -47,7 +47,7 @@ const CreateDevice = observer(({ opened, onClose }) => {
       {
         title: '',
         description: '',
-        variants: [{ value: '', cost: '', additionalInfo: '', number: Date.now() }],
+        variants: [{ value: '', cost: '', colorHex: '', number: Date.now() }],
         number: Date.now(),
       },
     ]);
@@ -56,7 +56,7 @@ const CreateDevice = observer(({ opened, onClose }) => {
   const setInfoVariant = (number) => {
     const item = infoWithVar.find((i) => i.number === number);
 
-    item.variants.push({ value: '', cost: '', additionalInfo: '', number: Date.now() });
+    item.variants.push({ value: '', cost: '', colorHex: '', number: Date.now() });
     setInfoWithVar([...infoWithVar]);
   };
 
@@ -209,10 +209,10 @@ const CreateDevice = observer(({ opened, onClose }) => {
                       }
                     />
                     <Input
-                      placeholder="Введите дополнение к нему"
-                      value={item.variants.additionalInfo}
+                      placeholder="Введите цвет в формате rgb, hex, etc (необ.)"
+                      value={item.variants.colorHex}
                       onChange={(e) =>
-                        updateInfoVariant('additionalInfo', e.target.value, item.number, obj.number)
+                        updateInfoVariant('colorHex', e.target.value, item.number, obj.number)
                       }
                     />
                     <Button variant="danger" onClick={() => removeInfoVariant(item.number)}>
