@@ -36,6 +36,7 @@ const CreateBrand = ({ opened, onClose }) => {
             onChange={(e) => setValue(e.target.value)}
             type="text"
             placeholder="Введите название бренда"
+            required={true}
           />
         </div>
 

@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Context } from '..';
 import BasketDevicesList from '../components/basket/BasketDevicesList';
 import { fetchBasketDevices } from '../http/basketApi';
+import BasketBottom from '../theme/BasketInfo';
 
 const Basket = observer(() => {
   const { basket, user } = useContext(Context);
@@ -30,9 +31,11 @@ const Basket = observer(() => {
   return (
     <div className="container">
       <BasketDevicesList />
-      <p>Итого: {basket.basketTotalPrice}</p>
-      <p>Всего в корзине: {basket.basketTotalCount}</p>
-      <p>Всего позиций: {basket.basketTotalPositions}</p>
+      <BasketBottom
+        totalPrice={basket.basketTotalPrice}
+        totalCount={basket.basketTotalCount}
+        totalPositions={basket.basketTotalPositions}
+      />
     </div>
   );
 });
