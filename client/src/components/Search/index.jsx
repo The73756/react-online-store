@@ -8,6 +8,7 @@ import Button from '../../theme/Button';
 const Search = () => {
   const { device } = useContext(Context);
   const [searchValue, setSearchValue] = useState('');
+  const [warning, setWarning] = useState(false);
   const setDeviceSearch = (value) => {
     device.setSearch(value);
   };
@@ -19,16 +20,18 @@ const Search = () => {
   };
 
   const handleSearch = () => {
-    if (searchValue) {
-      setDeviceSearch(searchValue);
-    } else {
-      alert('Please enter a search term'); //TODO: сделать нормальное уведомление
+    if (!searchValue) {
+      setWarning(true);
+      return;
     }
+    setDeviceSearch(searchValue);
+    setWarning(false);
   };
 
   const handleClear = () => {
     setSearchValue('');
     setDeviceSearch('');
+    setWarning(false);
   };
 
   return (
@@ -38,7 +41,7 @@ const Search = () => {
           <SearchSvgSelector name={'search'} />
         </Button>
         <input
-          className={styles.input}
+          className={`${styles.input} ${warning ? styles.warning : ''}`}
           type="text"
           value={searchValue}
           onChange={handleChange}

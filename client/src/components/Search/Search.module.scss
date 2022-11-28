@@ -43,7 +43,17 @@
   width: 250px;
   height: 100%;
 
+  &::placeholder {
+    transition: color var(--transition);
+  }
+
   &:focus {
     outline: none;
+  }
+}
+
+.warning {
+  &::placeholder {
+    color: var(--danger);
   }
 }

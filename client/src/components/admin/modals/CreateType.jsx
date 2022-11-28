@@ -22,7 +22,7 @@ const CreateType = ({ opened, onClose }) => {
       })
       .finally(() => {
         onClose();
-      }); // TODO: подумать над лоадером и оповещением об успешном добавлении + ошибке (и так везде)
+      });
   };
 
   return (

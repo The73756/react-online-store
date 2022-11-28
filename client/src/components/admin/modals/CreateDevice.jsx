@@ -117,8 +117,6 @@ const CreateDevice = observer(({ opened, onClose }) => {
   };
 
   return (
-    // TODO: декомпозировать эту биг штуку!!!!! прям надо
-
     <Modal opened={opened} onClose={onClose}>
       <h2>Добавить девайс</h2>
       <form className={styles.form} onSubmit={addDevice}>
