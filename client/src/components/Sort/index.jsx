@@ -15,7 +15,7 @@ const options = [
   { value: SORT.BRAND, label: 'По бренду' },
 ];
 
-const Sort = observer(() => {
+const Sort = observer(({ isLoading }) => {
   const { device } = useContext(Context);
   const [selectedOption, setSelectedOption] = useState(options[0]);
 
@@ -32,7 +32,9 @@ const Sort = observer(() => {
     <div className={styles.wrapper}>
       <div className={styles.top}>
         <h3 className={styles.title}>Сортировка:</h3>
-        <Button onClick={onOrderChange}>{device.selectedOrder}</Button>
+        <Button onClick={onOrderChange} disabled={isLoading}>
+          {device.selectedOrder}
+        </Button>
       </div>
 
       <Select
@@ -40,6 +42,7 @@ const Sort = observer(() => {
         defaultValue={selectedOption}
         onChange={onChange}
         options={options}
+        isDisabled={isLoading}
         theme={(theme) => ({
           ...theme,
           borderRadius: 10,

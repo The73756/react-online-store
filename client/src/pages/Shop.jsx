@@ -12,10 +12,13 @@ import Sort from '../components/Sort';
 
 const Shop = observer(() => {
   const { device, basket, rating, user } = useContext(Context);
-  const [loadedComponents, setLoadedComponents] = useState(0);
+  const [deviceInfoLoading, setDeviceInfoLoading] = useState(true);
+  const [isOptionsLoading, setIsOptionsLoading] = useState(true);
   const [isDevicesLoading, setIsDevicesLoading] = useState(true);
 
   useEffect(() => {
+    setIsOptionsLoading(true);
+
     Promise.all([fetchTypes(), fetchBrands()])
       .then(([types, brands]) => {
         device.setTypes(types);
@@ -25,11 +28,11 @@ const Shop = observer(() => {
         alert('ошибка при загрузке типов и брендов');
         console.log(e);
       })
-      .finally(() => setLoadedComponents((prev) => prev + 1));
+      .finally(() => setIsOptionsLoading(false));
   }, []);
 
   useEffect(() => {
-    setIsDevicesLoading(false);
+    setIsDevicesLoading(true);
 
     fetchDevices({
       typeId: device.selectedType.id,
@@ -61,6 +64,7 @@ const Shop = observer(() => {
   ]);
 
   useEffect(() => {
+    setDeviceInfoLoading(true);
     if (user.isAuth) {
       Promise.all([fetchBasketDevices(user.userId), fetchRatings(user.userId)])
         .then(([basketDevices, ratings]) => {
@@ -74,28 +78,23 @@ const Shop = observer(() => {
           alert('Ошибка при загрузке корзины и рейтингов');
           console.log(e);
         })
-        .finally(() => setLoadedComponents((prev) => prev + 1));
+        .finally(() => setDeviceInfoLoading((prev) => prev + 1));
     }
   }, []);
-
-  if (isDevicesLoading || loadedComponents < 2) {
-    // TODO: переделать лоадер мб
-    return <div className="container">Loading...</div>;
-  }
 
   return (
     <div className="shop-container">
       <div className="shop-sidebar-left">
-        <TypesSidebar />
+        <TypesSidebar isLoading={isOptionsLoading} />
       </div>
 
       <div className="shop-sidebar-right">
-        <Sort />
+        <Sort isLoading={isOptionsLoading} />
       </div>
 
       <div className="container">
-        <BrandsBar />
-        <DevicesList />
+        <BrandsBar isLoading={isOptionsLoading} />
+        <DevicesList isLoading={isDevicesLoading && deviceInfoLoading} />
         <Pagination />
       </div>
     </div>

@@ -1,14 +1,16 @@
 import { observer } from 'mobx-react-lite';
 import { useContext } from 'react';
 import { Context } from '../../..';
-import DeviceItem from '../DeviceItem';
 import styles from './DevicesList.module.scss';
 import NoItems from '../../../theme/NoItems';
+import DeviceItem from '../DeviceItem';
+import DeviceLoader from '../DeviceItem/DeviceLoader';
 
-const DevicesList = observer(() => {
+const DevicesList = observer(({ isLoading }) => {
   const { device, basket } = useContext(Context);
+  const skeletons = [...new Array(4)].map((_, index) => <DeviceLoader key={index} />);
 
-  if (device.totalCount === 0) {
+  if (device.totalCount === 0 && !isLoading) {
     return (
       <NoItems
         title="Устройств не найдено"
@@ -19,13 +21,15 @@ const DevicesList = observer(() => {
 
   return (
     <main className={styles.container}>
-      {device.devices.map((device) => (
-        <DeviceItem
-          key={device.id}
-          {...device}
-          isAdded={basket.basketDevices.some((item) => item.device.id === device.id)}
-        />
-      ))}
+      {isLoading
+        ? skeletons
+        : device.devices.map((device) => (
+            <DeviceItem
+              key={device.id}
+              {...device}
+              isAdded={basket.basketDevices.some((item) => item.device.id === device.id)}
+            />
+          ))}
     </main>
   );
 });
