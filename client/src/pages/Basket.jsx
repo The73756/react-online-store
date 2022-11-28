@@ -4,6 +4,7 @@ import { Context } from '..';
 import BasketDevicesList from '../components/basket/BasketDevicesList';
 import { fetchBasketDevices } from '../http/basketApi';
 import BasketBottom from '../theme/BasketInfo';
+import NoItems from '../theme/NoItems';
 
 const Basket = observer(() => {
   const { basket, user } = useContext(Context);
@@ -26,6 +27,17 @@ const Basket = observer(() => {
 
   if (isLoading) {
     return <div>Loading...</div>;
+  }
+
+  if (!basket.basketTotalPositions) {
+    return (
+      <div className="container">
+        <NoItems
+          title="Корзина пуста =("
+          desc="Добавьте хотя бы 1 товар в корзину и возвращайтесь снова!"
+        />
+      </div>
+    );
   }
 
   return (

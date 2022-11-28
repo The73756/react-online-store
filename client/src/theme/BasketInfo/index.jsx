@@ -1,7 +1,7 @@
 import styles from './BasketBottom.module.scss';
 import Button from '../Button';
 import { useState } from 'react';
-import Modal from '../../components/Modal';
+import AlertModal from '../AlertModal';
 
 const BasketBottom = ({ totalPrice, totalCount, totalPositions }) => {
   const [opened, setOpened] = useState(false);
@@ -23,26 +23,23 @@ const BasketBottom = ({ totalPrice, totalCount, totalPositions }) => {
         Создать заказ
       </Button>
 
-      <Modal opened={opened} onClose={() => setOpened(false)}>
-        <div className={styles.modal}>
-          <h3 className={styles.modalTitle}>Что то пошло не так...</h3>
-          <p className={styles.modalDescr}>
-            Магазин создан в учебных целях, по этому создание заказов не возможно.
-          </p>
-          <p className={styles.modalDescr}>
-            Буду рад звездочке на гитхабе, или любой другой обратной связи =)
-          </p>
-          <p className={styles.modalDescr}>
-            Репозиторий с проектом:
-            <a
-              className={styles.modalLink}
-              href="https://github.com/The73756/react-online-store"
-              target="_blank">
-              Github
-            </a>
-          </p>
-        </div>
-      </Modal>
+      <AlertModal opened={opened} onClose={() => setOpened(false)} title="Что то пошло не так...">
+        <p className={styles.modalDesc}>
+          Магазин создан в учебных целях, по этому создание заказов не возможно.
+        </p>
+        <p className={styles.modalDesc}>
+          Буду рад звездочке на гитхабе, или любой другой обратной связи =)
+        </p>
+        <p className={styles.modalDesc}>
+          Репозиторий с проектом:
+          <a
+            className={styles.modalLink}
+            href="https://github.com/The73756/react-online-store"
+            target="_blank">
+            Github
+          </a>
+        </p>
+      </AlertModal>
     </div>
   );
 };
