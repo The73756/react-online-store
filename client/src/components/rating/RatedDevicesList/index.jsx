@@ -5,11 +5,14 @@ import { deleteRating, fetchRatings } from '../../../http/ratingApi';
 import RatedDeviceItem from '../RatedDeviceItem';
 import styles from './RatedDevicesComponent.module.scss';
 import { createBasketDevice, fetchBasketDevices } from '../../../http/basketApi';
+import NoItems from '../../../theme/NoItems';
+import RatedDeviceLoader from '../RatedDeviceItem/RatedDeviceLoader';
 
 const RatedDevicesList = observer(() => {
   const { rating, basket, user } = useContext(Context);
   const [isLoading, setIsLoading] = useState(true);
   const [isItemLoading, setIsItemLoading] = useState(false);
+  const skeletons = [...new Array(2)].map((_, index) => <RatedDeviceLoader key={index} />);
 
   const deleteRate = (id, deviceId) => {
     setIsItemLoading(true);
@@ -66,22 +69,28 @@ const RatedDevicesList = observer(() => {
     }
   }, []);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
+  if (!rating.ratedDevicesCount && !isLoading) {
+    return (
+      <div className="container">
+        <NoItems title="Оценок не найдено =(" desc="Здесь будут отображаться ваши оценки" />
+      </div>
+    );
   }
 
   return (
     <div className={styles.container}>
-      {rating.ratedDevices.map((rate) => (
-        <RatedDeviceItem
-          key={rate.id}
-          device={rate.device}
-          {...rate}
-          onDelete={deleteRate}
-          onAddToBasket={addDeviceToBasket}
-          isItemLoading={isItemLoading}
-        />
-      ))}
+      {isLoading
+        ? skeletons
+        : rating.ratedDevices.map((rate) => (
+            <RatedDeviceItem
+              key={rate.id}
+              device={rate.device}
+              {...rate}
+              onDelete={deleteRate}
+              onAddToBasket={addDeviceToBasket}
+              isItemLoading={isItemLoading}
+            />
+          ))}
     </div>
   );
 });

@@ -25,11 +25,7 @@ const Basket = observer(() => {
     }
   }, []);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!basket.basketTotalPositions) {
+  if (!basket.basketTotalPositions && !isLoading) {
     return (
       <div className="container">
         <NoItems
@@ -42,11 +38,12 @@ const Basket = observer(() => {
 
   return (
     <div className="container">
-      <BasketDevicesList />
+      <BasketDevicesList isLoading={isLoading} />
       <BasketBottom
         totalPrice={basket.basketTotalPrice}
         totalCount={basket.basketTotalCount}
         totalPositions={basket.basketTotalPositions}
+        isLoading={isLoading}
       />
     </div>
   );

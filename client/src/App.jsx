@@ -6,6 +6,7 @@ import './scss/main.scss';
 import AppRouter from './components/AppRouter';
 import Navbar from './components/Navbar';
 import { check } from './http/userApi';
+import Loader from './theme/Loader/Loader';
 
 const App = observer(() => {
   const { user } = useContext(Context);
@@ -19,14 +20,14 @@ const App = observer(() => {
       })
       .catch((e) => {
         user.setUser({});
-        user.setIsAuth(false); // TODO: Авторизация неудачна (например, токен просрочен)
+        user.setIsAuth(false);
         console.log(e);
       })
       .finally(() => setIsLoading(false));
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return (

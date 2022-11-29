@@ -1,25 +1,38 @@
-import styles from './BasketBottom.module.scss';
-import Button from '../Button';
 import { useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
+import Button from '../Button';
 import AlertModal from '../AlertModal';
 
-const BasketBottom = ({ totalPrice, totalCount, totalPositions }) => {
+import styles from './BasketBottom.module.scss';
+import 'react-loading-skeleton/dist/skeleton.css';
+
+const BasketBottom = ({ totalPrice, totalCount, totalPositions, isLoading }) => {
   const [opened, setOpened] = useState(false);
   return (
     <div className={styles.root}>
       <ul className={styles.list}>
-        <li className={styles.listItem}>
-          <b className={styles.accent}>Итого:</b> {totalPrice} руб.
-        </li>
-        <li className={styles.listItem}>
-          <b className={styles.accent}>Всего в корзине:</b> {totalCount}
-        </li>
-        <li className={styles.listItem}>
-          <b className={styles.accent}>Всего позиций:</b> {totalPositions}
-        </li>
+        {isLoading ? (
+          <Skeleton className={`${styles.listItem} ${styles.noBorder}`} count={3} />
+        ) : (
+          <>
+            <li className={styles.listItem}>
+              <b className={styles.accent}>Итого:</b> {totalPrice} руб.
+            </li>
+            <li className={styles.listItem}>
+              <b className={styles.accent}>Всего в корзине:</b> {totalCount}
+            </li>
+            <li className={styles.listItem}>
+              <b className={styles.accent}>Всего позиций:</b> {totalPositions}
+            </li>
+          </>
+        )}
       </ul>
 
-      <Button variant="success" className={styles.btn} onClick={() => setOpened(true)}>
+      <Button
+        disabled={isLoading}
+        variant="success"
+        className={styles.btn}
+        onClick={() => setOpened(true)}>
         Создать заказ
       </Button>
 

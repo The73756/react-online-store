@@ -3,13 +3,14 @@ import ContentLoader from 'react-content-loader';
 const DeviceLoader = (props) => (
   <ContentLoader
     speed={2}
-    width={277.5}
-    height={421}
-    viewBox="0 0 277.5 421"
+    width={1200}
+    height={146}
+    viewBox="0 0 1200 146"
     backgroundColor="#f3f3f3"
     foregroundColor="#ecebeb"
+    style={{ marginTop: 20 }}
     {...props}>
-    <rect x="0" y="0" rx="10" ry="10" width="277.5" height="421" />
+    <rect x="0" y="0" rx="10" ry="10" width="1200" height="146" />
   </ContentLoader>
 );
 

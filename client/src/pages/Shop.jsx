@@ -95,7 +95,7 @@ const Shop = observer(() => {
       <div className="container">
         <BrandsBar isLoading={isOptionsLoading} />
         <DevicesList isLoading={isDevicesLoading && deviceInfoLoading} />
-        <Pagination />
+        <Pagination isLoading={isDevicesLoading && deviceInfoLoading} />
       </div>
     </div>
   );

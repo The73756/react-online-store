@@ -3,11 +3,13 @@ import { useContext } from 'react';
 import { Context } from '../../..';
 import { deleteBasketDevice, updateBasketDevice } from '../../../http/basketApi';
 import BasketDeviceItem from '../BasketDeviceItem';
+import BasketDeviceLoader from '../BasketDeviceItem/BasketDeviceLoader';
 
 import styles from './BasketDevicesList.module.scss';
 
-const BasketDevicesList = observer(() => {
+const BasketDevicesList = observer(({ isLoading }) => {
   const { basket } = useContext(Context);
+  const skeletons = [...new Array(3)].map((_, index) => <BasketDeviceLoader key={index} />);
 
   const deleteDeviceFromBasket = (basketItemId) => {
     const updatedBasket = basket.basketDevices.filter(
@@ -36,17 +38,19 @@ const BasketDevicesList = observer(() => {
 
   return (
     <main className={styles.container}>
-      {basket.basketDevices.map((position) => (
-        <BasketDeviceItem
-          key={position.id}
-          count={position.count}
-          basketItemId={position.id}
-          variants={position.variants}
-          {...position.device}
-          onDelete={deleteDeviceFromBasket}
-          onChangeCount={changeBasketDeviceCount}
-        />
-      ))}
+      {isLoading
+        ? skeletons
+        : basket.basketDevices.map((position) => (
+            <BasketDeviceItem
+              key={position.id}
+              count={position.count}
+              basketItemId={position.id}
+              variants={position.variants}
+              {...position.device}
+              onDelete={deleteDeviceFromBasket}
+              onChangeCount={changeBasketDeviceCount}
+            />
+          ))}
     </main>
   );
 });
