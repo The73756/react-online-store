@@ -6,6 +6,7 @@ import DevicePageComponent from '../components/device/DevicePageComponent';
 import { createBasketDevice, fetchBasketDevices } from '../http/basketApi';
 import { fetchOneDevice } from '../http/deviceApi';
 import { fetchOneRating } from '../http/ratingApi';
+import DevicePageLoader from '../components/device/DevicePageComponent/DevicePageLoader';
 
 const DevicePage = observer(() => {
   const { id } = useParams();
@@ -17,14 +18,14 @@ const DevicePage = observer(() => {
   const [isBasketUpdating, setIsBasketUpdating] = useState(false);
 
   const addDeviceToBasket = (variantsObj, callback) => {
+    setIsBasketUpdating(true);
+
     createBasketDevice({
       deviceId: +id,
       basketId: +user.userId,
       variantsId: variantsObj.map((variant) => variant.id),
     })
       .then(() => {
-        setIsBasketUpdating(true);
-
         fetchBasketDevices(user.userId)
           .then((data) => {
             basket.setBasketDevices(data);
@@ -35,6 +36,7 @@ const DevicePage = observer(() => {
       })
       .catch((e) => {
         alert('Ошибка при добавлении товара в корзину');
+        setIsBasketUpdating(false);
         console.log(e);
       });
   };
@@ -78,18 +80,19 @@ const DevicePage = observer(() => {
     }
   }, []);
 
-  if (isLoading || isUserDataLoading) {
-    //TODO: пофиксить костыль (isUserDataLoading)
-    return <div>Загрузка...</div>; //TODO: сделать лоадер
+  if (isLoading && isUserDataLoading) {
+    return (
+      <div className="container">
+        <DevicePageLoader />
+      </div>
+    );
   }
 
   return (
     <div className="container">
       <DevicePageComponent
         {...device}
-        isLoading={isLoading}
         addDeviceToBasket={addDeviceToBasket}
-        isUserDataLoading={isUserDataLoading}
         userRate={userRate}
         isBasketUpdating={isBasketUpdating}
         setUserRate={setUserRate}

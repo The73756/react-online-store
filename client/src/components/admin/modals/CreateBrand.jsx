@@ -7,9 +7,11 @@ import Input from '../../../theme/Input';
 
 const CreateBrand = ({ opened, onClose }) => {
   const [value, setValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const addBrand = (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     if (!value) {
       alert('Введите название бренда!');
@@ -19,10 +21,15 @@ const CreateBrand = ({ opened, onClose }) => {
     createBrand({ name: value })
       .then(() => {
         setValue('');
+        onClose();
+      })
+      .catch((e) => {
+        alert('Ошибка при создании бренда!');
+        console.log(e);
       })
       .finally(() => {
-        onClose();
-      }); // TODO: подумать над лоадером
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -41,7 +48,9 @@ const CreateBrand = ({ opened, onClose }) => {
         </div>
 
         <div className={styles.footer}>
-          <Button type="submit">Добавить</Button>
+          <Button type="submit" isLoading={isLoading}>
+            Добавить
+          </Button>
           <Button variant="danger" className={styles.closeBtn} onClick={onClose}>
             Закрыть
           </Button>

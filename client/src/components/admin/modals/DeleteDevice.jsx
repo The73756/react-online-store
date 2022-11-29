@@ -10,6 +10,7 @@ import styles from './modals.module.scss';
 const DeleteDevice = ({ opened, onClose }) => {
   const { device } = useContext(Context);
   const [selectedDevice, setSelectedDevice] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     try {
@@ -29,6 +30,8 @@ const DeleteDevice = ({ opened, onClose }) => {
   }, []);
 
   const handleDelete = () => {
+    setIsLoading(true);
+
     if (!selectedDevice) {
       alert('Выберите девайс!');
       return;
@@ -36,12 +39,14 @@ const DeleteDevice = ({ opened, onClose }) => {
 
     deleteDevice(selectedDevice.id)
       .then(() => {
-        alert('Девайс успешно удален!');
         onClose();
       })
       .catch((e) => {
         alert('Произошла ошибка при удалении девайса!');
         console.log(e);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -58,7 +63,9 @@ const DeleteDevice = ({ opened, onClose }) => {
         />
 
         <div className={styles.footer}>
-          <Button onClick={handleDelete}>Удалить</Button>
+          <Button onClick={handleDelete} isLoading={isLoading}>
+            Удалить
+          </Button>
           <Button variant="danger" className={styles.closeBtn} onClick={onClose}>
             Закрыть
           </Button>

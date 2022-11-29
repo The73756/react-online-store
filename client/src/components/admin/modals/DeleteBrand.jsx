@@ -10,6 +10,7 @@ import styles from './modals.module.scss';
 const DeleteBrand = ({ opened, onClose }) => {
   const { device } = useContext(Context);
   const [selectedBrand, setSelectedBrand] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     try {
@@ -21,6 +22,8 @@ const DeleteBrand = ({ opened, onClose }) => {
   }, []);
 
   const handleDelete = () => {
+    setIsLoading(true);
+
     if (!selectedBrand) {
       alert('Выберите бренд!');
       return;
@@ -28,12 +31,14 @@ const DeleteBrand = ({ opened, onClose }) => {
 
     deleteBrand(selectedBrand.id)
       .then(() => {
-        alert('Бренд успешно удален!');
         onClose();
       })
       .catch((e) => {
         alert('Произошла ошибка при удалении бренда!');
         console.log(e);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -50,7 +55,9 @@ const DeleteBrand = ({ opened, onClose }) => {
         />
 
         <div className={styles.footer}>
-          <Button onClick={handleDelete}>Удалить</Button>
+          <Button onClick={handleDelete} isLoading={isLoading}>
+            Удалить
+          </Button>
           <Button variant="danger" className={styles.closeBtn} onClick={onClose}>
             Закрыть
           </Button>

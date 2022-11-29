@@ -7,9 +7,11 @@ import Input from '../../../theme/Input';
 
 const CreateType = ({ opened, onClose }) => {
   const [value, setValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const addType = (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     if (!value) {
       alert('Введите название типа!');
@@ -19,9 +21,14 @@ const CreateType = ({ opened, onClose }) => {
     createType({ name: value })
       .then(() => {
         setValue('');
+        onClose();
+      })
+      .catch((e) => {
+        alert('Ошибка при создании типа!');
+        console.log(e);
       })
       .finally(() => {
-        onClose();
+        setIsLoading(false);
       });
   };
 
@@ -41,7 +48,9 @@ const CreateType = ({ opened, onClose }) => {
         </div>
 
         <div className={styles.footer}>
-          <Button type="submit">Добавить</Button>
+          <Button type="submit" isLoading={isLoading}>
+            Добавить
+          </Button>
           <Button variant="danger" className={styles.closeBtn} onClick={onClose}>
             Закрыть
           </Button>

@@ -10,6 +10,7 @@ import styles from './modals.module.scss';
 const DeleteType = ({ opened, onClose }) => {
   const { device } = useContext(Context);
   const [selectedType, setSelectedType] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     try {
@@ -21,6 +22,8 @@ const DeleteType = ({ opened, onClose }) => {
   }, []);
 
   const handleDelete = () => {
+    setIsLoading(true);
+
     if (!selectedType) {
       alert('Выберите тип!');
       return;
@@ -28,12 +31,14 @@ const DeleteType = ({ opened, onClose }) => {
 
     deleteType(selectedType.id)
       .then(() => {
-        alert('Тип успешно удален!');
         onClose();
       })
       .catch((e) => {
         alert('Произошла ошибка при удалении типа!');
         console.log(e);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -50,7 +55,9 @@ const DeleteType = ({ opened, onClose }) => {
         />
 
         <div className={styles.footer}>
-          <Button onClick={handleDelete}>Удалить</Button>
+          <Button onClick={handleDelete} isLoading={isLoading}>
+            Удалить
+          </Button>
           <Button variant="danger" className={styles.closeBtn} onClick={onClose}>
             Закрыть
           </Button>

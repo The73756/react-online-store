@@ -1,8 +1,8 @@
 import ReactStars from 'react-rating-stars-component';
-import styles from './RatingComponent.module.scss';
 import { useContext } from 'react';
 import { Context } from '../../..';
 import { createRating } from '../../../http/ratingApi';
+import styles from './RatingComponent.module.scss';
 
 const RatingComponent = ({ deviceId, setLocalRating, rate, setRate }) => {
   const { user } = useContext(Context);

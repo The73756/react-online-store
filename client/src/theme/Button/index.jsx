@@ -9,6 +9,7 @@ const Button = ({
   hover = true,
   type = 'button',
   active = false,
+  isLoading = false,
   ...props
 }) => {
   const classesMap = {
@@ -25,7 +26,7 @@ const Button = ({
       type={type}
       className={`${styles.root} ${className} ${disabled ? styles.disabled : ''} ${
         !hover ? styles.unHovered : ''
-      } ${classesMap[variant]} ${active ? styles.active : ''}`}
+      } ${classesMap[variant]} ${active ? styles.active : ''} ${isLoading ? styles.loading : ''}`}
       onClick={onClick}>
       {children}
     </button>

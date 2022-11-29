@@ -1,7 +1,10 @@
+.container {
+  margin-top: 20px;
+}
+
 .top {
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
 }
 
 .wrapper {
@@ -28,15 +31,24 @@
 }
 
 .rating {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 240px;
-  height: 240px;
-  font-size: 30px;
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat;
+  margin-bottom: 10px;
+  font-size: 18px;
+
+  span {
+    font-weight: 700;
+    color: var(--active);
+  }
+}
+
+.rate {
+  margin-bottom: 10px;
+  text-align: center;
+
+  h3 {
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+  }
 }
 
 .price {
@@ -44,6 +56,14 @@
   margin-bottom: 10px;
   padding: 0;
   font-size: 26px;
+}
+
+.desc {
+  margin: 0;
+  padding: 0;
+  max-width: 500px;
+  font-size: 18px;
+  text-align: center;
 }
 
 .cartBtn {
@@ -71,11 +91,23 @@
   }
 }
 
+.chars {
+  margin-top: 20px;
+}
+
+.charsTitle {
+  margin: 0;
+  margin-bottom: 15px;
+  padding: 0;
+  font-size: 30px;
+  line-height: 1;
+}
+
 .infoItem {
   display: flex;
   align-content: center;
   align-items: center;
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 .infoTitle {

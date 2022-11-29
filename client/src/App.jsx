@@ -10,7 +10,7 @@ import Loader from './theme/Loader/Loader';
 
 const App = observer(() => {
   const { user } = useContext(Context);
-  const [isLoading, setIsLoading] = useState(true); // TODO: прикрутить какой то лоадер
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     check()

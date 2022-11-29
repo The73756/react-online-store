@@ -6,12 +6,13 @@ import RatingComponent from '../../rating/RatingComponent';
 import { Link } from 'react-router-dom';
 import { Lazy, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { LOGIN_ROUTE } from '../../../utils/consts';
+import SelectorContainer from '../../selector/SelectorContainer';
+
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/lazy';
 import styles from './DevicePageComponent.module.scss';
-import { LOGIN_ROUTE } from '../../../utils/consts';
-import SelectorContainer from '../../selector/SelectorContainer';
 
 const DevicePageComponent = observer(
   ({
@@ -23,7 +24,6 @@ const DevicePageComponent = observer(
     id,
     description,
     addDeviceToBasket,
-    isUserDataLoading,
     isBasketUpdating,
     userRate,
   }) => {
@@ -84,7 +84,7 @@ const DevicePageComponent = observer(
     };
 
     return (
-      <div className="container">
+      <div className={styles.container}>
         <div className={styles.top}>
           <span className={styles.wrapper}>
             <Swiper
@@ -105,34 +105,32 @@ const DevicePageComponent = observer(
           </span>
           <div className={styles.topRatingBlock}>
             <h2 className={styles.title}>{name}</h2>
-            <div>Рейтинг: {localDeviceRating.toFixed(1)}</div>
+            <div className={styles.rating}>
+              Рейтинг: <span>{localDeviceRating.toFixed(1)}</span>
+            </div>
             {user.isAuth ? (
-              isUserDataLoading ? (
-                <div>Рейтинг загружается...</div>
-              ) : (
-                //TODO: Сделать проверку *если рейтинг добавлен есть, если нет то то там*
-                <>
-                  <div>Ваша оценка: {localRate}</div>
-                  <RatingComponent
-                    rate={localRate}
-                    setRate={setLocalRate}
-                    deviceId={id}
-                    setLocalRating={setLocalDeviceRating}
-                  />
-                </>
-              )
+              <div className={styles.rate}>
+                <h3>Ваша оценка: {localRate}</h3>
+                <RatingComponent
+                  rate={localRate}
+                  setRate={setLocalRate}
+                  deviceId={id}
+                  setLocalRating={setLocalDeviceRating}
+                  edit={user.isAuth}
+                />
+              </div>
             ) : (
               <div>
                 <Link to={LOGIN_ROUTE}>Войдите</Link> что бы оценить
               </div>
             )}
-            <div className={styles.desc}>{description}</div>
+            <p className={styles.desc}>{description}</p>
           </div>
           <div>
             <h3 className={styles.price}>{localPrice} Руб.</h3>
             <AddToBasketBtn
               isAuth={user.isAuth}
-              isLoading={isUserDataLoading || isBasketUpdating}
+              isLoading={isBasketUpdating}
               isAdded={isDeviceAdded}
               onAddToBasket={() => addDeviceToBasket(selectedVariant, checkDeviceInBasket)}
               className={styles.addToBasketBtn}
@@ -152,8 +150,8 @@ const DevicePageComponent = observer(
             )}
           </div>
         </div>
-        <div>
-          <h2>Характеристики</h2>
+        <div className={styles.chars}>
+          <h2 className={styles.charsTitle}>Характеристики</h2>
           {info.map((item) => (
             <div key={item.id} className={styles.infoItem}>
               <span className={styles.infoTitle}>{item.title} : </span>

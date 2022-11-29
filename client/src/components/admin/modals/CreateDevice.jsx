@@ -18,6 +18,7 @@ const CreateDevice = observer(({ opened, onClose }) => {
   const [desc, setDesc] = useState('');
   const [price, setPrice] = useState(0);
   const [files, setFiles] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     try {
@@ -88,6 +89,7 @@ const CreateDevice = observer(({ opened, onClose }) => {
 
   const addDevice = (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     if (!device.selectedBrand.id || !device.selectedType.id) {
       alert('Выберите бренд и тип');
@@ -111,9 +113,17 @@ const CreateDevice = observer(({ opened, onClose }) => {
       formData.append('img', files[i]);
     }
 
-    createDevice(formData).then(() => {
-      onClose();
-    });
+    createDevice(formData)
+      .then(() => {
+        onClose();
+      })
+      .catch((e) => {
+        alert('Ошибка при создании устройства');
+        console.log(e);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -224,7 +234,9 @@ const CreateDevice = observer(({ opened, onClose }) => {
         </div>
 
         <div className={styles.footer}>
-          <Button type="submit">Добавить</Button>
+          <Button type="submit" isLoading={isLoading}>
+            Добавить
+          </Button>
           <Button variant="danger" className={styles.closeBtn} onClick={onClose}>
             Закрыть
           </Button>

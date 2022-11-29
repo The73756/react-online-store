@@ -1,5 +1,7 @@
 .btn {
+  position: relative;
   display: block;
+  overflow: hidden;
   margin: 0;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -7,7 +9,7 @@
   text-decoration: none;
   color: #000;
   background-color: transparent;
-  transition: background-color var(--transition);
+  transition: background-color var(--transition), color var(--transition), border var(--transition);
 
   &:hover {
     background-color: #ccc;
@@ -23,4 +25,10 @@
 .accent {
   font-weight: 700;
   color: var(--active);
+}
+
+.unHovered {
+  &:hover {
+    background-color: transparent;
+  }
 }
