@@ -1,10 +1,9 @@
 import { Link } from 'react-router-dom';
 import { DEVICE_ROUTE } from '../../../utils/consts';
-import { Lazy, Pagination } from 'swiper';
+import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import 'swiper/css/lazy';
 import styles from './DeviceItem.module.scss';
 
 const DeviceItem = ({ id, name, price, rating, isAdded, photos, type, brand }) => {
@@ -14,11 +13,7 @@ const DeviceItem = ({ id, name, price, rating, isAdded, photos, type, brand }) =
   return (
     <article className={styles.card} style={{ borderColor: isAdded ? 'green' : '#ccc' }}>
       <div>
-        <Swiper
-          modules={[Pagination, Lazy]}
-          slidesPerView={1}
-          lazy={true}
-          pagination={{ clickable: true }}>
+        <Swiper modules={[Pagination]} slidesPerView={1} pagination={{ clickable: true }}>
           {photos.map((photo) => (
             <SwiperSlide key={photo.id}>
               <img

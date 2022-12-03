@@ -4,11 +4,10 @@ import useDebounce from '../../../hooks/useDebounce';
 import Button from '../../../theme/Button';
 import { DEVICE_ROUTE } from '../../../utils/consts';
 import { Context } from '../../../index';
-import { Lazy, Pagination } from 'swiper';
+import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import 'swiper/css/lazy';
 import styles from './BasketDevice.module.scss';
 
 const BasketDeviceItem = ({
@@ -57,11 +56,7 @@ const BasketDeviceItem = ({
   return (
     <article className={styles.item}>
       <div className={styles.itemImg}>
-        <Swiper
-          modules={[Pagination, Lazy]}
-          slidesPerView={1}
-          pagination={{ clickable: true }}
-          lazy={true}>
+        <Swiper modules={[Pagination]} slidesPerView={1} pagination={{ clickable: true }}>
           {photos.map((photo) => (
             <SwiperSlide key={photo.id}>
               <img

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Lazy, Pagination } from 'swiper';
+import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Link } from 'react-router-dom';
 import Button from '../../../theme/Button';
@@ -8,7 +8,6 @@ import { DEVICE_ROUTE } from '../../../utils/consts';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
-import 'swiper/css/lazy';
 import styles from './RatedDeviceItem.module.scss';
 
 const RatedDeviceItem = ({ device, id, rate, createdAt, updatedAt, onDelete, isItemLoading }) => {
@@ -22,11 +21,7 @@ const RatedDeviceItem = ({ device, id, rate, createdAt, updatedAt, onDelete, isI
       <Link to={`${DEVICE_ROUTE}/${device.id}`} className={styles.link}>
         <div className={styles.top}>
           <div className={styles.imgWrapper}>
-            <Swiper
-              modules={[Pagination, Lazy]}
-              slidesPerView={1}
-              lazy={true}
-              pagination={{ clickable: true }}>
+            <Swiper modules={[Pagination]} slidesPerView={1} pagination={{ clickable: true }}>
               {device.photos.map((photo) => (
                 <SwiperSlide key={photo.id}>
                   <img

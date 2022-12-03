@@ -4,14 +4,13 @@ import { Context } from '../../..';
 import AddToBasketBtn from '../../../theme/AddToBasketBtn';
 import RatingComponent from '../../rating/RatingComponent';
 import { Link } from 'react-router-dom';
-import { Lazy, Pagination } from 'swiper';
+import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { LOGIN_ROUTE } from '../../../utils/consts';
 import SelectorContainer from '../../selector/SelectorContainer';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
-import 'swiper/css/lazy';
 import styles from './DevicePageComponent.module.scss';
 
 const DevicePageComponent = observer(
@@ -87,11 +86,7 @@ const DevicePageComponent = observer(
       <div className={styles.container}>
         <div className={styles.top}>
           <span className={styles.wrapper}>
-            <Swiper
-              modules={[Pagination, Lazy]}
-              slidesPerView={1}
-              pagination={{ clickable: true }}
-              lazy={true}>
+            <Swiper modules={[Pagination]} slidesPerView={1} pagination={{ clickable: true }}>
               {photos.map((photo) => (
                 <SwiperSlide key={photo.id}>
                   <img
