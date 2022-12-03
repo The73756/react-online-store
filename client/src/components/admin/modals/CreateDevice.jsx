@@ -26,7 +26,7 @@ const CreateDevice = observer(({ opened, onClose }) => {
       fetchBrands().then((data) => device.setBrands(data));
     } catch (error) {
       console.log(error);
-      alert('Ошибка при загрузке классификаций (типов/брендов)'); // TODO: доделать лоадер и обработку ошибок
+      alert('Ошибка при загрузке классификаций (типов/брендов)');
     }
   }, []);
 

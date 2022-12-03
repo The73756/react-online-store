@@ -19,14 +19,10 @@ const BasketDevicesList = observer(({ isLoading }) => {
     basket.setBasketDevices(updatedBasket);
     basket.setBasketTotalPositions(basket.basketTotalPositions - 1);
 
-    deleteBasketDevice({ id: basketItemId })
-      .then(() => {
-        alert('Устройство удалено из корзины');
-      })
-      .catch((e) => {
-        alert('Ошибка при удалении устройства из корзины');
-        console.log(e);
-      });
+    deleteBasketDevice({ id: basketItemId }).catch((e) => {
+      alert('Ошибка при удалении устройства из корзины');
+      console.log(e);
+    });
   };
 
   const changeBasketDeviceCount = (id, count) => {

@@ -20,7 +20,6 @@ const RatingComponent = ({ deviceId, setLocalRating, rate, setRate }) => {
         console.log(data);
         if (data.newRating) {
           setLocalRating(data.newRating);
-          alert(data.message);
         } else {
           alert('Вы уже оценивали этот товар');
         }

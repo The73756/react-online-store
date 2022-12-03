@@ -36,7 +36,6 @@ const RatedDevicesList = observer(() => {
     createBasketDevice({ deviceId: id, basketId: user.userId })
       .then(() => {
         callback();
-        alert('Товар успешно добавлен в корзину');
       })
       .catch((e) => {
         alert('Ошибка при добавлении товара в корзину');
