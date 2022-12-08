@@ -80,7 +80,7 @@ const DevicePage = observer(() => {
     }
   }, []);
 
-  if (isLoading && isUserDataLoading) {
+  if (isLoading || isUserDataLoading) {
     return (
       <div className="container">
         <DevicePageLoader />
