@@ -39,6 +39,13 @@
   object-fit: contain;
 }
 
+.imgSlide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
 .price {
   margin: 0;
   padding: 0;

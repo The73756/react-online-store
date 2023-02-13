@@ -15,11 +15,13 @@ const DeviceItem = ({ id, name, price, rating, isAdded, photos, type, brand }) =
       <div>
         <Swiper modules={[Pagination]} slidesPerView={1} pagination={{ clickable: true }}>
           {photos.map((photo) => (
-            <SwiperSlide key={photo.id}>
+            <SwiperSlide key={photo.id} className={styles.imgSlide}>
               <img
                 src={`${process.env.REACT_APP_API_URL}/${photo.url}`}
                 alt={name}
                 className={styles.img}
+                width={250}
+                height={250}
               />
             </SwiperSlide>
           ))}
